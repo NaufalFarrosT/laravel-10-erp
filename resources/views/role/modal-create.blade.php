@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-create">
     <div class="modal-dialog">
-        <div class="modal-content" id="modal-content">
+        <div class="modal-content" id="">
             <div class="modal-header">
                 <h4 class="modal-title">Tambah Jabatan</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

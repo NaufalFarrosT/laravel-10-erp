@@ -36,32 +36,46 @@ class RoleController extends Controller
         $data->save();
 
         return response()->json(array(
-            'msg' => $data
+            'msg' => 'BERHASIL MENAMBAHKAN DATA JABATAN BARU', 'data' => $data
         ), 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Role $role)
+    public function show($id)
     {
-        //
+        $role = Role::find($id);
+
+        return response()->json(array(
+            'msg' => view('role.modal-show', compact('role'))->render()
+        ), 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
-        //
+        $data = Role::find($id);
+
+        return response()->json(array(
+            'msg' => view('role.modal-edit', compact('data'))->render()
+        ), 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id)
     {
-        //
+        $role = Role::find($id);
+        $role->name = $request->get('name');
+        $role->save();
+
+        return response()->json(array(
+            'msg' => 'BERHASIL MEMPERBARUI DATA JABATAN'
+        ), 200);
     }
 
     /**
@@ -70,11 +84,12 @@ class RoleController extends Controller
     public function destroy($id)
     {
         $role = Role::find($id);
+
         try {
             $role->delete();
             return response()->json(array(
                 'status' => 'Success',
-                'msg' => 'Data jabatan berhasil dihapus'
+                'msg' => 'BERHASIL MENGHAPUS DATA JABATAN'
             ), 200);
         } catch (\PDOException $e) {
             return response()->json(array(
@@ -82,5 +97,23 @@ class RoleController extends Controller
                 'msg' => 'kesalahan dalam menghapus data'
             ), 200);
         }
+    }
+
+    public function showUserBasedOnRole($id)
+    {
+        $users = Role::find($id)->with('users')->get();
+
+        return response()->json(array(
+            'msg' => view('role.modal-show', compact('users'))->render()
+        ), 200);
+    }
+
+    public function deleteConfirmation($id)
+    {
+        $role = Role::find($id);
+
+        return response()->json(array(
+            'msg' => view('role.modal-deleteConfirmation', compact('role'))->render()
+        ), 200);
     }
 }
