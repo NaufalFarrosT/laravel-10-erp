@@ -55,7 +55,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
-                                <a href="{{ route('user.create') }}" style="width: fit-content" class="btn btn-sm btn-success">Tambah Data User</a>
+                                <a href="{{ route('user.create') }}" style="width: fit-content"
+                                    class="btn btn-sm btn-success">Tambah Data User</a>
                             </div>
                         </div><br>
 
@@ -79,12 +80,11 @@
                                         <td id="td_address_{{ $user->id }}">{{ $user->address }}</td>
                                         <td id="td_gender_{{ $user->id }}">{{ $user->gender }}</td>
                                         <td id="td_email_{{ $user->id }}">{{ $user->email }}</td>
-                                        <td id="td_email_{{ $user->id }}">{{ $user->role_id }}</td>
-                                        
+                                        <td id="td_email_{{ $user->id }}">{{ $user->role->name }}</td>
+
                                         <td>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-primary"
-                                                id="btnShow"
-                                                onclick="showAllUserBasedOnRole({{ $user->id }})">Detil</button>
+                                                id="btnShow" onclick="showUser({{ $user->id }})">Detil</button>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-warning"
                                                 onclick="editRoleData({{ $user->id }})">Ubah</button>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-danger"
@@ -95,7 +95,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.card-body -->
+
                     <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
                             <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
@@ -113,9 +113,9 @@
 
 @section('javascript-function')
     <script>
-        function createRoleData(){
-
-        }
+        @if (Session::has('Success'))
+            toastr.success("{{ session('Success') }}");
+        @endif
 
         function storeRoleData() {
             var name = $("#inputName").val();
@@ -135,7 +135,7 @@
                         "<td id='td_name_" + data.data.id +
                         "'>" + name + "</td>" +
                         "<td>0</td>" +
-                        "<td><button type='button' style='width: 60px' class='btn btn-sm btn-primary' id='btnShow' onclick='showAllUserBasedOnRole(" +
+                        "<td><button type='button' style='width: 60px' class='btn btn-sm btn-primary' id='btnShow' onclick='showUser(" +
                         data.data.id + ")'>Detil</button>" +
                         "<button type='button' style='width: 60px' class='btn btn-sm btn-warning' onclick='editRoleData(" +
                         data.data.id + ")'>Ubah</button>" +
@@ -218,12 +218,11 @@
             });
         }
 
-        function showAllUserBasedOnRole(id) {
+        function showUser(id) {
             $.ajax({
                 type: "GET",
-                url: `role/${id}`,
+                url: `user/${id}`,
                 success: function(data) {
-                    //console.log(data.users);
                     $("#modal-content").html(data.msg);
                     $("#modal-default").modal('show');
                 },

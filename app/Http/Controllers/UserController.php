@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::all()->sortBy('name');
 
         return view('user.index', ['users' => $users]);
     }
@@ -48,15 +48,19 @@ class UserController extends Controller
         $data->join_date = $request->get('join_date');
         $data->save();
 
-        return redirect()->route('user.index');
+        return redirect()->route('user.index')->with('Success', 'BERHASIL MENAMBAHKAN DATA USER');;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $user = User::find($id);
+
+        return response()->json(array(
+            'msg' => view('user.modal-show', compact('user'))->render()
+        ), 200);
     }
 
     /**
