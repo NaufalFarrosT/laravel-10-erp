@@ -199,7 +199,7 @@
         function deleteRoleDataRemoveTR(id) {
             $.ajax({
                 type: "DELETE",
-                url:  /${id}`,
+                url:  `item/${id}`,
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
                 },
