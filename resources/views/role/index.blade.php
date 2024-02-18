@@ -22,7 +22,7 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="modal fade" id="modal-default">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content" id="modal-content">
 
                         </div>

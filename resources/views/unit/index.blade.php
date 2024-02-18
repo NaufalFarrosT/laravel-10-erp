@@ -6,12 +6,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Master User</h1>
+                        <h1>Master Unit</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Master User</li>
+                            <li class="breadcrumb-item active">Master Unit</li>
                         </ol>
                     </div>
                 </div>
@@ -29,9 +29,9 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card col-6">
                     <div class="card-header">
-                        <h3 class="card-title">Data User</h3>
+                        <h3 class="card-title">Data Unit</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -48,15 +48,16 @@
                     </div>
 
                     <!-- Modal Start -->
-                    @include('role/modal-create')
+                    @include('Unit/modal-create')
                     <!-- Modal End -->
 
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
-                                <a href="{{ route('user.create') }}" style="width: fit-content"
-                                    class="btn btn-sm btn-success">Tambah Data User</a>
+                                <button type="button" style="width: fit-content" class="btn btn-sm btn-success"
+                                    data-toggle="modal" data-target="#modal-create">Tambah
+                                    Data Unit</button>
                             </div>
                         </div><br>
 
@@ -64,37 +65,30 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Nama Lengkap</th>
-                                    <th>Alamat</th>
-                                    <th>Gender</th>
-                                    <th>Email</th>
-                                    <th>Jabatan</th>
-                                    <th style="width: 18%">Aksi</th>
+                                    <th>Nama Unit</th>
+                                    <th style="width: 40%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
-                                    <tr id="tr_{{ $user->id }}">
+                                @foreach ($units as $unit)
+                                    <tr id="tr_{{ $unit->id }}">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td id="td_fullname_{{ $user->id }}">{{ $user->fullname }}</td>
-                                        <td id="td_address_{{ $user->id }}">{{ $user->address }}</td>
-                                        <td id="td_gender_{{ $user->id }}">{{ $user->gender }}</td>
-                                        <td id="td_email_{{ $user->id }}">{{ $user->email }}</td>
-                                        <td id="td_email_{{ $user->id }}">{{ $user->role->name }}</td>
-
+                                        <td id="td_name_{{ $unit->id }}">{{ $unit->name }}</td>
                                         <td>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-primary"
-                                                id="btnShow" onclick="showUser({{ $user->id }})">Detil</button>
-                                            <a href="{{ route('user.edit',['user' => $user->id]) }}" class="btn btn-sm btn-warning">Ubah</a>
+                                                id="btnShow"
+                                                onclick="showAllItemBasedOnItem({{ $unit->id }})">Detil</button>
+                                            <button type="button" style="width: 60px" class="btn btn-sm btn-warning"
+                                                onclick="editUnitData({{ $unit->id }})">Ubah</button>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-danger"
-                                                onclick="deleteConfirmation({{ $user->id }})">Hapus</button>
+                                                onclick="deleteConfirmation({{ $unit->id }})">Hapus</button>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-
+                    <!-- /.card-body -->
                     <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
                             <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
@@ -112,14 +106,78 @@
 
 @section('javascript-function')
     <script>
-        @if (Session::has('Success'))
-            toastr.success("{{ session('Success') }}");
-        @endif
+        function storeUnitData() {
+            var name = $("#inputName").val();
+            var numberOfRow = $(".table-bordered tr").length - 0;
+
+            $.ajax({
+                type: "POST",
+                url: `unit`,
+                data: {
+                    _token: "<?php echo csrf_token(); ?>",
+                    name: name
+                },
+                success: function(data) {
+                    toastr.success(data.msg);
+                    var tr = "<tr id='tr_" + data.data.id + "'>" +
+                        "<td>" + numberOfRow + "</td>" +
+                        "<td id='td_name_" + data.data.id +
+                        "'>" + name + "</td>" +
+                        "<td>0</td>" +
+                        "<td><button type='button' style='width: 60px' class='btn btn-sm btn-primary' id='btnShow' onclick='showAllUserBasedOnRole(" +
+                        data.data.id + ")'>Detil</button>" +
+                        "<button type='button' style='width: 60px' class='btn btn-sm btn-warning' onclick='editRoleData(" +
+                        data.data.id + ")'>Ubah</button>" +
+                        "<button type='button' style='width: 60px' class='btn btn-sm btn-danger' onclick='deleteConfirmation(" +
+                        data.data.id + ")'>Hapus</button>" +
+                        "</td></tr>";
+
+                    $('.table-bordered tbody').append(tr);
+                    $('#inputName').val("");
+                },
+                error: function(xhr) {
+                    console.log((xhr.responseJSON.errors));
+                }
+            });
+        }
+
+        function editUnitData(id) {
+            $.ajax({
+                type: "GET",
+                url: `unit/${id}/edit`,
+                success: function(data) {
+                    $("#modal-content").html(data.msg);
+                    $("#modal-default").modal('show');
+                },
+                error: function(err) {
+                    alert(err);
+                },
+            });
+        }
+
+        function saveUnitDataUpdateTD(id) {
+            var eName = $("#eName").val();
+            $.ajax({
+                type: "PUT",
+                url: `unit/${id}`,
+                data: {
+                    _token: "<?php echo csrf_token(); ?>",
+                    name: eName
+                },
+                success: function(data) {
+                    $("#td_name_" + id).html(eName);
+                    toastr.success(data.msg);
+                },
+                error: function(err) {
+                    alert(err);
+                },
+            });
+        }
 
         function deleteConfirmation(id) {
             $.ajax({
                 type: "GET",
-                url: `user/${id}/DeleteConfirmation`,
+                url: `unit/${id}/DeleteConfirmation`,
                 success: function(data) {
                     $("#modal-content").html(data.msg);
                     $("#modal-default").modal('show');
@@ -131,10 +189,10 @@
             });
         }
 
-        function deleteRoleDataRemoveTR(id) {
+        function deleteUnitDataRemoveTR(id) {
             $.ajax({
                 type: "DELETE",
-                url: `user/${id}`,
+                url: `unit/${id}`,
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
                 },
@@ -145,6 +203,21 @@
                     } else {
                         alert(data.msg);
                     }
+                },
+            });
+        }
+
+        function showAllItemBasedOnItem(id) {
+            $.ajax({
+                type: "GET",
+                url: `unit/${id}`,
+                success: function(data) {
+                    //console.log(data.users);
+                    $("#modal-content").html(data.msg);
+                    $("#modal-default").modal('show');
+                },
+                error: function(err) {
+                    alert("Error");
                 },
             });
         }

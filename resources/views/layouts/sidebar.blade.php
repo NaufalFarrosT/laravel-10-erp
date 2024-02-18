@@ -33,7 +33,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="border-bottom: 1px solid #4f5962">
                     <a href="#" class="nav-link">
                         <p>
                             Master
@@ -42,13 +42,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/layout/top-nav.html" class="nav-link">
-                                <i class="far fa fa-database nav-icon"></i>
-                                <p>Category</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                            <a href="/item" class="nav-link">
                                 <i class="far fa fa-database nav-icon"></i>
                                 <p>Item</p>
                             </a>
@@ -60,6 +54,24 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="/category" class="nav-link">
+                                <i class="far fa fa-database nav-icon"></i>
+                                <p>Kategori</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/supplier" class="nav-link">
+                                <i class="far fa fa-database nav-icon"></i>
+                                <p>Pemasok</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/unit" class="nav-link">
+                                <i class="far fa fa-database nav-icon"></i>
+                                <p>Satuan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="/user" class="nav-link">
                                 <i class="far fa fa-database nav-icon"></i>
                                 <p>User</p>
@@ -67,6 +79,18 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item mt-2">
+                    <form id="logout" action="{{ route('logout') }}" method="POST" class="nav-link">
+                        @csrf
+                        <a href="javascript:;" onclick="document.getElementById('logout').submit();">
+                            <i class="nav-icon far fas fa-sign-out-alt"></i>
+                            <p>
+                                Logout
+                            </p>
+                        </a>
+                    </form>
+                </li>
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

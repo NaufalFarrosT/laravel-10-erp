@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +35,20 @@ Route::middleware('auth')->group(function () {
         return view('home');
     });
 
+    Route::resource('/category', CategoryController::class);
+    Route::get('/category/{id}/DeleteConfirmation', [CategoryController::class, 'deleteConfirmation'])->name('category.deleteConfirmation');
+
+    Route::resource('/item', ItemController::class);
+    Route::get('/item/{id}/DeleteConfirmation', [ItemController::class, 'deleteConfirmation'])->name('item.deleteConfirmation');
+
+    Route::resource('/supplier', SupplierController::class);
+    Route::get('/supplier/{id}/DeleteConfirmation', [SupplierController::class, 'deleteConfirmation'])->name('supplier.deleteConfirmation');
+    
+    Route::resource('/unit', UnitController::class);
+    Route::get('/unit/{id}/DeleteConfirmation', [UnitController::class, 'deleteConfirmation'])->name('unit.deleteConfirmation');
+
     Route::resource('/user', UserController::class);
+    Route::get('/user/{id}/DeleteConfirmation', [UserController::class, 'deleteConfirmation'])->name('user.deleteConfirmation');
 
     Route::resource('/role', RoleController::class);
     Route::get('/role/{id}/DeleteConfirmation', [RoleController::class, 'deleteConfirmation'])->name('role.deleteConfirmation');

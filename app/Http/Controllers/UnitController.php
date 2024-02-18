@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Unit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class RoleController extends Controller
+class UnitController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $roles = DB::select("SELECT R.id, R.name, COUNT(U.role_id) as 'total' FROM roles R LEFT JOIN users U on R.id = U.role_id GROUP BY R.id, R.name");
+        $units = Unit::all();
 
-        return view('role.index', ['roles' => $roles]);
+        return view('unit.index', ['units' => $units]);
     }
 
     /**
@@ -31,12 +30,12 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new Role();
+        $data = new Unit();
         $data->name = $request->get('name');
         $data->save();
 
         return response()->json(array(
-            'msg' => 'BERHASIL MENAMBAHKAN DATA JABATAN BARU', 'data' => $data
+            'msg' => 'BERHASIL MENAMBAHKAN DATA UNIT BARU', 'data' => $data
         ), 200);
     }
 
@@ -45,12 +44,12 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
+        $unit = Unit::find($id);
 
-        $users = $role->users;
+        $items = $unit->items;
 
         return response()->json(array(
-            'msg' => view('role.modal-show', compact('role','users'))->render()
+            'msg' => view('unit.modal-show', compact('unit'))->render()
         ), 200);
     }
 
@@ -59,10 +58,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $data = Role::find($id);
+        $unit = Unit::find($id);
 
         return response()->json(array(
-            'msg' => view('role.modal-edit', compact('data'))->render()
+            'msg' => view('unit.modal-edit', compact('unit'))->render()
         ), 200);
     }
 
@@ -71,12 +70,12 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Role::find($id);
-        $role->name = $request->get('name');
-        $role->save();
+        $unit = Unit::find($id);
+        $unit->name = $request->get('name');
+        $unit->save();
 
         return response()->json(array(
-            'msg' => 'BERHASIL MEMPERBARUI DATA JABATAN'
+            'msg' => 'BERHASIL MEMPERBARUI DATA UNIT'
         ), 200);
     }
 
@@ -85,13 +84,13 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::find($id);
+        $unit = Unit::find($id);
 
         try {
-            $role->delete();
+            $unit->delete();
             return response()->json(array(
                 'status' => 'Success',
-                'msg' => 'BERHASIL MENGHAPUS DATA JABATAN'
+                'msg' => 'BERHASIL MENGHAPUS DATA UNIT'
             ), 200);
         } catch (\PDOException $e) {
             return response()->json(array(
@@ -101,21 +100,12 @@ class RoleController extends Controller
         }
     }
 
-    // public function showUserBasedOnRole($id)
-    // {
-    //     $users = Role::find($id)->with('users')->get();
-
-    //     return response()->json(array(
-    //         'msg' => view('role.modal-show', compact('users'))->render()
-    //     ), 200);
-    // }
-
     public function deleteConfirmation($id)
     {
-        $role = Role::find($id);
+        $unit = Unit::find($id);
 
         return response()->json(array(
-            'msg' => view('role.modal-deleteConfirmation', compact('role'))->render()
+            'msg' => view('unit.modal-deleteConfirmation', compact('unit'))->render()
         ), 200);
     }
 }

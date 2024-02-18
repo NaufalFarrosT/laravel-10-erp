@@ -111,6 +111,22 @@
     <!-- date-range-picker -->
     <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
     @yield('javascript-function')
+    
+    <script>
+        function showUser(id) {
+            $.ajax({
+                type: "GET",
+                url: `user/${id}`,
+                success: function(data) {
+                    $("#modal-content").html(data.msg);
+                    $("#modal-default").modal('show');
+                },
+                error: function(err) {
+                    alert("Error");
+                },
+            });
+        }
+    </script>
 
 </body>
 

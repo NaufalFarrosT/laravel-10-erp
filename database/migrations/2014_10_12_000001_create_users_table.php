@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->date('join_date');
+            $table->string('photo_url')->nullable();
 
             $table->foreignId('role_id')->constrained();
 

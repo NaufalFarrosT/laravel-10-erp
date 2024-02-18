@@ -11,12 +11,12 @@
             <div class="form-group">
                 <label for="">Nama Jabatan</label>
                 <input type="text" class="form-control" id="eName" name="eName" placeholder="Nama Jabatan"
-                    value="{{ $data->name }}">
+                    value="{{ $category->name }}">
             </div>
         </div>
     </form>
 </div>
 <div class="modal-footer justify-content-between">
-    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveRoleDataUpdateTD({{ $data->id }})">Simpan</button>
+    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveCategoryDataUpdateTD({{ $category->id }})">Simpan</button>
     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
 </div>

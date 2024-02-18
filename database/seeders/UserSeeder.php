@@ -27,19 +27,41 @@ class UserSeeder extends Seeder
                 'role_id' => 1
             ],
             [
-                'fullname' => "Admin",
-                'name' => "Admin",
+                'fullname' => "ADMIN 1",
+                'name' => "Admin1",
                 'dob'=> '1999-12-20',
                 'address' => "Jalan Kembar",
                 'gender' => "Laki-Laki",
-                'email' => "admin@gmail.com",
+                'email' => "admin1@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
                 'role_id' => 2
             ],
             [
-                'fullname' => "Staff",
-                'name' => "Staff",
+                'fullname' => "ADMIN 2",
+                'name' => "Admin2",
+                'dob'=> '1999-12-20',
+                'address' => "Jalan Kembar",
+                'gender' => "Laki-Laki",
+                'email' => "admin2@gmail.com",
+                'password' => Hash::make('123'),
+                'join_date' => '1999-12-20',
+                'role_id' => 2
+            ],
+            [
+                'fullname' => "ADMIN 3",
+                'name' => "Admin3",
+                'dob'=> '1999-12-20',
+                'address' => "Jalan Kembar",
+                'gender' => "Laki-Laki",
+                'email' => "admin3@gmail.com",
+                'password' => Hash::make('123'),
+                'join_date' => '1999-12-20',
+                'role_id' => 2
+            ],
+            [
+                'fullname' => "Staff1",
+                'name' => "Staff1",
                 'dob'=> '1999-12-20',
                 'address' => "Jalan Kertajaya",
                 'gender' => "Perempuan",

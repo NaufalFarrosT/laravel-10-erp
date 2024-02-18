@@ -48,7 +48,7 @@ class UserController extends Controller
         $data->join_date = $request->get('join_date');
         $data->save();
 
-        return redirect()->route('user.index')->with('Success', 'BERHASIL MENAMBAHKAN DATA USER');;
+        return redirect()->route('user.index')->with('Success', 'BERHASIL MENAMBAHKAN DATA USER');
     }
 
     /**
@@ -66,24 +66,64 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $roles = Role::all();
+
+        return view('user.edit', ['user' => $user, 'roles' => $roles]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->fullname = $request->get('fullname');
+        $user->name = $request->get('name');
+        $user->dob = $request->get('dob');
+        $user->address = $request->get('address');
+        $user->gender = $request->get('gender');
+        $user->email = $request->get('email');
+        $password = $request->get('password');
+        if ($password != $user->password) {
+            $user->password = Hash::make($request->get('password'));
+        }
+        $user->role_id = $request->get('role_id');
+        $user->save();
+
+        //return view('user.index')->with('Success', 'BERHASIL MEMPERBARUI DATA USER');;
+        return redirect()->route('user.index')->with('Success', 'BERHASIL MEMPERBARUI DATA USER');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $user = User::find($id);
+
+        try {
+            $user->delete();
+            return response()->json(array(
+                'status' => 'Success',
+                'msg' => 'BERHASIL MENGHAPUS DATA USER'
+            ), 200);
+        } catch (\PDOException $e) {
+            return response()->json(array(
+                'status' => 'error',
+                'msg' => 'kesalahan dalam menghapus data'
+            ), 200);
+        }
+    }
+
+    public function deleteConfirmation($id)
+    {
+        $user = User::find($id);
+
+        return response()->json(array(
+            'msg' => view('user.modal-deleteConfirmation', compact('user'))->render()
+        ), 200);
     }
 }

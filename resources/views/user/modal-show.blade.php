@@ -5,6 +5,10 @@
     </button>
 </div>
 <div class="modal-body">
+    <div class="text-center">
+        <img class="profile-user-img img-fluid" src="{{ asset('assets/dist/img/user4-128x128.jpg') }}"
+            alt="User profile picture">
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -57,5 +61,6 @@
     </table>
 </div>
 <div class="modal-footer justify-content-between">
+    <a href="{{ route('user.edit',['user' => $user->id]) }}" class="btn btn-warning">Ubah</a>
     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
 </div>
