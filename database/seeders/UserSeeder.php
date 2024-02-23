@@ -16,15 +16,16 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'fullname' => "Super Admin",
-                'name' => "Super Admin",
+                'fullname' => "Super Admin 1",
+                'name' => "SuperAdmin1",
                 'dob'=> '1999-12-20',
                 'address' => "Jalan Kuningan",
                 'gender' => "Laki-Laki",
                 'email' => "superadmin@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
-                'role_id' => 1
+                'role_id' => 1,
+                'warehouse_id' => 1
             ],
             [
                 'fullname' => "ADMIN 1",
@@ -35,7 +36,8 @@ class UserSeeder extends Seeder
                 'email' => "admin1@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
-                'role_id' => 2
+                'role_id' => 2,
+                'warehouse_id' => 1
             ],
             [
                 'fullname' => "ADMIN 2",
@@ -46,7 +48,8 @@ class UserSeeder extends Seeder
                 'email' => "admin2@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
-                'role_id' => 2
+                'role_id' => 2,
+                'warehouse_id' => 2
             ],
             [
                 'fullname' => "ADMIN 3",
@@ -57,18 +60,20 @@ class UserSeeder extends Seeder
                 'email' => "admin3@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
-                'role_id' => 2
+                'role_id' => 2,
+                'warehouse_id' => 3
             ],
             [
-                'fullname' => "Staff1",
+                'fullname' => "Staff 1",
                 'name' => "Staff1",
                 'dob'=> '1999-12-20',
                 'address' => "Jalan Kertajaya",
                 'gender' => "Perempuan",
-                'email' => "staff@gmail.com",
+                'email' => "staff1@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
-                'role_id' => 3
+                'role_id' => 3,
+                'warehouse_id' => 1
             ],
         ];
 

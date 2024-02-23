@@ -19,8 +19,11 @@ class Item extends Model
         return $this->belongsTo(Unit::class);
     }
 
-    public function supplier()
-    {
-        return $this->belongsTo(Supplier::class);
+    public function purchasing_details() {
+        return $this->belongsToMany(PurchasingNote::class)->as('purchasing_details');
+    }
+
+    public function selling_details() {
+        return $this->belongsToMany(SellingNote::class)->as('selling_details');
     }
 }

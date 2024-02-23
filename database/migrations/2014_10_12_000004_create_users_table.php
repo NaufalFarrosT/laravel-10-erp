@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('photo_url')->nullable();
 
             $table->foreignId('role_id')->constrained();
+            $table->foreignId('warehouse_id')->constrained();
 
             $table->rememberToken();
             $table->timestamps();

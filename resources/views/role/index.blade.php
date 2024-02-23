@@ -21,14 +21,6 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="modal fade" id="modal-default">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content" id="modal-content">
-
-                        </div>
-                    </div>
-                </div>
-
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Data Jabatan</h3>

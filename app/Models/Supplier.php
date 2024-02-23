@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Supplier extends Model
 {
     use HasFactory;
+
+    public function purchasing_notes() {
+        return $this->hasMany(PurchasingNote::class);
+    }
 }
