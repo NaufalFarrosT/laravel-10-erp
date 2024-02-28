@@ -6,12 +6,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Master Unit</h1>
+                        <h1>Master Satuan</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Master Unit</li>
+                            <li class="breadcrumb-item active">Master Satuan</li>
                         </ol>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
 
                 <div class="card col-6">
                     <div class="card-header">
-                        <h3 class="card-title">Data Unit</h3>
+                        <h3 class="card-title">Data Satuan</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -57,7 +57,7 @@
                             <div class="col-4">
                                 <button type="button" style="width: fit-content" class="btn btn-sm btn-success"
                                     data-toggle="modal" data-target="#modal-create">Tambah
-                                    Data Unit</button>
+                                    Data Satuan</button>
                             </div>
                         </div><br>
 
@@ -65,7 +65,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Nama Unit</th>
+                                    <th>Nama Satuan</th>
                                     <th style="width: 40%">Aksi</th>
                                 </tr>
                             </thead>

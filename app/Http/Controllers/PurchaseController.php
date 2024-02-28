@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PurchasingNote;
+use App\Models\PurchaseOrder;
 use Illuminate\Http\Request;
 
-class PurchasingNoteController extends Controller
+class PurchaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class PurchasingNoteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PurchasingNote $purchasingNote)
+    public function show(PurchaseOrder $purchaseOrder)
     {
         //
     }
@@ -42,7 +42,7 @@ class PurchasingNoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PurchasingNote $purchasingNote)
+    public function edit(PurchaseOrder $purchaseOrder)
     {
         //
     }
@@ -50,7 +50,7 @@ class PurchasingNoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PurchasingNote $purchasingNote)
+    public function update(Request $request, PurchaseOrder $purchaseOrder)
     {
         //
     }
@@ -58,7 +58,7 @@ class PurchasingNoteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PurchasingNote $purchasingNote)
+    public function destroy(PurchaseOrder $purchaseOrder)
     {
         //
     }

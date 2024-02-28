@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchase_details', function (Blueprint $table) {
+        Schema::create('sales_details', function (Blueprint $table) {
             $table->id();
             $table->integer('qty');
             $table->integer('price');
@@ -19,9 +19,9 @@ return new class extends Migration
             $table->integer('total_price');
 
             $table->foreignId('item_id')->constrained();
-            $table->foreignId('purchase_order_id')->constrained();
+            $table->foreignId('sales_order_id')->constrained();
             $table->foreignId('warehouse_id')->constrained();
-
+            
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchase_details');
+        Schema::dropIfExists('selling_details');
     }
 };

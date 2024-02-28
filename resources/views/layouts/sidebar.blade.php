@@ -79,6 +79,87 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-folder-plus nav-icon"></i>
+                        <p>
+                            Pembelian
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="../UI/general.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pesanan Pembelian</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../UI/icons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Penerimaan Barang</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../UI/icons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Faktur Pembelian</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../UI/icons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pembayaran Pembelian</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cart-plus nav-icon"></i>
+                        <p>
+                            Penjualan
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="../UI/icons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pesanan Penjualan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../UI/buttons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Faktur Penjualan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../UI/icons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Penerimaan Penjualan</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item" style="border-bottom: 1px solid #4f5962">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-folder nav-icon"></i>
+                        <p>
+                            Persediaan
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="../UI/general.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pindah Persediaan</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item mt-2">
                     <form id="logout" action="{{ route('logout') }}" method="POST" class="nav-link">
                         @csrf

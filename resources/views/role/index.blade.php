@@ -73,7 +73,7 @@
                                         <td>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-primary"
                                                 id="btnShow"
-                                                onclick="showAllUserBasedOnRole({{ $role->id }})">Detil</button>
+                                                onclick="show({{ $role->id }})">Detil</button>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-warning"
                                                 onclick="editRoleData({{ $role->id }})">Ubah</button>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-danger"
@@ -102,7 +102,7 @@
 
 @section('javascript-function')
     <script>
-        function storeRoleData() {
+        function storeData() {
             var name = $("#inputName").val();
             var numberOfRow = $(".table-bordered tr").length - 0;
 
@@ -120,7 +120,7 @@
                         "<td id='td_name_" + data.data.id +
                         "'>" + name + "</td>" +
                         "<td>0</td>" +
-                        "<td><button type='button' style='width: 60px' class='btn btn-sm btn-primary' id='btnShow' onclick='showAllUserBasedOnRole(" +
+                        "<td><button type='button' style='width: 60px' class='btn btn-sm btn-primary' id='btnShow' onclick='show(" +
                         data.data.id + ")'>Detil</button>" +
                         "<button type='button' style='width: 60px' class='btn btn-sm btn-warning' onclick='editRoleData(" +
                         data.data.id + ")'>Ubah</button>" +
@@ -137,7 +137,7 @@
             });
         }
 
-        function editRoleData(id) {
+        function editData(id) {
             $.ajax({
                 type: "GET",
                 url: `role/${id}/edit`,
@@ -151,7 +151,7 @@
             });
         }
 
-        function saveRoleDataUpdateTD(id) {
+        function saveDataUpdateTD(id) {
             var eName = $("#eName").val();
             $.ajax({
                 type: "PUT",
@@ -185,7 +185,7 @@
             });
         }
 
-        function deleteRoleDataRemoveTR(id) {
+        function deleteDataRemoveTR(id) {
             $.ajax({
                 type: "DELETE",
                 url: `role/${id}`,
@@ -203,7 +203,7 @@
             });
         }
 
-        function showAllUserBasedOnRole(id) {
+        function show(id) {
             $.ajax({
                 type: "GET",
                 url: `role/${id}`,

@@ -41,7 +41,6 @@ class ItemController extends Controller
         $item->name = $request->get('name');
         $item->price = $request->get('price');
         $item->stock = $request->get('stock');
-        $item->supplier_id = $request->get('supplier_id');
         $item->unit_id = $request->get('unit_id');
         $item->category_id = $request->get('category_id');
         $item->save();

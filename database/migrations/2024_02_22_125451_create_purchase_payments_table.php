@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('selling_notes', function (Blueprint $table) {
+        Schema::create('purchase_payments', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('date');
-            $table->integer('total_price');
+            $table->date('date');
+            $table->integer('amount');
 
+            $table->foreignId('purchase_invoice_id')->constrained();
+            $table->foreignId('account_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('customer_id')->constrained();
-
+            
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('selling_notes');
+        Schema::dropIfExists('purchasing_payments');
     }
 };

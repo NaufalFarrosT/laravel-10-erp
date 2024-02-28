@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SellingNote;
+use App\Models\SalesOrder;
 use Illuminate\Http\Request;
 
-class SellingNoteController extends Controller
+class SalesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class SellingNoteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SellingNote $sellingNote)
+    public function show(SalesOrder $salesOrder)
     {
         //
     }
@@ -42,7 +42,7 @@ class SellingNoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SellingNote $sellingNote)
+    public function edit(SalesOrder $salesOrder)
     {
         //
     }
@@ -50,7 +50,7 @@ class SellingNoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SellingNote $sellingNote)
+    public function update(Request $request, SalesOrder $salesOrder)
     {
         //
     }
@@ -58,7 +58,7 @@ class SellingNoteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SellingNote $sellingNote)
+    public function destroy(SalesOrder $salesOrder)
     {
         //
     }
