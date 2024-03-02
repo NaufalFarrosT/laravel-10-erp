@@ -12,7 +12,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        //
+        return view('purchase.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        //
+        return view('purchase.purchase_order.create');
     }
 
     /**
