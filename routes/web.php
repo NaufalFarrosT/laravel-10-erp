@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/role/{id}/DeleteConfirmation', [RoleController::class, 'deleteConfirmation'])->name('role.deleteConfirmation');
 
     Route::resource('/purchase', PurchaseController::class);
+    Route::get('/purchase/create/autocomplete', [PurchaseController::class, 'autoComplete'])->name('autocomplete');
     Route::get('/purchase/{id}/DeleteConfirmation', [PurchaseController::class, 'deleteConfirmation'])->name('purchase.deleteConfirmation');
 });
 

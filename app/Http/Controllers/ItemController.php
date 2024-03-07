@@ -66,10 +66,13 @@ class ItemController extends Controller
     public function edit($id)
     {
         $item = Item::find($id);
+
         $units = Unit::all();
         $suppliers = Supplier::all();
+        $categories = Category::all();
 
-        return view('item.edit', ['item' => $item,'suppliers' => $suppliers,'units' => $units]);
+
+        return view('item.edit', ['item' => $item,'suppliers' => $suppliers,'units' => $units,'categories' => $categories]);
     }
 
     /**

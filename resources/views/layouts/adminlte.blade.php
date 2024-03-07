@@ -34,6 +34,10 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
+
+    <!-- jQuery UI 1.11.4 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/jquery-ui/jquery-ui.css') }}">
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -110,8 +114,9 @@
     <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
     <!-- date-range-picker -->
     <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    @yield('javascript-function')
     
+    @yield('javascript-function')
+
     <script>
         function showUser(id) {
             $.ajax({

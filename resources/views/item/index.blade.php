@@ -47,10 +47,6 @@
                         </div>
                     </div>
 
-                    <!-- Modal Start -->
-                    @include('role/modal-create')
-                    <!-- Modal End -->
-
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
@@ -86,7 +82,7 @@
                                                 id="btnShow"
                                                 onclick="showData({{ $item->id }})">Detil</button>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-warning"
-                                                onclick="editData({{ $item->id }})">Ubah</button>
+                                                onclick="location.href='{{ route('item.edit', $item->id) }}'">Ubah</button>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-danger"
                                                 onclick="deleteConfirmation({{ $item->id }})">Hapus</button>
                                         </td>
@@ -113,42 +109,7 @@
 
 @section('javascript-function')
     <script>
-        function storeRoleData() {
-            var name = $("#inputName").val();
-            var numberOfRow = $(".table-bordered tr").length - 0;
-
-            $.ajax({
-                type: "POST",
-                url: `item`,
-                data: {
-                    _token: "<?php echo csrf_token(); ?>",
-                    name: name
-                },
-                success: function(data) {
-                    toastr.success(data.msg);
-                    var tr = "<tr id='tr_" + data.data.id + "'>" +
-                        "<td>" + numberOfRow + "</td>" +
-                        "<td id='td_name_" + data.data.id +
-                        "'>" + name + "</td>" +
-                        "<td>0</td>" +
-                        "<td><button type='button' style='width: 60px' class='btn btn-sm btn-primary' id='btnShow' onclick='showItem(" +
-                        data.data.id + ")'>Detil</button>" +
-                        "<button type='button' style='width: 60px' class='btn btn-sm btn-warning' onclick='editRoleData(" +
-                        data.data.id + ")'>Ubah</button>" +
-                        "<button type='button' style='width: 60px' class='btn btn-sm btn-danger' onclick='deleteConfirmation(" +
-                        data.data.id + ")'>Hapus</button>" +
-                        "</td></tr>";
-
-                    $('.table-bordered tbody').append(tr);
-                    $('#inputName').val("");
-                },
-                error: function(xhr) {
-                    console.log((xhr.responseJSON.errors));
-                }
-            });
-        }
-
-        function editRoleData(id) {
+        function editItemData(id) {
             $.ajax({
                 type: "GET",
                 url: `item/${id}/edit`,
