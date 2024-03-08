@@ -29,7 +29,7 @@ class ItemController extends Controller
         $suppliers = Supplier::all();
         $categories = Category::all();
 
-        return view('item.create', ['suppliers' => $suppliers,'units' => $units,'categories' => $categories]);
+        return view('item.create', ['units' => $units, 'categories' => $categories]);
     }
 
     /**
@@ -68,11 +68,10 @@ class ItemController extends Controller
         $item = Item::find($id);
 
         $units = Unit::all();
-        $suppliers = Supplier::all();
         $categories = Category::all();
 
 
-        return view('item.edit', ['item' => $item,'suppliers' => $suppliers,'units' => $units,'categories' => $categories]);
+        return view('item.edit', ['item' => $item, 'units' => $units, 'categories' => $categories]);
     }
 
     /**
@@ -80,16 +79,15 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = new Item();
+        $item = Item::find($id);
         $item->name = $request->get('name');
         $item->price = $request->get('price');
         $item->stock = $request->get('stock');
-        $item->supplier_id = $request->get('supplier_id');
         $item->unit_id = $request->get('unit_id');
+        $item->category_id = $request->get('category_id');
         $item->save();
 
         return redirect()->route('item.index')->with('Success', 'BERHASIL MEMPERBARUI DATA ITEM');
-
     }
 
     /**

@@ -22,7 +22,7 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="modal fade" id="modal-default">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                         <div class="modal-content" id="modal-content">
 
                         </div>
@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="col-4">
                                 <a href="{{ route('item.create') }}" style="width: fit-content"
-                                class="btn btn-sm btn-success">Tambah Data Item</a>
+                                    class="btn btn-sm btn-success">Tambah Data Item</a>
                             </div>
                         </div><br>
 
@@ -79,12 +79,11 @@
                                         </td>
                                         <td>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-primary"
-                                                id="btnShow"
-                                                onclick="showData({{ $item->id }})">Detil</button>
+                                                id="btnShow" onclick="showData({{ $item->id }})">Detil</button>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-warning"
                                                 onclick="location.href='{{ route('item.edit', $item->id) }}'">Ubah</button>
                                             <button type="button" style="width: 60px" class="btn btn-sm btn-danger"
-                                                onclick="deleteConfirmation({{ $item->id }})">Hapus</button>
+                                                onclick="deleteItemConfirmation({{ $item->id }})">Hapus</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -109,40 +108,7 @@
 
 @section('javascript-function')
     <script>
-        function editItemData(id) {
-            $.ajax({
-                type: "GET",
-                url: `item/${id}/edit`,
-                success: function(data) {
-                    $("#modal-content").html(data.msg);
-                    $("#modal-default").modal('show');
-                },
-                error: function(err) {
-                    alert(err);
-                },
-            });
-        }
-
-        function saveRoleDataUpdateTD(id) {
-            var eName = $("#eName").val();
-            $.ajax({
-                type: "PUT",
-                url: `item/${id}`,
-                data: {
-                    _token: "<?php echo csrf_token(); ?>",
-                    name: eName
-                },
-                success: function(data) {
-                    $("#td_name_" + id).html(eName);
-                    toastr.success(data.msg);
-                },
-                error: function(err) {
-                    alert(err);
-                },
-            });
-        }
-
-        function deleteConfirmation(id) {
+        function deleteItemConfirmation(id) {
             $.ajax({
                 type: "GET",
                 url: `item/${id}/DeleteConfirmation`,
@@ -157,10 +123,10 @@
             });
         }
 
-        function deleteRoleDataRemoveTR(id) {
+        function deleteItemDataRemoveTR(id) {
             $.ajax({
                 type: "DELETE",
-                url:  `item/${id}`,
+                url: `item/${id}`,
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
                 },
