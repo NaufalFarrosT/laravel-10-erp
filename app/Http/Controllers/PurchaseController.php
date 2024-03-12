@@ -66,10 +66,10 @@ class PurchaseController extends Controller
 
     public function autoComplete(Request $request)
     {
-        $data = Item::select("name as value", "id")
-                    ->where('name', 'LIKE', '%'. $request->get('search'). '%')
-                    ->get();
-    
+    $data = Item::select("id", "name as value", "price", "stock")
+            ->where('name', 'LIKE', '%' . $request->get('search') . '%')
+            ->get();
+
         return response()->json($data);
     }
 }

@@ -46,8 +46,9 @@
                                 <tr>
                                     <th style="width: 10px">#</th>
                                     <th>Nama Item</th>
-                                    <th>Stok</th>
-                                    <th style="">Satuan</th>
+                                    <th>Harga</th>
+                                    <th>Jumlah</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,6 +86,7 @@
         });
 
         var path = "{{ route('autocomplete') }}";
+        var numberOfRow = $(".table-bordered tr").length - 0;
 
         $("#search").autocomplete({
             source: function(request, response) {
@@ -101,16 +103,19 @@
                 });
             },
             select: function(event, ui) {
-                $('#search').val(ui.item.label);
+                $('#search').val("");
                 console.log(ui.item);
 
-                var tr = "<tr id='tr_" + data.data.id + "'>" +
+                var tr = "<tr id='tr_" + ui.item.id + "'>" +
                     "<td>" + numberOfRow + "</td>" +
-                    "<td id='td_name_" + data.data.id +
-                    "'>" + name + "</td>" +
-                    "<td>0</td>" +
+                    "<td id='td_name_" + ui.item.id +
+                    "'>" + ui.item.value + "</td>" +
+                    "<td><input type='number' name='quantity[]' id='quantity'" +
+                    "min='1' class='form-control' value='1'required/></td>" +
+                    "<td><input type='number' name='price[]' id='price'" +
+                    "min='1' class='form-control' value='1'required/></td>" +
                     "<td><button type='button' style='width: 60px' class='btn btn-sm btn-danger' onclick='deleteConfirmation(" +
-                    data.data.id + ")'>Hapus</button>" +
+                    ui.item.id + ")'>Hapus</button>" +
                     "</td></tr>";
 
                 $('.table-bordered tbody').append(tr);
