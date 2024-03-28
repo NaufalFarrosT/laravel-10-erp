@@ -119,4 +119,13 @@ class ItemController extends Controller
             'msg' => view('item.modal-deleteConfirmation', compact('item'))->render()
         ), 200);
     }
+
+    public function autoCompleteItem(Request $request)
+    {
+        $data = Item::select("id", "name as value", "price", "stock")
+            ->where('name', 'LIKE', '%' . $request->get('search') . '%')
+            ->get();
+
+        return response()->json($data);
+    }
 }

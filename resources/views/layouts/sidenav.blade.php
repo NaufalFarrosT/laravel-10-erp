@@ -89,9 +89,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
+                            <a href="{{route('purchase.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Data Pembelian</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route('purchase.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Pesanan Pembelian</p>
+                                <p>Buat Pesanan Pembelian</p>
                             </a>
                         </li>
                         <li class="nav-item">

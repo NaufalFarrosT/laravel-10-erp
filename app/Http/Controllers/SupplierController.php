@@ -111,4 +111,13 @@ class SupplierController extends Controller
             'msg' => view('supplier.modal-deleteConfirmation', compact('supplier'))->render()
         ), 200);
     }
+
+    public function autoCompleteSupplier(Request $request)
+    {
+        $data = Supplier::select("id", "name as value")
+            ->where('name', 'LIKE', '%' . $request->get('search') . '%')
+            ->get();
+
+        return response()->json($data);
+    }
 }

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\PurchaseDetail;
 use App\Models\PurchaseOrder;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -13,7 +15,9 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        return view('purchase.index');
+        $purchase_orders = PurchaseOrder::all();
+
+        return view('purchase.index',['purchase_orders' => $purchase_orders]);
     }
 
     /**
@@ -35,9 +39,14 @@ class PurchaseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PurchaseOrder $purchaseOrder)
+    public function show($purchase_id)
     {
-        //
+        $purchase_order = PurchaseOrder::find($purchase_id);
+
+        return view(
+            'purchase.purchase_order.detail',
+            ['purchase_order' => $purchase_order]
+        );
     }
 
     /**
@@ -64,12 +73,27 @@ class PurchaseController extends Controller
         //
     }
 
-    public function autoComplete(Request $request)
+    public function storePurchaseDetail(Request $request)
     {
-    $data = Item::select("id", "name as value", "price", "stock")
-            ->where('name', 'LIKE', '%' . $request->get('search') . '%')
-            ->get();
+        // dd($request);
+        $purchase_order = new PurchaseOrder();
+        $purchase_order->date = $request->get('datePicker');
+        $purchase_order->total_price = $request->get('total');
+        $purchase_order->supplier_id = $request->get('supplier_id');
+        $purchase_order->save();
+        // dd($purchase_order->id);
 
-        return response()->json($data);
+        for ($i = 0; $i < count($request->get('itemId')); $i++) {
+            $data = new PurchaseDetail();
+            $data->qty = $request->get('quantity')[$i];
+            $data->price = intval(str_replace('.', '', $request->get('price')[$i]));
+            $data->discount = intval(str_replace('.', '', $request->get('discount')[$i]));
+            $data->total_price = $request->get('total_price_per_item')[$i];
+            $data->item_id = $request->get('itemId')[$i];
+            $data->purchase_order_id = $purchase_order->id;
+            $data->save();
+        }
+
+        return redirect()->route('purchase.show', $purchase_order->id);
     }
 }

@@ -41,9 +41,11 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/item', ItemController::class);
     Route::get('/item/{id}/DeleteConfirmation', [ItemController::class, 'deleteConfirmation'])->name('item.deleteConfirmation');
+    Route::get('/item/autocomplete', [ItemController::class, 'autoCompleteItem'])->name('item.autocomplete');
 
     Route::resource('/supplier', SupplierController::class);
     Route::get('/supplier/{id}/DeleteConfirmation', [SupplierController::class, 'deleteConfirmation'])->name('supplier.deleteConfirmation');
+    Route::get('/supplier/autocomplete', [SupplierController::class, 'autoCompleteSupplier'])->name('supplier.autocomplete');
     
     Route::resource('/unit', UnitController::class);
     Route::get('/unit/{id}/DeleteConfirmation', [UnitController::class, 'deleteConfirmation'])->name('unit.deleteConfirmation');
@@ -55,8 +57,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/role/{id}/DeleteConfirmation', [RoleController::class, 'deleteConfirmation'])->name('role.deleteConfirmation');
 
     Route::resource('/purchase', PurchaseController::class);
-    Route::get('/purchase/create/autocomplete', [PurchaseController::class, 'autoComplete'])->name('autocomplete');
+    Route::post('/purchase/detail', [PurchaseController::class, 'storePurchaseDetail'])->name('purchase.detail.store');
     Route::get('/purchase/{id}/DeleteConfirmation', [PurchaseController::class, 'deleteConfirmation'])->name('purchase.deleteConfirmation');
+    Route::get('/purchase/create//item/autocomplete', [ItemController::class, 'autoCompleteItem'])->name('purchase.item.autocomplete');
+    Route::get('/purchase/create/supplier/autocomplete', [SupplierController::class, 'autoCompleteSupplier'])->name('purchase.supplier.autocomplete');
 });
 
 require __DIR__ . '/auth.php';

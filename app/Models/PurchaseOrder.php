@@ -9,8 +9,8 @@ class PurchaseOrder extends Model
 {
     use HasFactory;
 
-    public function purchasing_details() {
-        return $this->belongsToMany(Item::class)->as('purchasing_details');
+    public function purchase_details() {
+        return $this->hasMany(PurchaseDetail::class);
     }
 
     public function supplier()

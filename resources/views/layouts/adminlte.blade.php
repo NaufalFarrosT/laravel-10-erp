@@ -54,7 +54,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        @include('layouts.sidebar')
+        @include('layouts.sidenav')
 
         <!-- Content Wrapper. Contains page content -->
         @yield('content')
