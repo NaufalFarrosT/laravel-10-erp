@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Detil Data Pemesanan Pembelian</h1>
+                        <h1>Data Pemesanan Pembelian</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -27,7 +27,7 @@
                         <h3 class="card-title">Data Pembelian</h3>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <div class="row justify-content-between">
                             <div class="col-md-6 mb-2 p-0">
                                 <div class="input-group">
@@ -59,9 +59,9 @@
                                     <th style="width: 5%">#</th>
                                     <th>ID</th>
                                     <th>Tanggal</th>
-                                    <th>Jumlah</th>
+                                    <th>Total Biaya</th>
                                     <th>Pemasok</th>
-                                    <th></th>
+                                    <th style="width: 5%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,15 +73,17 @@
                                             {{ $po->date }}
                                         </td>
                                         <td>
-                                            {{ $po->total_price }}
+                                            @php
+                                                echo "Rp " . number_format( $po->total_price , 0, ",", ".");
+                                            @endphp
                                         </td>
                                         <td>
                                             {{ $po->supplier->name }}
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-success ml-0 mr-0"
+                                            <a href="{{route('purchase.show', $po->id)}}" class="btn btn-sm btn-info ml-0 mr-0"
                                             id="btnShow"
-                                            onclick="">Terima Barang</button>
+                                            onclick="">Detil</button>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -17,7 +17,7 @@ class PurchaseController extends Controller
     {
         $purchase_orders = PurchaseOrder::all();
 
-        return view('purchase.index',['purchase_orders' => $purchase_orders]);
+        return view('purchase.index', ['purchase_orders' => $purchase_orders]);
     }
 
     /**
@@ -95,5 +95,15 @@ class PurchaseController extends Controller
         }
 
         return redirect()->route('purchase.show', $purchase_order->id);
+    }
+
+    public function createItemReceive($purchase_id)
+    {
+        $purchase_order = PurchaseOrder::find($purchase_id);
+
+        return view(
+            'purchase.item_receive',
+            ['purchase_order' => $purchase_order]
+        );
     }
 }

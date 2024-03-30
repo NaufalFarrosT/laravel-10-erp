@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/purchase/{id}/DeleteConfirmation', [PurchaseController::class, 'deleteConfirmation'])->name('purchase.deleteConfirmation');
     Route::get('/purchase/create//item/autocomplete', [ItemController::class, 'autoCompleteItem'])->name('purchase.item.autocomplete');
     Route::get('/purchase/create/supplier/autocomplete', [SupplierController::class, 'autoCompleteSupplier'])->name('purchase.supplier.autocomplete');
+    Route::get('/purchase/item-receive/{id}', [PurchaseController::class, 'createItemReceive'])->name('purchase.createItemReceive');
 });
 
 require __DIR__ . '/auth.php';
