@@ -33,7 +33,8 @@
                         @csrf
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="fullname" class="col-sm-2 col-form-label">Nama Lengkap</label>
+                                <label for="fullname"
+                                 class="col-sm-2 col-form-label">Nama Lengkap</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="fullname" name="fullname"
                                         placeholder="Nama Lengkap" required>

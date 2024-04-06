@@ -27,7 +27,7 @@
                         <h3 class="card-title">Data Pembelian</h3>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body table-responsive">
+                    <div class="card-body pb-0">
                         <div class="row justify-content-between">
                             <div class="col-md-6 mb-2 p-0">
                                 <div class="input-group">
@@ -53,42 +53,45 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%">#</th>
-                                    <th>ID</th>
-                                    <th>Tanggal</th>
-                                    <th>Total Biaya</th>
-                                    <th>Pemasok</th>
-                                    <th style="width: 5%"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($purchase_orders as $po)
-                                    <tr id="tr_{{ $po->id }}">
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td id="td_id_{{ $po->id }}">{{ $po->id }}</td>
-                                        <td>
-                                            {{ $po->date }}
-                                        </td>
-                                        <td>
-                                            @php
-                                                echo "Rp " . number_format( $po->total_price , 0, ",", ".");
-                                            @endphp
-                                        </td>
-                                        <td>
-                                            {{ $po->supplier->name }}
-                                        </td>
-                                        <td>
-                                            <a href="{{route('purchase.show', $po->id)}}" class="btn btn-sm btn-info ml-0 mr-0"
-                                            id="btnShow"
-                                            onclick="">Detil</button>
-                                        </td>
+                        <div class="row table-responsive p-0">
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%">#</th>
+                                        <th>ID</th>
+                                        <th>Tanggal</th>
+                                        <th>Total Biaya</th>
+                                        <th>Pemasok</th>
+                                        <th style="width: 5%"></th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($purchase_orders as $po)
+                                        <tr id="tr_{{ $po->id }}">
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td id="td_id_{{ $po->id }}">{{ $po->id }}</td>
+                                            <td>
+                                                {{ $po->date }}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    echo 'Rp ' . number_format($po->total_price, 0, ',', '.');
+                                                @endphp
+                                            </td>
+                                            <td>
+                                                {{ $po->supplier->name }}
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('purchase.show', $po->id) }}"
+                                                    class="btn btn-sm btn-info ml-0 mr-0" id="btnShow"
+                                                    onclick="">Detil</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">

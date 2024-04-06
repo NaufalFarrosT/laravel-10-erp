@@ -21,6 +21,14 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+                <div class="modal fade" id="modal-default">
+                    <div class="modal-dialog">
+                        <div class="modal-content" id="modal-content">
+
+                        </div>
+                    </div>
+                </div>
+
                 <!-- form start -->
                 <div class="form-group row mb-0">
                     <label for="supplier" class="col-sm-1 col-form-label">Pemasok</label>
@@ -58,7 +66,7 @@
                     <!-- /.card-header -->
                     <div class="card-body pb-0">
                         <div class="row table-responsive p-0">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered text-nowrap">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">#</th>
@@ -115,36 +123,59 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body pb-0">
-                                    <div class="row">
-                                        <a href="{{ route('purchase.createItemReceive', $purchase_order->id) }}" style="width: fit-content"
-                                            class="btn btn-sm btn-success">Tambah Data Penerimaan Barang</a>
-                                    </div><br>
+
+                                    <div id="item_receive_action">
+                                        @if ($purchase_order->item_receive_status == 'SEMUA')
+                                            <div class="row">
+                                                <label for="">! Semua barang sudah diterima</label>
+                                            </div>
+                                        @else
+                                            <div class="row">
+                                                <a href="{{ route('purchase.createItemReceive', $purchase_order->id) }}"
+                                                    style="width: fit-content" class="btn btn-sm btn-success">
+                                                    Tambah Data Penerimaan Barang
+                                                </a>
+                                            </div><br>
+                                        @endif
+                                    </div>
+
                                     <div class="row table-responsive p-0">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered text-nowrap">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 10px">#</th>
                                                     <th>Tanggal</th>
-                                                    <th>Kode Penerimaan Barang</th>
+                                                    <th>Kode</th>
                                                     <th>Detail Item</th>
                                                     <th>Gudang</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($purchase_order->purchase_details as $pd)
-                                                    <tr id="tr_{{ $pd->id }}">
+                                                @foreach ($purchase_order->item_receives as $ir)
+                                                    <tr id="tr_item_receive_{{ $ir->id }}">
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td id="td_name_{{ $pd->id }}">{{ $pd->item->name }}</td>
+                                                        <td id="td_date_{{ $ir->id }}">{{ $ir->date }}</td>
                                                         <td>
-                                                            @php
-                                                                echo 'Rp ' . number_format($pd->price, 0, ',', '.');
-                                                            @endphp
+                                                            {{ $ir->id }}
                                                         </td>
                                                         <td>
-                                                            {{ $pd->qty }} {{ $pd->item->unit->name }}
+                                                            @foreach ($ir->itemReceiveDetails as $ir_detail)
+                                                                {{ $ir_detail->qty }} -
+                                                                {{ $ir_detail->purchaseDetail->item->name }} </br>
+                                                            @endforeach
                                                         </td>
                                                         <td>
-                                                            {{ $pd->qty }} {{ $pd->item->unit->name }}
+                                                            {{ $ir->warehouse->name }}
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex justify-content-center">
+                                                                <a href="" class="btn btn-sm btn-warning mr-2"><i
+                                                                        class="fas fa-edit"></i></a>
+                                                                <button class="btn btn-sm btn-danger"
+                                                                    onclick="deleteConfirmationItemReceive({{ $ir->id }})"><i
+                                                                        class="fas fa-trash-alt"></i></button>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -212,4 +243,41 @@
             </div>
         </section>
     </div>
+@endsection
+
+@section('javascript-function')
+    <script>
+        function deleteConfirmationItemReceive(id) {
+            $.ajax({
+                type: "GET",
+                url: `/purchase/item-receive-delete-confirmation/${id}`,
+                success: function(data) {
+                    $("#modal-content").html(data.msg);
+                    $("#modal-default").modal('show');
+                },
+                error: function(xhr) {
+                    console.log((xhr.responseJSON.errors));
+                    alert('Error');
+                }
+            });
+        }
+
+        function deleteDataRemoveTR(id, route, tableName) {
+            $.ajax({
+                type: "DELETE",
+                url: `/purchase/item-receive/${id}`,
+                data: {
+                    _token: "<?php echo csrf_token(); ?>",
+                },
+                success: function(data) {
+                    if (data.status == "Success") {
+                        $("#tr_" + tableName + "_" + id).remove();
+                        toastr.success(data.msg);
+                    } else {
+                        alert(data.msg);
+                    }
+                },
+            });
+        }
+    </script>
 @endsection

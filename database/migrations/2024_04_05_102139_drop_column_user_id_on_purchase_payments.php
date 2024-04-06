@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('suppliers', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('address');
-
-            $table->softDeletes();
-            $table->timestamps();
+        Schema::table('purchase_payments', function (Blueprint $table) {
+            //
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('suppliers');
+        Schema::table('purchase_payments', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchase_payments', function (Blueprint $table) {
+        Schema::create('item_receive_details', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->integer('amount');
+            $table->integer('qty');
 
-            $table->foreignId('purchase_invoice_id')->constrained();
-            $table->foreignId('account_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            
+            $table->foreignId('purchase_detail_id')->constrained();
+            $table->foreignId('item_receive_id')->constrained();
+
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchasing_payments');
+        Schema::dropIfExists('item_receive_details');
     }
 };

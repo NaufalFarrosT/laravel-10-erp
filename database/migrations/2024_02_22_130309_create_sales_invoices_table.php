@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('sales_invoices', function (Blueprint $table) {
             $table->id();
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

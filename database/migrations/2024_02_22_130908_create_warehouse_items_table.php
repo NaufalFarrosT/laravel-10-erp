@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('item_id')->constrained();
             $table->foreignId('warehouse_id')->constrained();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -40,13 +40,13 @@
                                             placeholder="Nama Item" required>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                {{-- <div class="form-group row">
                                     <label for="fullname" class="col-sm-2 col-form-label">Stok</label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control col-sm-2" id="stock" name="stock"
                                             placeholder="Jumlah Stok" min="0" required>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group row">
                                     <label for="fullname" class="col-sm-2 col-form-label">Harga</label>

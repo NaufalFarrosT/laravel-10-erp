@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UnitSeeder::class,
             SupplierSeeder::class,
             AccountSeeder::class,
+            ItemSeeder::class,
         ]);
     }
 }

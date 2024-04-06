@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained();
             $table->foreignId('unit_id')->constrained();
             
+            $table->softDeletes();
             $table->timestamps();
         });
     }

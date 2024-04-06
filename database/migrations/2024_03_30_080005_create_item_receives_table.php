@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('item_receives', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->integer('qty');
 
             $table->foreignId('warehouse_id')->constrained();
-            $table->foreignId('purchase_detail_id')->constrained();
+            $table->foreignId('purchase_order_id')->constrained();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

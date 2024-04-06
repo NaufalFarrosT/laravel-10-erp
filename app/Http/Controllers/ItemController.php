@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\ItemWarehouse;
 use App\Models\Supplier;
 use App\Models\Unit;
+use App\Models\Warehouse;
+use App\Models\WarehouseItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -40,10 +44,22 @@ class ItemController extends Controller
         $item = new Item();
         $item->name = $request->get('name');
         $item->price = $request->get('price');
-        $item->stock = $request->get('stock');
+        $item->stock = 0;
+        // $item->stock = $request->get('stock');
         $item->unit_id = $request->get('unit_id');
         $item->category_id = $request->get('category_id');
         $item->save();
+
+        // Create Item Data on each Warehouse
+        $warehouses = Warehouse::all();
+        foreach($warehouses as $warehouse){
+            $warehouse_item = new WarehouseItem();
+            $warehouse_item->item_id = $item->id;
+            $warehouse_item->warehouse_id = $warehouse->id;
+            $warehouse_item->stock = 0;
+
+            $warehouse_item->save();
+        }
 
         return redirect()->route('item.index')->with('Success', 'BERHASIL MENAMBAHKAN DATA ITEM');
     }
@@ -122,8 +138,15 @@ class ItemController extends Controller
 
     public function autoCompleteItem(Request $request)
     {
-        $data = Item::select("id", "name as value", "price", "stock")
-            ->where('name', 'LIKE', '%' . $request->get('search') . '%')
+        // $data = DB::table("items")
+        //     ->join('units', 'items.unit_id', '=', 'units.id')
+        //     ->select("items.id", DB::raw("CONCAT(items.name,  '-' , units.name) as value"), "items.price", "items.stock")
+        //     ->where('items.name', 'LIKE', '%' . $request->get('search') . '%')
+        //     ->get();
+
+        $data = Item::select("items.id", DB::raw("CONCAT(items.name, ' - ', units.name) as value"), "items.price", "items.stock")
+            ->join('units', 'items.unit_id', '=', 'units.id')
+            ->where('items.name', 'LIKE', '%' . $request->get('search') . '%')
             ->get();
 
         return response()->json($data);

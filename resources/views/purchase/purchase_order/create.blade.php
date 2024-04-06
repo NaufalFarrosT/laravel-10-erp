@@ -23,7 +23,7 @@
             <div class="container-fluid">
                 <!-- form start -->
                 <form class="form-horizontal" id="purchase_detail" name="purchase_detail" method="POST"
-                    action="{{ route('purchase.detail.store') }}">
+                    action="{{ route('purchase.store') }}">
                     @csrf
                     <div class="p-1">
                         <div class="form-group row">
@@ -31,7 +31,7 @@
                             <div class="col-sm-3">
                                 <input type="search" class="typeahead form-control input-medium" id="supplier_search"
                                     name="supplier_search" placeholder="Cari Pemasok">
-                                <input type="hidden" id="supplier_id" name="supplier_id" >
+                                <input type="hidden" id="supplier_id" name="supplier_id">
                             </div>
                         </div>
 
@@ -146,32 +146,32 @@
         // Count total price after keyup or click
         $(".addMoreItem").delegate(".quantity, .price, .discount", "keyup click", function() {
             let tr = $(this).parent().parent();
-            
+
             // Price
             let price = tr.find('.price');
             let priceValue = changeNumberWithThousandSeparator(price.val())
             price.val(function() {
-                return (priceValue === 0) 
-                ?"0" 
-                :priceValue.toLocaleString("id-ID");
+                return (priceValue === 0) ?
+                    "0" :
+                    priceValue.toLocaleString("id-ID");
             })
-            
+
             // Quantity
             let qty = tr.find('.quantity');
             let qtyValue = changeNumberWithThousandSeparator(qty.val())
             qty.val(function() {
-                return (qtyValue === 0) 
-                ?"" 
-                    :qtyValue.toLocaleString("id-ID");
+                return (qtyValue === 0) ?
+                    "" :
+                    qtyValue.toLocaleString("id-ID");
             })
 
             // Discount
             let discount = tr.find('.discount');
             let discountValue = changeNumberWithThousandSeparator(discount.val())
             discount.val(function() {
-                return (discountValue === 0) 
-                    ?"0" 
-                    :discountValue.toLocaleString("id-ID");
+                return (discountValue === 0) ?
+                    "0" :
+                    discountValue.toLocaleString("id-ID");
             })
 
             // Total Price per Item
@@ -180,9 +180,9 @@
             tr.find('#total_price_per_item').val(totalPriceValue);
 
             displayTotalPrice.text(function() {
-                return (totalPriceValue === 0) 
-                    ?"" 
-                    : totalPriceValue.toLocaleString();
+                return (totalPriceValue === 0) ?
+                    "" :
+                    totalPriceValue.toLocaleString();
             })
 
             // $('#test').text(totalPriceValue.toLocaleString());
@@ -226,6 +226,7 @@
                         search: request.term
                     },
                     success: function(data) {
+                        console.log(data)
                         response(data);
                     }
                 });
@@ -242,9 +243,13 @@
                     ui.item.value + "</td>" +
 
                     "<td>" +
-                    "<input type='number' name='price[]' id='price'" +
-                    "min='1' class='form-control price' value=" + ui.item.price +
-                    " readonly/>" +
+                    "<label id='display_price_per_item' name='display_price_per_item' class='form-control'>" +
+                    ui.item.price.toLocaleString() + "</label>" +
+                    "<input type='hidden' class='price' id='price' name='price[]' value=" + ui
+                    .item.price + "></td>"+
+                    // "<input type='number' name='price[]' id='price'" +
+                    // "min='1' class='form-control price' value=" + ui.item.price +
+                    // " readonly/>" +
                     "</td>" +
 
                     "<td>" +
