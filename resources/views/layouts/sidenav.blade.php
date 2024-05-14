@@ -28,7 +28,6 @@
                 <li class="nav-item" style="border-bottom: 1px solid #4f5962">
                     <a href="#" class="nav-link">
                         <i class="far fa fa-database nav-icon"></i>
-
                         <p>
                             Master
                             <i class="fas fa-angle-left right"></i>
@@ -95,9 +94,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('sale.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Transaksi</p>
+                                <p>Penjualan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('purchase.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pembelian</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -116,13 +121,13 @@
                 </li>
                 <li class="nav-header">Transaksi</li>
                 <li class="nav-item">
-                    <a href="{{ route('purchase.index') }}" class="nav-link">
+                    <a href="{{ route('purchase.create') }}" class="nav-link">
                         <i class="fas fa-folder-plus nav-icon"></i>
                         <p>Pembelian</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('sale.index') }}" class="nav-link">
+                    <a href="{{ route('sale.create') }}" class="nav-link">
                         <i class="fas fa-cart-plus nav-icon"></i>
                         <p>Penjualan</p>
                     </a>
