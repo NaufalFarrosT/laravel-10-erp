@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
 
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
             $table->softDeletes();
-            $table->timestamps();
         });
     }
 

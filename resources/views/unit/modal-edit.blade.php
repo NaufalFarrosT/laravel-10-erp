@@ -17,6 +17,7 @@
     </form>
 </div>
 <div class="modal-footer justify-content-between">
-    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveUnitDataUpdateTD({{ $unit->id }})">Simpan</button>
+    <button type="button" class="btn btn-primary" data-dismiss="modal"
+        onclick="saveUnitDataUpdateTD({{ $unit->id }})">Simpan</button>
     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
 </div>

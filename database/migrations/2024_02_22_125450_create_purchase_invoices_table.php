@@ -19,8 +19,9 @@ return new class extends Migration
             $table->foreignId('purchase_order_id')->constrained();
             $table->foreignId('user_id')->constrained();
 
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
             $table->softDeletes();
-            $table->timestamps();
         });
     }
 

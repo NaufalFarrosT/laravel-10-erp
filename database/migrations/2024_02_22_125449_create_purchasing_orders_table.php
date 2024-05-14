@@ -15,12 +15,16 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->integer('total_price');
+            $table->string('status')->nullable();
+            $table->string('item_receive_status')->nullable();
+            $table->string('payment_status')->nullable();
 
             $table->foreignId('user_id')->constrained();
             $table->foreignId('supplier_id')->constrained();
 
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
             $table->softDeletes();
-            $table->timestamps();
         });
     }
 

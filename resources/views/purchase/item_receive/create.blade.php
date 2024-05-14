@@ -21,7 +21,7 @@
         <!-- Main content -->
         <section class="content">
             <!-- form start -->
-            <form class="form-horizontal" method="POST" action="{{ route('purchase.storeItemReceive') }}">
+            <form class="form-horizontal" method="POST" action="{{ route('item-receive.store') }}">
                 @csrf
                 <div class="container-fluid">
                     <div class="form-group row mb-0">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
 
-                    <!-- Detil Pemesanan Pembelian -->
+                    <!-- <i class="fas fa-eye"></i> Pemesanan Pembelian -->
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Data Penerimaan Barang</h3>
@@ -74,7 +74,7 @@
                                     </thead>
                                     <tbody>
                                         <input type="hidden" class="form-control" name="purchase_order_id"
-                                        id="purchase_order_id" value="{{ $purchase_order->id }}">
+                                            id="purchase_order_id" value="{{ $purchase_order->id }}">
                                         @foreach ($purchase_details as $pd)
                                             <tr id="tr_{{ $pd->id }}">
                                                 <td>
@@ -89,7 +89,7 @@
                                                 <td>
                                                     {{ $pd->item_id }}
                                                 </td>
-                                                <td id="td_name_{{ $pd->id }}">{{ $pd->item_name }}</td>
+                                                <td id="td_name_{{ $pd->id }}">{{ $pd->item->name }}</td>
                                                 <td>
                                                     <input type='number' name='qty[]' id='qty' min='1'
                                                         max="{{ $pd->qty }}" class='form-control'
@@ -97,7 +97,7 @@
                                                 </td>
 
                                                 <td>
-                                                    {{ $pd->unit_name }}
+                                                    {{ $pd->item->unit->name }}
                                                 </td>
                                                 {{-- <td>
                                                     @php

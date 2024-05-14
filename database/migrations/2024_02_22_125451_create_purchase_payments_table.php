@@ -16,12 +16,13 @@ return new class extends Migration
             $table->date('date');
             $table->integer('amount');
 
-            $table->foreignId('purchase_invoice_id')->constrained();
-            $table->foreignId('account_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            
+            $table->foreignId('purchase_order_id')->constrained();
+            $table->foreignId('sub_account_id')->constrained();
+            $table->foreignId('user_id')->constrained()->nullable();
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
             $table->softDeletes();
-            $table->timestamps();
         });
     }
 

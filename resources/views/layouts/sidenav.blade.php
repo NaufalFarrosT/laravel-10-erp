@@ -3,7 +3,7 @@
     <a href="/" class="brand-link">
         <img src="{{ asset('assets/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">ERP KU</span>
     </a>
 
     <!-- Sidebar -->
@@ -25,22 +25,28 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
-                <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Widgets
-                        </p>
-                    </a>
-                </li>
                 <li class="nav-item" style="border-bottom: 1px solid #4f5962">
                     <a href="#" class="nav-link">
+                        <i class="far fa fa-database nav-icon"></i>
+
                         <p>
                             Master
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/account" class="nav-link">
+                                <i class="far fa fa-database nav-icon"></i>
+                                <p>Akun</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/warehouse" class="nav-link">
+                                <i class="far fa fa-database nav-icon"></i>
+                                <p>Gudang</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="/item" class="nav-link">
                                 <i class="far fa fa-database nav-icon"></i>
@@ -66,85 +72,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="/user" class="nav-link">
+                                <i class="far fa fa-database nav-icon"></i>
+                                <p>Pengguna</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="/unit" class="nav-link">
                                 <i class="far fa fa-database nav-icon"></i>
                                 <p>Satuan</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/user" class="nav-link">
-                                <i class="far fa fa-database nav-icon"></i>
-                                <p>User</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-folder-plus nav-icon"></i>
-                        <p>
-                            Pembelian
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('purchase.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Data Pembelian</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('purchase.create')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Buat Pesanan Pembelian</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../UI/icons.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Penerimaan Barang</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../UI/icons.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Faktur Pembelian</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../UI/icons.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Pembayaran Pembelian</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-cart-plus nav-icon"></i>
-                        <p>
-                            Penjualan
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../UI/icons.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Pesanan Penjualan</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../UI/buttons.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Faktur Penjualan</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../UI/icons.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Penerimaan Penjualan</p>
                             </a>
                         </li>
                     </ul>
@@ -153,24 +89,49 @@
                     <a href="#" class="nav-link">
                         <i class="fas fa-folder nav-icon"></i>
                         <p>
-                            Persediaan
+                            Laporan
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="../UI/general.html" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Cek Persediaan</p>
+                                <p>Transaksi</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../UI/general.html" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Pindah Persediaan</p>
+                                <p>Buku Besar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Jurnal Umum</p>
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-header">Transaksi</li>
+                <li class="nav-item">
+                    <a href="{{ route('purchase.index') }}" class="nav-link">
+                        <i class="fas fa-folder-plus nav-icon"></i>
+                        <p>Pembelian</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('sale.index') }}" class="nav-link">
+                        <i class="fas fa-cart-plus nav-icon"></i>
+                        <p>Penjualan</p>
+                    </a>
+                </li>
+                <li class="nav-item" style="border-bottom: 1px solid #4f5962">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-clipboard nav-icon"></i>
+                        <p>Pendapatan/Pengeluaran</p>
+                    </a>
                 </li>
                 <li class="nav-item mt-2">
                     <form id="logout" action="{{ route('logout') }}" method="POST" class="nav-link">

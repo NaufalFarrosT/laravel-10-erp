@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
-            $table->dropForeign('purchase_orders_user_id_foreign');
-            $table->dropColumn('user_id');
+        Schema::create('account_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
         });
     }
 
@@ -22,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('account_categories');
     }
 };

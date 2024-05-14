@@ -20,10 +20,14 @@ class Item extends Model
     }
 
     public function purchasing_details() {
-        return $this->belongsToMany(PurchasingNote::class)->as('purchasing_details');
+        return $this->belongsToMany(PurchaseDetail::class);
     }
 
     public function selling_details() {
-        return $this->belongsToMany(SellingNote::class)->as('selling_details');
+        return $this->belongsToMany(SalesOrder::class);
+    }
+
+    public function warehouses(){
+        return $this->hasMany(WarehouseItem::class);
     }
 }

@@ -6,14 +6,9 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Tambah Data Pemesanan Pembelian</h1>
+                        <h1>Tambah Data Pembelian</h1>
                     </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item">Pesanan Pembelian</li>
-                        </ol>
-                    </div>
+
                 </div>
             </div><!-- /.container-fluid -->
         </section>
@@ -53,7 +48,7 @@
 
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Data Pemesanan Pembelian</h3>
+                            <h3 class="card-title">Data Pembelian</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -115,7 +110,7 @@
         // Set date to nowdate
         document.getElementById('datePicker').valueAsDate = new Date();
 
-        // Count total price by summarize total price each item 
+        // Count total price by summarize total price each item
         function TotalAmount() {
             let total = 0;
             $(".display_total_price_per_item").each(function(i, e) {
@@ -137,9 +132,8 @@
         }
 
         function changeNumberWithThousandSeparator(number) {
-            number = number.replaceAll(/[\D\s\._\-]+/g, "");
-            number = number ? parseInt(number, 10) : 0;
-
+            number = number.replace(/\D/g, ''); // Remove non-numeric characters
+            number = Number(number).toLocaleString(); // Add thousand separator
             return number
         }
 
@@ -149,29 +143,32 @@
 
             // Price
             let price = tr.find('.price');
-            let priceValue = changeNumberWithThousandSeparator(price.val())
+            let priceValue = price.val().replace(/,/g, '');
+            let formattedPrice = changeNumberWithThousandSeparator(priceValue)
             price.val(function() {
                 return (priceValue === 0) ?
                     "0" :
-                    priceValue.toLocaleString("id-ID");
+                    formattedPrice;
             })
 
             // Quantity
             let qty = tr.find('.quantity');
-            let qtyValue = changeNumberWithThousandSeparator(qty.val())
+            let qtyValue = qty.val().replace(/,/g, '');
+            let formattedQty = changeNumberWithThousandSeparator(qtyValue)
             qty.val(function() {
                 return (qtyValue === 0) ?
                     "" :
-                    qtyValue.toLocaleString("id-ID");
+                    formattedQty;
             })
 
             // Discount
             let discount = tr.find('.discount');
-            let discountValue = changeNumberWithThousandSeparator(discount.val())
+            let discountValue = discount.val().replace(/,/g, '');
+            let formattedDiscount = changeNumberWithThousandSeparator(discountValue)
             discount.val(function() {
                 return (discountValue === 0) ?
                     "0" :
-                    discountValue.toLocaleString("id-ID");
+                    formattedDiscount;
             })
 
             // Total Price per Item
@@ -190,7 +187,7 @@
             TotalAmount();
         });
 
-        let autoCompleteSupplierPath = "{{ route('purchase.supplier.autocomplete') }}";
+        let autoCompleteSupplierPath = "{{ route('purchase.supplier.autoComplete') }}";
         $("#supplier_search").autocomplete({
             source: function(request, response) {
                 $.ajax({
@@ -214,7 +211,7 @@
             }
         });
 
-        let autoCompleteItemPath = "{{ route('purchase.item.autocomplete') }}";
+        let autoCompleteItemPath = "{{ route('purchase.item.autoComplete') }}";
         let numberOfRow = $(".table-bordered tr").length - 0;
         $("#item_search").autocomplete({
             source: function(request, response) {
@@ -235,40 +232,42 @@
                 $('#item_search').val("");
                 // console.log(ui.item);
 
-                let tr = "<tr id='tr_" + ui.item.id + "'>" +
-                    "<input type='hidden' id='itemId' name='itemId[]' value=" + ui.item.id + ">" +
-                    "<td>" + numberOfRow + "</td>" +
+                if ($('#tr_' + ui.item.id).length) {
+                    $tr_item = $('#tr_' + ui.item.id)
 
-                    "<td id='td_name_" + ui.item.id + "'>" +
-                    ui.item.value + "</td>" +
+                    $tr_item_quantity = parseInt($tr_item.find('#quantity').val());
+                    $new_quantity = $tr_item_quantity + 1;
+                    $tr_item.find('#quantity').val($new_quantity);
+                } else {
+                    let tr = "<tr id='tr_" + ui.item.id + "'>" +
+                        "<input type='hidden' id='itemId' name='itemId[]' value=" + ui.item.id + ">" +
+                        "<td>" + numberOfRow + "</td>" +
 
-                    "<td>" +
-                    "<label id='display_price_per_item' name='display_price_per_item' class='form-control'>" +
-                    ui.item.price.toLocaleString() + "</label>" +
-                    "<input type='hidden' class='price' id='price' name='price[]' value=" + ui
-                    .item.price + "></td>"+
-                    // "<input type='number' name='price[]' id='price'" +
-                    // "min='1' class='form-control price' value=" + ui.item.price +
-                    // " readonly/>" +
-                    "</td>" +
+                        "<td id='td_name_" + ui.item.id + "'>" +
+                        ui.item.value + "</td>" +
 
-                    "<td>" +
-                    "<input type='number' name='quantity[]' id='quantity'" +
-                    "min='1' class='form-control quantity' value='1' required/>" +
-                    "</td>" +
+                        "<td>" +
+                        "<input type='text' class='form-control price' id='price' name='price[]' value=" + ui
+                        .item.price.toLocaleString() + "></td>" +
+                        "<td>" +
+                        "<input type='number' name='quantity[]' id='quantity'" +
+                        "min='1' class='form-control quantity' value='1' required/>" +
+                        "</td>" +
 
-                    "<td><input type='number' name='discount[]' id='discount'" +
-                    "min='0' class='form-control discount' value='0' required/></td>" +
+                        "<td><input type='text' name='discount[]' id='discount'" +
+                        "min='0' class='form-control discount' value='0' required/></td>" +
 
-                    "<td><label id='display_total_price_per_item' name='display_total_price_per_item[]' class='form-control display_total_price_per_item'>" +
-                    ui.item.price.toLocaleString() + "</label>" +
-                    "<input type='hidden' id='total_price_per_item' name='total_price_per_item[]' value=" + ui
-                    .item.price + "></td>" +
-                    "<td><button type='button' style='' class='btn btn-danger btn-sm delete' onclick='deleteConfirmation(" +
-                    ui.item.id + ")'><i class='fas fa-trash-alt'></i></button>" +
-                    "</td></tr>";
+                        "<td><label id='display_total_price_per_item' name='display_total_price_per_item[]' class='form-control display_total_price_per_item'>" +
+                        ui.item.price.toLocaleString() + "</label>" +
+                        "<input type='hidden' id='total_price_per_item' name='total_price_per_item[]' value=" +
+                        ui
+                        .item.price + "></td>" +
+                        "<td><button type='button' style='' class='btn btn-danger btn-sm delete' onclick='deleteConfirmation(" +
+                        ui.item.id + ")'><i class='fas fa-trash-alt'></i></button>" +
+                        "</td></tr>";
 
-                $('.table-bordered tbody').append(tr);
+                    $('.table-bordered tbody').append(tr);
+                }
 
                 TotalAmount();
                 return false;

@@ -1,13 +1,22 @@
 <?php
 
+use App\Http\Controllers\SubAccountController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemReceiveController;
+use App\Http\Controllers\PurchasePaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SalePaymentController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseController;
+use App\Models\ItemReceive;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,43 +37,118 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::prefix('profile')->controller(ProfileController::class)
+        ->group(function () {
+            Route::get('/', 'edit')->name('profile.edit');
+            Route::patch('/', 'update')->name('profile.update');
+            Route::delete('/', 'destroy')->name('profile.destroy');
+        });
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/', function () {
-        return view('home');
-    });
+    // Route::get('/', function () {
+    //     return view('home');
+    // });
+
+    Route::get('/', [HomeController::class, 'index']);
+
+    Route::resource('/account', SubAccountController::class);
+    Route::prefix('account')->controller(SubAccountController::class)
+        ->group(function () {
+            Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
+                ->name('account.deleteConfirmation');
+        });
 
     Route::resource('/category', CategoryController::class);
-    Route::get('/category/{id}/DeleteConfirmation', [CategoryController::class, 'deleteConfirmation'])->name('category.deleteConfirmation');
+    Route::prefix('category')->controller(CategoryController::class)
+        ->group(function () {
+            Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
+                ->name('category.deleteConfirmation');
+        });
 
     Route::resource('/item', ItemController::class);
-    Route::get('/item/{id}/DeleteConfirmation', [ItemController::class, 'deleteConfirmation'])->name('item.deleteConfirmation');
-    Route::get('/item/autocomplete', [ItemController::class, 'autoCompleteItem'])->name('item.autocomplete');
-
-    Route::resource('/supplier', SupplierController::class);
-    Route::get('/supplier/{id}/DeleteConfirmation', [SupplierController::class, 'deleteConfirmation'])->name('supplier.deleteConfirmation');
-    Route::get('/supplier/autocomplete', [SupplierController::class, 'autoCompleteSupplier'])->name('supplier.autocomplete');
-    
-    Route::resource('/unit', UnitController::class);
-    Route::get('/unit/{id}/DeleteConfirmation', [UnitController::class, 'deleteConfirmation'])->name('unit.deleteConfirmation');
-
-    Route::resource('/user', UserController::class);
-    Route::get('/user/{id}/DeleteConfirmation', [UserController::class, 'deleteConfirmation'])->name('user.deleteConfirmation');
-
-    Route::resource('/role', RoleController::class);
-    Route::get('/role/{id}/DeleteConfirmation', [RoleController::class, 'deleteConfirmation'])->name('role.deleteConfirmation');
+    Route::prefix('item')->controller(ItemController::class)
+        ->group(function () {
+            Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
+                ->name('item.deleteConfirmation');
+        });
 
     Route::resource('/purchase', PurchaseController::class);
-    Route::post('/purchase/detail', [PurchaseController::class, 'storePurchaseDetail'])->name('purchase.detail.store');
-    Route::get('/purchase/{id}/DeleteConfirmation', [PurchaseController::class, 'deleteConfirmation'])->name('purchase.deleteConfirmation');
-    Route::get('/purchase/create//item/autocomplete', [ItemController::class, 'autoCompleteItem'])->name('purchase.item.autocomplete');
-    Route::get('/purchase/create/supplier/autocomplete', [SupplierController::class, 'autoCompleteSupplier'])->name('purchase.supplier.autocomplete');
-    Route::get('/purchase/item-receive/{purchase_order_id}', [PurchaseController::class, 'createItemReceive'])->name('purchase.createItemReceive');
-    Route::post('/purchase/item-receive/', [PurchaseController::class, 'storeItemReceive'])->name('purchase.storeItemReceive');
-    Route::get('/purchase/item-receive-delete-confirmation/{id}', [PurchaseController::class, 'deleteConfirmationItemReceive'])->name('purchase.deleteConfirmationItemReceive');
-    Route::delete('/purchase/item-receive/{item_receive_id}', [PurchaseController::class, 'deleteItemReceive'])->name('purchase.deleteItemReceive');
+    Route::prefix('purchase')->controller(PurchaseController::class)
+        ->group(function () {
+            Route::post('/detail', 'storePurchaseDetail')
+                ->name('purchase.detail.store');
+            Route::get('/{id}/delete-confirmation',  'deleteConfirmation')
+                ->name('purchase.deleteConfirmation');
+            Route::get('/create/auto-complete-item', 'autoCompleteItem')->name('purchase.item.autoComplete');
+            Route::get('/create/auto-complete-supplier', 'autoCompleteSupplier')->name('purchase.supplier.autoComplete');
+
+            // To create and store item receive for purchase
+            Route::resource('/item-receive', ItemReceiveController::class);
+            Route::prefix('/item-receive')->controller(ItemReceiveController::class)->group(function () {
+                Route::get('/delete-confirmation/{id}', 'deleteConfirmation')->name('item-receive.deleteConfirmation');
+                Route::get('/{id}/create', 'create')->name('item-receive.createWithID');
+            });
+
+            // To create and store payment for purchase
+            Route::resource('/purchase-payment', PurchasePaymentController::class);
+            Route::prefix('/purchase-payment')->controller(PurchasePaymentController::class)->group(function () {
+                Route::get('/delete-confirmation/{id}', 'deleteConfirmation')->name('purchase-payment.deleteConfirmation');
+            });
+        });
+
+
+    Route::resource('/role', RoleController::class);
+    Route::prefix('role')->controller(RoleController::class)
+        ->group(function () {
+            Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
+                ->name('role.deleteConfirmation');
+        });
+
+    Route::resource('/sale', SaleController::class);
+    Route::prefix('sale')->controller(SaleController::class)
+        ->group(function () {
+            Route::post('/detail', 'storePurchaseDetail')
+                ->name('sale.detail.store');
+            Route::get('/{id}/delete-confirmation',  'deleteConfirmation')
+                ->name('sale.deleteConfirmation');
+            Route::get('/create/auto-complete-item', 'autoCompleteItem')->name('sale.item.autoComplete');
+
+            // To create and store payment for purchase
+            Route::resource('/sale-payment', SalePaymentController::class);
+            Route::prefix('/sale-payment')->controller(SalePaymentController::class)->group(function () {
+                Route::get('/delete-confirmation/{id}', 'deleteConfirmation')->name('sale-payment.deleteConfirmation');
+            });
+        });
+
+    Route::resource('/supplier', SupplierController::class);
+    Route::prefix('supplier')->controller(SupplierController::class)
+        ->group(function () {
+            Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
+                ->name('supplier.deleteConfirmation');
+        });
+
+    Route::resource('/unit', UnitController::class);
+    Route::prefix('unit')->controller(UnitController::class)
+        ->group(function () {
+            Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
+                ->name('unit.deleteConfirmation');
+        });
+
+    Route::resource('/user', UserController::class);
+    Route::prefix('user')->controller(UserController::class)
+        ->group(function () {
+            Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
+                ->name('user.deleteConfirmation');
+        });
+
+    Route::resource('/warehouse', WarehouseController::class);
+    Route::prefix('warehouse')->controller(WarehouseController::class)
+        ->group(function () {
+            Route::get('/{id}/DeleteConfirmation',  'deleteConfirmation')
+                ->name('warehouse.deleteConfirmation');
+        });
 });
 
 require __DIR__ . '/auth.php';

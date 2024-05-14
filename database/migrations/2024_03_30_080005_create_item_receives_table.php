@@ -18,8 +18,9 @@ return new class extends Migration
             $table->foreignId('warehouse_id')->constrained();
             $table->foreignId('purchase_order_id')->constrained();
 
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
             $table->softDeletes();
-            $table->timestamps();
         });
     }
 

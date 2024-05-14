@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LARAVEL ERP</title>
+    <title>ERP KU</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -114,7 +114,7 @@
     <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
     <!-- date-range-picker -->
     <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    
+
     @yield('javascript-function')
 
     <script>

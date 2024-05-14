@@ -4,17 +4,6 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Master Item</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Master Item</li>
-                        </ol>
-                    </div>
-                </div>
             </div><!-- /.container-fluid -->
         </section>
 
@@ -31,31 +20,35 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Item</h3>
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <h3 class="mb-0">Data Item</h3>
 
-                        <div class="card-tools">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control float-right"
-                                    placeholder="Search">
+                            <div class="d-flex flex-wrap justify-content-between">
 
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default">
-                                        <i class="fas fa-search"></i>
-                                    </button>
+                                <div class="card-tools mr-2">
+                                    <form id="filterForm" class="flex-fill" method="GET"
+                                        action="{{ route('item.index') }}">
+                                        <div class="input-group input-group-m" style="width: 300px;">
+                                            <input type="text" name="table_search" class="form-control float-right"
+                                                placeholder="Search" value="{{ $table_search != null ? $table_search : '' }}">
+
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
+
+                                <a href="{{route('item.create')}}" class="btn btn-sm btn-success">Tambah
+                                    Item</a>
                             </div>
                         </div>
                     </div>
-
                     <!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <a href="{{ route('item.create') }}" style="width: fit-content"
-                                    class="btn btn-sm btn-success">Tambah Data Item</a>
-                            </div>
-                        </div><br>
 
+                    <div class="card-body">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -63,7 +56,7 @@
                                     <th>Nama Item</th>
                                     <th>Stok</th>
                                     <th style="">Satuan</th>
-                                    <th style="width: 18%">Aksi</th>
+                                    <th style="width: 130px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,12 +71,18 @@
                                             {{ $item->unit->name }}
                                         </td>
                                         <td>
-                                            <button type="button" style="width: 60px" class="btn btn-sm btn-primary"
-                                                id="btnShow" onclick="showData({{ $item->id }})">Detil</button>
-                                            <button type="button" style="width: 60px" class="btn btn-sm btn-warning"
-                                                onclick="location.href='{{ route('item.edit', $item->id) }}'">Ubah</button>
-                                            <button type="button" style="width: 60px" class="btn btn-sm btn-danger"
-                                                onclick="deleteItemConfirmation({{ $item->id }})">Hapus</button>
+                                            <button type="button" class="btn btn-sm btn-primary" id="btnShow"
+                                                onclick="show({{ $item->id }})">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-warning"
+                                                onclick="location.href='{{ route('item.edit', $item->id) }}'">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                onclick="deleteItemConfirmation({{ $item->id }})">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -93,11 +92,8 @@
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            {{ $items->links() }}
+                            {{-- {{ $items->links() }} --}}
                         </ul>
                     </div>
                 </div>
@@ -108,6 +104,20 @@
 
 @section('javascript-function')
     <script>
+        function show(id) {
+            $.ajax({
+                type: "GET",
+                url: `item/${id}`,
+                success: function(data) {
+                    $("#modal-content").html(data.msg);
+                    $("#modal-default").modal('show');
+                },
+                error: function(err) {
+                    alert("Error");
+                },
+            });
+        }
+
         function deleteItemConfirmation(id) {
             $.ajax({
                 type: "GET",

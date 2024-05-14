@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SalesOrder extends Model
+class SubAccount extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 }

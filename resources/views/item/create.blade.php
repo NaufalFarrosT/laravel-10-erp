@@ -4,18 +4,6 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Tambah Data Item</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item"><a href="/item">Master Item</a></li>
-                            <li class="breadcrumb-item">Tambah Data Item</li>
-                        </ol>
-                    </div>
-                </div>
             </div><!-- /.container-fluid -->
         </section>
 
@@ -26,7 +14,7 @@
                     <!-- Horizontal Form -->
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Data Item</h3>
+                            <h3 class="mb-0">Tambah Data Item</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->

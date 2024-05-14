@@ -4,18 +4,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Tambah Data Item</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item"><a href="/item">Master Item</a></li>
-                            <li class="breadcrumb-item">Ubah Data Item</li>
-                        </ol>
-                    </div>
-                </div>
+
             </div><!-- /.container-fluid -->
         </section>
 
@@ -26,7 +15,7 @@
                     <!-- Horizontal Form -->
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Data Item</h3>
+                            <h3 class="mb-0">Ubah Data Item</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -62,8 +51,9 @@
                                     <div class="col-sm-2">
                                         <select class="custom-select" id="unit_id" name="unit_id">
                                             @foreach ($units as $unit)
-                                                @if($item->unit_id == $unit->id)
-                                                    <option value="{{ $unit->id }}" selected>{{ $unit->name }}</option>
+                                                @if ($item->unit_id == $unit->id)
+                                                    <option value="{{ $unit->id }}" selected>{{ $unit->name }}
+                                                    </option>
                                                 @else
                                                     <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                                                 @endif
@@ -77,8 +67,9 @@
                                     <div class="col-sm-3">
                                         <select class="custom-select" id="category_id" name="category_id">
                                             @foreach ($categories as $category)
-                                                @if($item->category_id == $category->id)
-                                                    <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                                @if ($item->category_id == $category->id)
+                                                    <option value="{{ $category->id }}" selected>{{ $category->name }}
+                                                    </option>
                                                 @else
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                 @endif

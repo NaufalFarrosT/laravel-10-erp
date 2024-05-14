@@ -61,6 +61,6 @@
     </table>
 </div>
 <div class="modal-footer justify-content-between">
-    <a href="{{ route('user.edit',['user' => $user->id]) }}" class="btn btn-warning">Ubah</a>
+    <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
 </div>

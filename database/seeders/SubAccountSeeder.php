@@ -6,30 +6,33 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class AccountSeeder extends Seeder
+class SubAccountSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $accounts = [
+        $sub_accounts = [
             [
                 'name' => "Tunai",
-                'balance' => 1500000,
+                'balance' => 0,
+                'account_sub_category_id' => 1
             ],
             [
                 'name' => "BANK BCA",
                 'balance' => 0,
+                'account_sub_category_id' => 1
             ],
             [
                 'name' => "BANK BRI",
-                'balance' => 1500000,
+                'balance' => 0,
+                'account_sub_category_id' => 1
             ],
         ];
 
-        DB::table('accounts')->insert(
-            $accounts
+        DB::table('sub_accounts')->insert(
+            $sub_accounts
         );
     }
 }

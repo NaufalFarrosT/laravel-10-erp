@@ -17,11 +17,13 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::all();
+        $search =  ($request->get("table_search") == "" ? "" : $request->get("table_search"));
 
-        return view('item.index', ['items' => $items]);
+        $items = Item::where('name', 'like', '%' . $search . '%')->paginate(10);
+
+        return view('item.index', ['items' => $items, 'table_search' => $search]);
     }
 
     /**
@@ -30,7 +32,6 @@ class ItemController extends Controller
     public function create()
     {
         $units = Unit::all();
-        $suppliers = Supplier::all();
         $categories = Category::all();
 
         return view('item.create', ['units' => $units, 'categories' => $categories]);
@@ -134,21 +135,5 @@ class ItemController extends Controller
         return response()->json(array(
             'msg' => view('item.modal-deleteConfirmation', compact('item'))->render()
         ), 200);
-    }
-
-    public function autoCompleteItem(Request $request)
-    {
-        // $data = DB::table("items")
-        //     ->join('units', 'items.unit_id', '=', 'units.id')
-        //     ->select("items.id", DB::raw("CONCAT(items.name,  '-' , units.name) as value"), "items.price", "items.stock")
-        //     ->where('items.name', 'LIKE', '%' . $request->get('search') . '%')
-        //     ->get();
-
-        $data = Item::select("items.id", DB::raw("CONCAT(items.name, ' - ', units.name) as value"), "items.price", "items.stock")
-            ->join('units', 'items.unit_id', '=', 'units.id')
-            ->where('items.name', 'LIKE', '%' . $request->get('search') . '%')
-            ->get();
-
-        return response()->json($data);
     }
 }

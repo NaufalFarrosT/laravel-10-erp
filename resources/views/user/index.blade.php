@@ -31,18 +31,25 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data User</h3>
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <h3 class="mb-0">Data User</h3>
 
-                        <div class="card-tools">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control float-right"
-                                    placeholder="Search">
+                            <div class="d-flex flex-wrap justify-content-between">
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 300px;">
+                                        <input type="text" name="table_search" class="form-control float-right"
+                                            placeholder="Search">
 
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default">
-                                        <i class="fas fa-search"></i>
-                                    </button>
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <a href="{{ route('user.create') }}" style="width: fit-content"
+                                    class="btn btn-sm btn-success ml-3">Tambah Pengguna</a>
                             </div>
                         </div>
                     </div>
@@ -53,13 +60,6 @@
 
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <a href="{{ route('user.create') }}" style="width: fit-content"
-                                    class="btn btn-sm btn-success">Tambah Data User</a>
-                            </div>
-                        </div><br>
-
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -69,7 +69,7 @@
                                     <th>Gender</th>
                                     <th>Email</th>
                                     <th>Jabatan</th>
-                                    <th style="width: 18%">Aksi</th>
+                                    <th style="width: 130px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,11 +83,13 @@
                                         <td id="td_email_{{ $user->id }}">{{ $user->role->name }}</td>
 
                                         <td>
-                                            <button type="button" style="width: 60px" class="btn btn-sm btn-primary"
-                                                id="btnShow" onclick="showUser({{ $user->id }})">Detil</button>
-                                            <a href="{{ route('user.edit',['user' => $user->id]) }}" class="btn btn-sm btn-warning">Ubah</a>
-                                            <button type="button" style="width: 60px" class="btn btn-sm btn-danger"
-                                                onclick="deleteConfirmation({{ $user->id }})">Hapus</button>
+                                            <button type="button" class="btn btn-sm btn-primary" id="btnShow"
+                                                onclick="showUser({{ $user->id }})"><i class="fas fa-eye"></i></button>
+                                            <a href="{{ route('user.edit', ['user' => $user->id]) }}"
+                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                onclick="deleteConfirmation({{ $user->id }})"><i
+                                                    class="fas fa-trash-alt"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -97,11 +99,7 @@
 
                     <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            {{ $users->links() }}
                         </ul>
                     </div>
                 </div>

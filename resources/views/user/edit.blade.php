@@ -52,7 +52,7 @@
                                 <div class="input-group date col-sm-10" id="dobDateHelper" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input" id="dob"
                                         name="dob" data-target="#dobDateHelper" placeholder="YYYY/MM/dd"
-                                        value="{{ $user->dob }}" required/>
+                                        value="{{ $user->dob }}" required />
                                     <div class="input-group-append" data-target="#dobDateHelper"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -128,7 +128,7 @@
                                 <div class="input-group date col-sm-10" id="joinDateHelper" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input" id="join_date"
                                         name="join_date" data-target="#joinDateHelper" placeholder="YYYY/MM/dd"
-                                        value="{{ $user->join_date }}" required/>
+                                        value="{{ $user->join_date }}" required />
                                     <div class="input-group-append" data-target="#joinDateHelper"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>

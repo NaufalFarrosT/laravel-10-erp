@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_payments', function (Blueprint $table) {
+        Schema::create('sale_payments', function (Blueprint $table) {
             $table->id();
             $table->date('date');
             $table->integer('amount');
 
-            $table->foreignId('sales_invoice_id')->constrained();
-            $table->foreignId('account_id')->constrained();
+            $table->foreignId('sale_order_id')->constrained();
+            $table->foreignId('sub_account_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
             $table->softDeletes();
-            $table->timestamps();
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('selling_payments');
+        Schema::dropIfExists('sale_payments');
     }
 };

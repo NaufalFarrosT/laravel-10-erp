@@ -10,11 +10,13 @@ class UnitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $units = Unit::all();
+        $search =  ($request->get("table_search") == "" ? "" : $request->get("table_search"));
 
-        return view('unit.index', ['units' => $units]);
+        $units = Unit::where('name', 'like', '%' . $search . '%')->paginate(10);
+
+        return view('unit.index', ['units' => $units, 'table_search' => $search]);
     }
 
     /**

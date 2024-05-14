@@ -11,11 +11,13 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = DB::select("SELECT R.id, R.name, COUNT(U.role_id) as 'total' FROM roles R LEFT JOIN users U on R.id = U.role_id GROUP BY R.id, R.name");
+        $search =  ($request->get("table_search") == "" ? "" : $request->get("table_search"));
 
-        return view('role.index', ['roles' => $roles]);
+        $roles = Role::where('name', 'like', '%' . $search . '%')->withCount('users')->paginate(10);
+
+        return view('role.index', ['roles' => $roles, 'table_search' => $search]);
     }
 
     /**
@@ -36,7 +38,8 @@ class RoleController extends Controller
         $data->save();
 
         return response()->json(array(
-            'msg' => 'BERHASIL MENAMBAHKAN DATA JABATAN BARU', 'data' => $data
+            'msg' => 'BERHASIL MENAMBAHKAN DATA JABATAN BARU',
+            'data' => $data
         ), 200);
     }
 
@@ -50,7 +53,7 @@ class RoleController extends Controller
         $users = $role->users;
 
         return response()->json(array(
-            'msg' => view('role.modal-show', compact('role','users'))->render()
+            'msg' => view('role.modal-show', compact('role', 'users'))->render()
         ), 200);
     }
 
@@ -59,10 +62,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $data = Role::find($id);
+        $role = Role::find($id);
 
         return response()->json(array(
-            'msg' => view('role.modal-edit', compact('data'))->render()
+            'msg' => view('role.modal-edit', compact('role'))->render()
         ), 200);
     }
 

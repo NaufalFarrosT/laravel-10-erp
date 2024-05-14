@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_invoices', function (Blueprint $table) {
+        Schema::create('account_sub_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
 
-            $table->softDeletes();
-            $table->timestamps();
+            $table->foreignId('account_category_id')->constrained();
+
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
         });
     }
 
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sales_invoices');
+        Schema::dropIfExists('account_sub_categories');
     }
 };

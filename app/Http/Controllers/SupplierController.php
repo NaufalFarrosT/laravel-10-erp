@@ -10,11 +10,13 @@ class SupplierController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $suppliers = Supplier::all();
+        $search =  ($request->get("table_search") == "" ? "" : $request->get("table_search"));
 
-        return view('supplier.index', ['suppliers' => $suppliers]);
+        $suppliers = Supplier::where('name', 'like', '%' . $search . '%')->paginate(10);
+
+        return view('supplier.index', ['suppliers' => $suppliers, 'table_search' => $search]);
     }
 
     /**
@@ -110,14 +112,5 @@ class SupplierController extends Controller
         return response()->json(array(
             'msg' => view('supplier.modal-deleteConfirmation', compact('supplier'))->render()
         ), 200);
-    }
-
-    public function autoCompleteSupplier(Request $request)
-    {
-        $data = Supplier::select("id", "name as value")
-            ->where('name', 'LIKE', '%' . $request->get('search') . '%')
-            ->get();
-
-        return response()->json($data);
     }
 }

@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('sub_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('balance');
 
-            $table->timestamps();
+            $table->foreignId('account_sub_category_id')->constrained();
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('sub_accounts');
     }
 };

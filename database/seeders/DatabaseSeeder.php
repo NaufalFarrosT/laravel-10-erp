@@ -19,8 +19,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             UnitSeeder::class,
             SupplierSeeder::class,
-            AccountSeeder::class,
+            AccountCategorySeeder::class,
+            AccountSubCategorySeeder::class,
+            SubAccountSeeder::class,
             ItemSeeder::class,
+            CustomerSeeder::class
         ]);
     }
 }

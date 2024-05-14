@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_details', function (Blueprint $table) {
+        Schema::create('sale_details', function (Blueprint $table) {
             $table->id();
             $table->integer('qty');
             $table->integer('price');
@@ -19,11 +19,11 @@ return new class extends Migration
             $table->integer('total_price');
 
             $table->foreignId('item_id')->constrained();
-            $table->foreignId('sales_order_id')->constrained();
-            $table->foreignId('warehouse_id')->constrained();
-            
+            $table->foreignId('sale_order_id')->constrained();
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
             $table->softDeletes();
-            $table->timestamps();
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('selling_details');
+        Schema::dropIfExists('sale_details');
     }
 };

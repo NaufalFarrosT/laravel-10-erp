@@ -21,10 +21,10 @@
                     <td>{{ $user->fullname }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        <a href="{{ route('user.edit', ['user' => $user->id]) }}"
-                            class="btn btn-sm btn-warning">Ubah</a>
-                        <button type="button" style="width: 60px" class="btn btn-sm btn-primary" id="btnShow"
-                            onclick="showUser({{ $user->id }})">Detil</button>
+                        <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn btn-sm btn-warning"><i
+                                class="fas fa-edit"></i></a>
+                        <button type="button" class="btn btn-sm btn-primary" id="btnShow"
+                            onclick="showUser({{ $user->id }})"><i class="fas fa-eye"></i></button>
                     </td>
                 </tr>
             @endforeach
