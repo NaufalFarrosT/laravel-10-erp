@@ -243,6 +243,7 @@
             var payment_date = $("#datePicker").val();
             var payment_amount = $("#payment_amount").val();
             var account_id = $("#account_id").val();
+            var sub_account_name = $("#account_id option:selected").text();
             var purchase_order_id = $('#purchase_order_id').val();
 
             var payment_amount_integer_format = payment_amount.replace(/Rp\.|\./g, '').trim();
@@ -263,13 +264,14 @@
                     if (response.payment_status == "Lunas") {
                         $("#purchase_payment_action").html("");
                     }
+
                     var tr = "<tr id='tr_purchase_payment_" + response.data.id + "'>" +
                         "<td>" + numberOfRow + "</td>" +
                         "<td id='td_name_" + response.data.id +
                         "'>" + payment_date + "</td>" +
                         "'<td>" + response.data.code + "</td>" +
                         "<td>" + payment_amount + "</td>" +
-                        "<td>" + account_id + "</td>" +
+                        "<td>" + sub_account_name + "</td>" +
                         "<td><div class='d-flex justify-content-center'><button type='button' class='btn btn-sm btn-warning mr-2' onclick='editPurchasePayment(" +
                         response.data.id + ")'><i class='fas fa-edit'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-danger' onclick='deleteConfirmationPurchasePayment(" +

@@ -134,7 +134,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/transaction', TransactionController::class);
 
-
     Route::resource('/unit', UnitController::class);
     Route::prefix('unit')->controller(UnitController::class)
         ->group(function () {
