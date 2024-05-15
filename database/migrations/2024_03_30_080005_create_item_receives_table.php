@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('item_receives', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
             $table->date('date');
 
             $table->foreignId('warehouse_id')->constrained();

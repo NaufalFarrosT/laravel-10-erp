@@ -19,6 +19,7 @@
                     <tr>
                         <th style="width: 10px">#</th>
                         <th>Tanggal</th>
+                        <th>Kode</th>
                         <th>Jumlah</th>
                         <th>Akun</th>
                         <th></th>
@@ -28,7 +29,8 @@
                     @foreach ($purchase_order->payments as $payment)
                         <tr id="tr_purchase_payment_{{ $payment->id }}">
                             <td>{{ $loop->iteration }}</td>
-                            <td id="td_name_{{ $payment->id }}">{{ $payment->date }}</td>
+                            <td id="td_date_{{ $payment->id }}">{{ $payment->date }}</td>
+                            <td id="td_code_{{ $payment->id }}">{{ $payment->code }}</td>
                             <td>
                                 @php
                                     echo 'Rp ' . number_format($payment->amount, 0, ',', '.');

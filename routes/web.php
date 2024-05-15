@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\SubAccountController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemReceiveController;
 use App\Http\Controllers\PurchasePaymentController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SalePaymentController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WarehouseController;
@@ -128,6 +131,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
                 ->name('supplier.deleteConfirmation');
         });
+
+    Route::resource('/transaction', TransactionController::class);
+
 
     Route::resource('/unit', UnitController::class);
     Route::prefix('unit')->controller(UnitController::class)

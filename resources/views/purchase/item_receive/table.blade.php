@@ -30,8 +30,8 @@
                     @foreach ($purchase_order->item_receives as $ir)
                         <tr id="tr_item_receive_{{ $ir->id }}">
                             <td>{{ $loop->iteration }}</td>
-                            <td id="td_code_{{ $ir->id }}">{{ $ir->code }}</td>
                             <td id="td_date_{{ $ir->id }}">{{ $ir->date }}</td>
+                            <td id="td_code_{{ $ir->id }}">{{ $ir->code }}</td>
                             <td>
                                 {{ $ir->id }}
                             </td>

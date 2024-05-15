@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('sale_orders', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
             $table->dateTime('date');
             $table->integer('total_price');
             $table->string('status')->nullable();

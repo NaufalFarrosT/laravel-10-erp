@@ -6,23 +6,24 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CustomerSeeder extends Seeder
+class TransactionTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $customers = [
+        $transaction_types = [
             [
-                'Code'=>"Guest",
-                'name' => "Guest",
-                'address' => "-"
+                'name' => "Pemasukan",
+            ],
+            [
+                'name' => "Pengeluaran",
             ],
         ];
 
-        DB::table('customers')->insert(
-            $customers
+        DB::table('transaction_types')->insert(
+            $transaction_types
         );
     }
 }

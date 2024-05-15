@@ -71,12 +71,9 @@ class ItemReceiveController extends Controller
 
         // Store Item Receive Data
         $prefix = 'IR';
-        $date = Carbon::now()->format('Ymd');
+        $countTotalItemReceive = ItemReceive::where('purchase_order_id', $purchase_order->id)->count() + 1;
 
-        // Count total item receive today
-        $totalItemReceiveToday = ItemReceive::whereDate('created_at', Carbon::today())->count() + 1;
-
-        $ir_code = sprintf('%s%s%03d', $prefix, $date, $totalItemReceiveToday);
+        $ir_code = sprintf('%s-%s-%02d', $purchase_order->code, $prefix, $countTotalItemReceive);
 
         $item_receive_data = new ItemReceive();
         $item_receive_data->code = $ir_code;
@@ -136,12 +133,12 @@ class ItemReceiveController extends Controller
         if ($item_receive_status == true) {
             $purchase_order->item_receive_status = "Diterima";
 
-            if($purchase_order->payment_status == "Lunas"){
+            if ($purchase_order->payment_status == "Lunas") {
                 $purchase_order->status = "Selesai";
             }
 
             $purchase_order->save();
-        }else{
+        } else {
             $purchase_order->item_receive_status = "Diterima Sebagian";
         }
 
@@ -188,7 +185,7 @@ class ItemReceiveController extends Controller
                 $item->save();
 
                 $warehouse_item = WarehouseItem::where('item_id', $item->id)
-                ->where('warehouse_id', $warehouse->id)->decrement('stock',$ird->qty);
+                    ->where('warehouse_id', $warehouse->id)->decrement('stock', $ird->qty);
 
                 // $warehouse_item->stock = $warehouse_item->stock - $ird->qty;
                 // $warehouse_item->save();

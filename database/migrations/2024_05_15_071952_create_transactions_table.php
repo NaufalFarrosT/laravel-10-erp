@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->string('name');
-            $table->string('address');
+            $table->date('date');
+            $table->string('information');
+            $table->integer('amount');
+
+            $table->foreignId('sub_account_id')->constrained();
+            $table->foreignId('transaction_type_id')->constrained();
+            $table->foreignId('user_id')->constrained()->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->nullable();
@@ -28,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('transactions');
     }
 };

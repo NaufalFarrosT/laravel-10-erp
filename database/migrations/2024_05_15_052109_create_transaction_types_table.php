@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('sale_orders', function (Blueprint $table) {
-            $table->string('code')->unique();
+        Schema::create('transaction_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->nullable();
+            $table->softDeletes();
         });
     }
 
@@ -21,9 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('sale_orders', function (Blueprint $table) {
-            $table->dropUnique(['code']);
-            $table->dropColumn('code');
-        });
+        Schema::dropIfExists('transaction_types');
     }
 };

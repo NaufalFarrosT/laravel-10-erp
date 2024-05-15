@@ -28,6 +28,12 @@ class PurchasePaymentController extends Controller
 
         $sub_accounts = SubAccount::all();
 
+        $purchase_payment = PurchasePayment::where('purchase_order_id', $purchase_order->id)->get();
+
+        foreach($purchase_payment as $pp){
+            $purchase_order->total_price -= $pp->amount;
+        }
+
         return response()->json(array(
             'msg' => view('purchase.payment.modal-createPayment', compact('purchase_order', 'sub_accounts'))->render()
         ), 200);
@@ -39,8 +45,15 @@ class PurchasePaymentController extends Controller
     public function store(Request $request)
     {
         $purchase_order_id = $request->po_id;
+        $purchase_order = PurchaseOrder::find($purchase_order_id);
+
+        $prefix = 'PP';
+        $countTotalPurchasePayment = PurchasePayment::where('purchase_order_id', $purchase_order_id)->count() + 1;
+
+        $pp_code = sprintf('%s-%s-%02d', $purchase_order->code, $prefix, $countTotalPurchasePayment);
 
         $new_purchase_payment = new PurchasePayment();
+        $new_purchase_payment->code = $pp_code;
         $new_purchase_payment->date = $request->date;
         $new_purchase_payment->amount = $request->amount;
         $new_purchase_payment->sub_account_id = $request->account;
@@ -54,7 +67,6 @@ class PurchasePaymentController extends Controller
 
         $sub_account->save();
 
-        $purchase_order = PurchaseOrder::find($purchase_order_id);
         $total_payment = 0;
         foreach ($purchase_order->payments as $payment) {
             $total_payment += $payment->amount;

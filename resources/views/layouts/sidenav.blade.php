@@ -121,15 +121,15 @@
                 </li>
                 <li class="nav-header">Transaksi</li>
                 <li class="nav-item">
-                    <a href="{{ route('purchase.create') }}" class="nav-link">
-                        <i class="fas fa-folder-plus nav-icon"></i>
-                        <p>Pembelian</p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('sale.create') }}" class="nav-link">
                         <i class="fas fa-cart-plus nav-icon"></i>
                         <p>Penjualan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('purchase.create') }}" class="nav-link">
+                        <i class="fas fa-folder-plus nav-icon"></i>
+                        <p>Pembelian</p>
                     </a>
                 </li>
                 <li class="nav-item" style="border-bottom: 1px solid #4f5962">

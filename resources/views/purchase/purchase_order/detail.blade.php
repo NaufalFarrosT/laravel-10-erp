@@ -267,6 +267,7 @@
                         "<td>" + numberOfRow + "</td>" +
                         "<td id='td_name_" + response.data.id +
                         "'>" + payment_date + "</td>" +
+                        "'<td>" + response.data.code + "</td>" +
                         "<td>" + payment_amount + "</td>" +
                         "<td>" + account_id + "</td>" +
                         "<td><div class='d-flex justify-content-center'><button type='button' class='btn btn-sm btn-warning mr-2' onclick='editPurchasePayment(" +

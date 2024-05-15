@@ -70,22 +70,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>Nama Item</th>
-                                        <th>Harga</th>
-                                        <th>Jumlah</th>
-                                        <th>Potongan</th>
-                                        <th>Jumlah Biaya</th>
-                                        <th style="width: 15px"></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="addMoreItem">
+                            <div class="row table-responsive">
 
-                                </tbody>
-                            </table>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10px">#</th>
+                                            <th>Nama Item</th>
+                                            <th>Harga</th>
+                                            <th>Jumlah</th>
+                                            <th>Potongan</th>
+                                            <th>Jumlah Biaya</th>
+                                            <th style="width: 15px"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="addMoreItem">
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
@@ -117,38 +120,7 @@
         // Set date to nowdate
         document.getElementById('datePicker').valueAsDate = new Date();
 
-        // Count total price by summarize total price each item
-        function TotalAmount() {
-            let total = 0;
-            $(".display_total_price_per_item").each(function(i, e) {
-                let amount = $(this).text().replaceAll(",", "");
-                amount = parseInt(amount);
-
-                //let amount = $(this).val() - 0;
-                total += amount;
-            });
-
-            let rupiahFormat = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                maximumFractionDigits: 0,
-            }).format(total);
-
-            $("#displayTotal").html(rupiahFormat);
-            $("#total").val(total);
-        }
-
-        function changeNumberWithThousandSeparator(number) {
-            number = number.replaceAll(/[\D\s\._\-]+/g, "");
-            number = number ? parseInt(number, 10) : 0;
-
-            return number
-        }
-
-        // Count total price after keyup or click
-        $(".addMoreItem").delegate(".quantity, .price, .discount", "keyup click", function() {
-            let tr = $(this).parent().parent();
-
+        function countTotalPriceItem(tr) {
             // Price
             let price = tr.find('.price');
             let priceValue = changeNumberWithThousandSeparator(price.val())
@@ -186,8 +158,41 @@
                     "" :
                     totalPriceValue.toLocaleString();
             })
+        }
 
-            // $('#test').text(totalPriceValue.toLocaleString());
+        // Count total price by summarize total price each item
+        function TotalAmount() {
+            let total = 0;
+            $(".display_total_price_per_item").each(function(i, e) {
+                let amount = $(this).text().replaceAll(",", "");
+                amount = parseInt(amount);
+
+                //let amount = $(this).val() - 0;
+                total += amount;
+            });
+
+            let rupiahFormat = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                maximumFractionDigits: 0,
+            }).format(total);
+
+            $("#displayTotal").html(rupiahFormat);
+            $("#total").val(total);
+        }
+
+        function changeNumberWithThousandSeparator(number) {
+            number = number.replaceAll(/[\D\s\._\-]+/g, "");
+            number = number ? parseInt(number, 10) : 0;
+
+            return number
+        }
+
+        // Count total price after keyup or click
+        $(".addMoreItem").delegate(".quantity, .price, .discount", "keyup click", function() {
+            let tr = $(this).parent().parent();
+
+            countTotalPriceItem(tr);
 
             TotalAmount();
         });
@@ -213,7 +218,7 @@
                 $('#item_search').val("");
 
                 if ($('#tr_' + ui.item.id).length) {
-                    $tr_item = $('#tr_' + ui.item.id)
+                    $tr_item = $('#tr_' + ui.item.id);
 
                     $tr_item_quantity = parseInt($tr_item.find('#quantity').val());
 
@@ -223,6 +228,8 @@
                     } else {
                         $new_quantity = $tr_item_quantity + 1;
                         $tr_item.find('#quantity').val($new_quantity);
+
+                        countTotalPriceItem($tr_item);
                     }
                 } else {
                     let tr = "<tr id='tr_" + ui.item.id + "'>" +

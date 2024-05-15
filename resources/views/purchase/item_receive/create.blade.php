@@ -76,6 +76,7 @@
                                         <input type="hidden" class="form-control" name="purchase_order_id"
                                             id="purchase_order_id" value="{{ $purchase_order->id }}">
                                         @foreach ($purchase_details as $pd)
+                                            @if($pd->qty != 0)
                                             <tr id="tr_{{ $pd->id }}">
                                                 <td>
                                                     <input type="hidden" class="form-control" name="selectedData[]"
@@ -105,6 +106,7 @@
                                                     @endphp
                                                 </td> --}}
                                             </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

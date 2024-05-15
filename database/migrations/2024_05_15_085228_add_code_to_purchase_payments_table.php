@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
-            $table->string('code')->unique();
+        Schema::table('purchase_payments', function (Blueprint $table) {
+            $table->string('code');
         });
     }
 
@@ -21,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
-            $table->dropUnique(['code']);
-            $table->dropColumn('code');
+        Schema::table('purchase_payments', function (Blueprint $table) {
+            //
         });
     }
 };

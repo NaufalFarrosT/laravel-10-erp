@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             AccountSubCategorySeeder::class,
             SubAccountSeeder::class,
             ItemSeeder::class,
-            CustomerSeeder::class
+            CustomerSeeder::class,
+            TransactionTypeSeeder::class,
         ]);
     }
 }

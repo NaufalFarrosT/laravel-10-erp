@@ -73,7 +73,7 @@ class PurchaseController extends Controller
         // Count total order today
         $totalOrdersToday = PurchaseOrder::whereDate('created_at', Carbon::today())->count() + 1;
 
-        $po_code = sprintf('%s%s%03d', $prefix, $date, $totalOrdersToday);
+        $po_code = sprintf('%s%s-%03d', $prefix, $date, $totalOrdersToday);
 
         // Store Purchase Order
         $purchase_order = new PurchaseOrder();

@@ -70,7 +70,7 @@ class SaleController extends Controller
         // Count total order today
         $totalOrdersToday = SaleOrder::whereDate('created_at', Carbon::today())->count() + 1;
 
-        $so_code = sprintf('%s%s%03d', $prefix, $date, $totalOrdersToday);
+        $so_code = sprintf('%s%s-%03d', $prefix, $date, $totalOrdersToday);
 
         // Store Sale Order
         $sale_order = new SaleOrder();
