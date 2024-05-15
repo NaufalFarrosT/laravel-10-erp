@@ -78,7 +78,7 @@
                                     @foreach ($sale_orders as $so)
                                         <tr id="tr_{{ $so->id }}">
                                             <td>{{ $loop->iteration }}</td>
-                                            <td id="td_id_{{ $so->id }}">{{ $so->id }}</td>
+                                            <td id="td_code_{{ $so->id }}">{{ $so->code }}</td>
                                             <td>
                                                 {{ $so->date }}
                                             </td>
@@ -148,33 +148,5 @@
                 }
             });
         });
-
-        // Submit form when date inputs change
-        // $('#dateRange').on('apply.daterangepicker', function(ev, picker) {
-        //     $('#filterForm').submit();
-        // })
-
-        // $('#dateRange, #end_date').on('click', function() {
-        //     $('#filterForm').submit();
-        // });
-
-        // $('#dateRange').on('apply.daterangepicker', function(ev, picker) {
-        //     // Format the start and end dates from the picker
-        //     var startDate = picker.startDate.format('YYYY-MM-DD');
-        //     var endDate = picker.endDate.format('YYYY-MM-DD');
-
-        //     console.log(startDate);
-        //     console.log(endDate);
-
-        //     // Use jQuery AJAX to send a GET request to the server
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "{{ route('purchase.index') }}",
-        //         data: {
-        //             start_date: startDate,
-        //             end_date: endDate,
-        //         },
-        //     });
-        // });
     </script>
 @endsection

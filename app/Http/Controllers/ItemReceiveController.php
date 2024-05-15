@@ -9,6 +9,7 @@ use App\Models\PurchaseDetail;
 use App\Models\PurchaseOrder;
 use App\Models\Warehouse;
 use App\Models\WarehouseItem;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -69,7 +70,16 @@ class ItemReceiveController extends Controller
         $purchase_order = PurchaseOrder::find($request->purchase_order_id);
 
         // Store Item Receive Data
+        $prefix = 'IR';
+        $date = Carbon::now()->format('Ymd');
+
+        // Count total item receive today
+        $totalItemReceiveToday = ItemReceive::whereDate('created_at', Carbon::today())->count() + 1;
+
+        $ir_code = sprintf('%s%s%03d', $prefix, $date, $totalItemReceiveToday);
+
         $item_receive_data = new ItemReceive();
+        $item_receive_data->code = $ir_code;
         $item_receive_data->date = $request->datePicker;
         $item_receive_data->warehouse_id = $warehouse_id;
         $item_receive_data->purchase_order_id = $purchase_order->id;

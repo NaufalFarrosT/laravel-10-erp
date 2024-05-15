@@ -80,7 +80,7 @@
                                     @foreach ($purchase_orders as $po)
                                         <tr id="tr_{{ $po->id }}">
                                             <td>{{ $loop->iteration }}</td>
-                                            <td id="td_id_{{ $po->id }}">{{ $po->id }}</td>
+                                            <td id="td_code_{{ $po->id }}">{{ $po->code }}</td>
                                             <td>
                                                 {{ \Carbon\Carbon::parse($po->date)->format('d-M-Y') }}
                                             </td>

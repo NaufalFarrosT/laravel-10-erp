@@ -67,8 +67,17 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
+        $prefix = 'PO';
+        $date = Carbon::now()->format('Ymd');
+
+        // Count total order today
+        $totalOrdersToday = PurchaseOrder::whereDate('created_at', Carbon::today())->count() + 1;
+
+        $po_code = sprintf('%s%s%03d', $prefix, $date, $totalOrdersToday);
+
         // Store Purchase Order
         $purchase_order = new PurchaseOrder();
+        $purchase_order->code = $po_code;
         $purchase_order->date = $request->get('datePicker');
         $purchase_order->total_price = $request->get('total');
         $purchase_order->supplier_id = $request->get('supplier_id');

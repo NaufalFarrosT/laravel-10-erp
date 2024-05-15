@@ -64,8 +64,17 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
+        $prefix = 'SO';
+        $date = Carbon::now()->format('Ymd');
+
+        // Count total order today
+        $totalOrdersToday = SaleOrder::whereDate('created_at', Carbon::today())->count() + 1;
+
+        $so_code = sprintf('%s%s%03d', $prefix, $date, $totalOrdersToday);
+
         // Store Sale Order
         $sale_order = new SaleOrder();
+        $sale_order->code = $so_code;
         $sale_order->date = $request->get('datePicker');
         $sale_order->total_price = $request->get('total');
         $sale_order->status = "PROSES";
