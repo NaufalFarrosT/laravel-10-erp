@@ -12,7 +12,7 @@ class ItemReceive extends Model
 
     public function warehouse()
     {
-        return $this->belongsTo(warehouse::class);
+        return $this->belongsTo(Warehouse::class);
     }
 
     public function itemReceiveDetails() {
