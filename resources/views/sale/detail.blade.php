@@ -169,6 +169,7 @@
         function storePaymentData() {
             var payment_date = $("#datePicker").val();
             var payment_amount = $("#payment_amount").val();
+            var sub_account_name = $("#account_id option:selected").text();
             var account_id = $("#account_id").val();
             var sale_order_id = $('#sale_order_id').val();
 
@@ -196,7 +197,7 @@
                         "<td id='td_name_" + response.data.id +
                         "'>" + payment_date + "</td>" +
                         "<td>" + payment_amount + "</td>" +
-                        "<td>" + account_id + "</td>" +
+                        "<td>" + sub_account_name + "</td>" +
                         "<td><div class='d-flex justify-content-center'><button type='button' class='btn btn-sm btn-warning mr-2' onclick='editSalePayment(" +
                         response.data.id + ")'><i class='fas fa-edit'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-danger' onclick='deleteConfirmationSalePayment(" +

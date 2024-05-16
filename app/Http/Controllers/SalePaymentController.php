@@ -27,6 +27,12 @@ class SalePaymentController extends Controller
 
         $sub_accounts = SubAccount::all();
 
+        $sale_payment = SalePayment::where('sale_order_id', $sale_order->id)->get();
+
+        foreach($sale_payment as $sp){
+            $sale_order->total_price -= $sp->amount;
+        }
+
         return response()->json(array(
             'msg' => view('sale.payment.modal-createPayment', compact('sale_order', 'sub_accounts'))->render()
         ), 200);

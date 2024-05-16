@@ -120,32 +120,35 @@
         // Set date to nowdate
         document.getElementById('datePicker').valueAsDate = new Date();
 
-        function countTotalPriceItem(tr) {
+        function countTotalItemPrice(tr) {
             // Price
             let price = tr.find('.price');
-            let priceValue = changeNumberWithThousandSeparator(price.val())
+            let priceValue = price.val().replace(/,/g, '');
+            let formattedPrice = changeNumberWithThousandSeparator(priceValue)
             price.val(function() {
                 return (priceValue === 0) ?
                     "0" :
-                    priceValue.toLocaleString("id-ID");
+                    formattedPrice;
             })
 
             // Quantity
             let qty = tr.find('.quantity');
-            let qtyValue = changeNumberWithThousandSeparator(qty.val())
+            let qtyValue = qty.val().replace(/,/g, '');
+            let formattedQty = changeNumberWithThousandSeparator(qtyValue)
             qty.val(function() {
                 return (qtyValue === 0) ?
                     "" :
-                    qtyValue.toLocaleString("id-ID");
+                    formattedQty;
             })
 
             // Discount
             let discount = tr.find('.discount');
-            let discountValue = changeNumberWithThousandSeparator(discount.val())
+            let discountValue = discount.val().replace(/,/g, '');
+            let formattedDiscount = changeNumberWithThousandSeparator(discountValue)
             discount.val(function() {
                 return (discountValue === 0) ?
                     "0" :
-                    discountValue.toLocaleString("id-ID");
+                    formattedDiscount;
             })
 
             // Total Price per Item
@@ -158,10 +161,10 @@
                     "" :
                     totalPriceValue.toLocaleString();
             })
-        }
+        };
 
         // Count total price by summarize total price each item
-        function TotalAmount() {
+        function countGrandTotal() {
             let total = 0;
             $(".display_total_price_per_item").each(function(i, e) {
                 let amount = $(this).text().replaceAll(",", "");
@@ -192,9 +195,9 @@
         $(".addMoreItem").delegate(".quantity, .price, .discount", "keyup click", function() {
             let tr = $(this).parent().parent();
 
-            countTotalPriceItem(tr);
+            countTotalItemPrice(tr);
 
-            TotalAmount();
+            countGrandTotal();
         });
 
         let autoCompleteItemPath = "{{ route('sale.item.autoComplete') }}";
@@ -229,7 +232,7 @@
                         $new_quantity = $tr_item_quantity + 1;
                         $tr_item.find('#quantity').val($new_quantity);
 
-                        countTotalPriceItem($tr_item);
+                        countTotalItemPrice($tr_item);
                     }
                 } else {
                     let tr = "<tr id='tr_" + ui.item.id + "'>" +
@@ -237,16 +240,11 @@
                         "<input type='hidden' id='warehouseItemId' name='warehouseItemId[]' value=" + ui.item
                         .warehouse_item_id + ">" +
                         "<td>" + numberOfRow + "</td>" +
-
                         "<td id='td_name_" + ui.item.id + "'>" +
                         ui.item.value + "</td>" +
-
                         "<td>" +
-                        "<label id='display_price_per_item' name='display_price_per_item' class='form-control'>" +
-                        ui.item.price.toLocaleString() + "</label>" +
-                        "<input type='hidden' class='price' id='price' name='price[]' value=" + ui
-                        .item.price + "></td>" +
-                        "</td>" +
+                        "<input type='text' class='form-control price' id='price' name='price[]' value=" + ui
+                        .item.price.toLocaleString() + "></td>" +
                         "<td><input type='number' name='quantity[]' id='quantity'" +
                         "min='1' max='" + ui.item.stock +
                         "' class='form-control quantity' value='1' required/><span>Stok: " + ui.item.stock +
@@ -267,14 +265,14 @@
                     $('.table-bordered tbody').append(tr);
                 }
 
-                TotalAmount();
+                countGrandTotal();
                 return false;
             }
         });
 
         $(".addMoreItem").delegate(".delete", "click", function() {
             $(this).parent().parent().remove();
-            TotalAmount();
+            countGrandTotal();
         });
     </script>
 @endsection
