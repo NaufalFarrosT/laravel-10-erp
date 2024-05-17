@@ -112,7 +112,7 @@
         // Set date to nowdate
         document.getElementById('datePicker').valueAsDate = new Date();
 
-        function countTotalAmount(tr) {
+        function countTotalItemPrice(tr) {
             // Price
             let price = tr.find('.price');
             let priceValue = price.val().replace(/,/g, '');
@@ -186,7 +186,7 @@
         $(".addMoreItem").delegate(".quantity, .price, .discount", "keyup click", function() {
             let tr = $(this).parent().parent();
 
-            countTotalAmount(tr);
+            countTotalItemPrice(tr);
 
             countGrandTotal();
         });
@@ -243,15 +243,13 @@
                     new_quantity = tr_item_quantity + 1;
                     tr_item.find('#quantity').val(new_quantity);
 
-                    countTotalAmount(tr_item);
+                    countTotalItemPrice(tr_item);
                 } else {
                     let tr = "<tr id='tr_" + ui.item.id + "'>" +
                         "<input type='hidden' id='itemId' name='itemId[]' value=" + ui.item.id + ">" +
                         "<td>" + numberOfRow + "</td>" +
-
                         "<td id='td_name_" + ui.item.id + "'>" +
                         ui.item.value + "</td>" +
-
                         "<td>" +
                         "<input type='text' class='form-control price' id='price' name='price[]' value=" + ui
                         .item.price.toLocaleString() + "></td>" +

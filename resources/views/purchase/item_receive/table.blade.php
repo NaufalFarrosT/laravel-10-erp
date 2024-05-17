@@ -33,9 +33,6 @@
                             <td id="td_date_{{ $ir->id }}">{{ $ir->date }}</td>
                             <td id="td_code_{{ $ir->id }}">{{ $ir->code }}</td>
                             <td>
-                                {{ $ir->id }}
-                            </td>
-                            <td>
                                 @foreach ($ir->itemReceiveDetails as $ir_detail)
                                     {{ $ir_detail->qty }} -
                                     {{ $ir_detail->purchaseDetail->item->name }} </br>
