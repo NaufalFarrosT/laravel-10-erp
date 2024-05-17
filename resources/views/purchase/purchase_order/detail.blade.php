@@ -93,7 +93,7 @@
                                         <th>Harga</th>
                                         <th>Jumlah</th>
                                         <th>Potongan</th>
-                                        <th>Jumlah Biaya</th>
+                                        <th>Subtotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
