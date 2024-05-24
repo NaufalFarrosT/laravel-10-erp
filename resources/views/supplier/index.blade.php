@@ -41,6 +41,8 @@
                                     </form>
                                 </div>
 
+                                {{-- <button type="button" style="" class="btn btn-sm btn-success"
+                                    onclick="createSupplier()">Tambah Pemasok</button> --}}
                                 <button type="button" style="" class="btn btn-sm btn-success" data-toggle="modal"
                                     data-target="#modal-create">Tambah
                                     Pemasok</button>

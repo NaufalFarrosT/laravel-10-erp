@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->date('date');
-            $table->string('information');
+            $table->string('information')->nullable();
             $table->integer('amount');
 
             $table->foreignId('sub_account_id')->constrained();

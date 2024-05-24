@@ -39,8 +39,8 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-center">
-                                    <a href="" class="btn btn-sm btn-warning mr-2"><i
-                                            class="fas fa-edit"></i></a>
+                                    {{-- <a href="" class="btn btn-sm btn-warning mr-2"><i
+                                            class="fas fa-edit"></i></a> --}}
                                     <button class="btn btn-sm btn-danger"
                                         onclick="deleteConfirmationSalePayment({{ $payment->id }})">
                                         <i class="fas fa-trash-alt"></i>

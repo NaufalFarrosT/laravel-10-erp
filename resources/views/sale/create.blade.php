@@ -185,9 +185,8 @@
         }
 
         function changeNumberWithThousandSeparator(number) {
-            number = number.replaceAll(/[\D\s\._\-]+/g, "");
-            number = number ? parseInt(number, 10) : 0;
-
+            number = number.replace(/\D/g, ''); // Remove non-numeric characters
+            number = Number(number).toLocaleString(); // Add thousand separator
             return number
         }
 

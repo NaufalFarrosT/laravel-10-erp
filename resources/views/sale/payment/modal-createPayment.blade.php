@@ -20,7 +20,7 @@
                 @endphp
                 <input type="text" class="form-control" id="payment_amount" name="payment_amount"
                     value="{{ $formatted_total_price }}" placeholder="Masukkan jumlah dalam Rupiah"
-                    onkeyup="formatRupiah(this, 'Rp. ')" onclick="formatRupiah(this, 'Rp. ')" required>
+                    onkeyup="inputFormatRupiah(this, 'Rp. ')" onclick="inputFormatRupiah(this, 'Rp. ')" required>
             </div>
 
             <div class="form-group">

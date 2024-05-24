@@ -133,7 +133,7 @@
                     </a>
                 </li>
                 <li class="nav-item" style="border-bottom: 1px solid #4f5962">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('transaction.index')}}" class="nav-link">
                         <i class="fas fa-clipboard nav-icon"></i>
                         <p>Pendapatan/Pengeluaran</p>
                     </a>

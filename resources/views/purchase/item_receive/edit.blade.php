@@ -21,7 +21,7 @@
         <!-- Main content -->
         <section class="content">
             <!-- form start -->
-            <form class="form-horizontal" method="POST" action="{{ route('item-receive.store') }}">
+            <form class="form-horizontal" method="PUT" action="{{ route('item-receive.update', ) }}">
                 @csrf
                 <div class="container-fluid">
                     <div class="form-group row mb-0">
@@ -37,7 +37,7 @@
                         <label class="col-sm-1 col-form-label">Tanggal</label>
                         <div class="col-sm-2">
                             <input class="form-control form-control-inline input-medium date-picker" size="16"
-                                type="date" value="" id="datePicker" name="datePicker" />
+                                type="date" value="{{ $purchase_order->date }}" id="datePicker" name="datePicker" />
                         </div>
                     </div>
 
@@ -76,37 +76,31 @@
                                         <input type="hidden" class="form-control" name="purchase_order_id"
                                             id="purchase_order_id" value="{{ $purchase_order->id }}">
                                         @foreach ($purchase_details as $pd)
-                                            @if ($pd->qty != 0)
-                                                <tr id="tr_{{ $pd->id }}">
-                                                    <td>
-                                                        <input type="hidden" class="form-control" name="selectedData[]"
-                                                            id="selectedData" value="true">
-                                                        <input type="hidden" class="form-control"
-                                                            name="purchase_detail_id[]" id="purchase_detail_id"
-                                                            value="{{ $pd->id }}">
-                                                        <input type="checkbox" class="form-control checkbox" id="checkbox"
-                                                            value="true" checked />
-                                                    </td>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>
-                                                        {{ $pd->item_id }}
-                                                    </td>
-                                                    <td id="td_name_{{ $pd->id }}">{{ $pd->item->name }}</td>
-                                                    <td>
-                                                        <input type='number' name='qty[]' id='qty' min='1'
-                                                            max="{{ $pd->qty }}" class='form-control'
-                                                            value="{{ $pd->qty }}" />
-                                                    </td>
+                                            @if($pd->qty != 0)
+                                            <tr id="tr_{{ $pd->id }}">
+                                                <td>
+                                                    <input type="hidden" class="form-control" name="selectedData[]"
+                                                        id="selectedData" value="true">
+                                                    <input type="hidden" class="form-control" name="purchase_detail_id[]"
+                                                        id="purchase_detail_id" value="{{ $pd->id }}">
+                                                    <input type="checkbox" class="form-control checkbox" id="checkbox"
+                                                        value="true" checked />
+                                                </td>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>
+                                                    {{ $pd->item_id }}
+                                                </td>
+                                                <td id="td_name_{{ $pd->id }}">{{ $pd->item->name }}</td>
+                                                <td>
+                                                    <input type='number' name='qty[]' id='qty' min='1'
+                                                        max="{{ $pd->qty }}" class='form-control'
+                                                        value="{{ $pd->qty }}" />
+                                                </td>
 
-                                                    <td>
-                                                        {{ $pd->item->unit->name }}
-                                                    </td>
-                                                    {{-- <td>
-                                                    @php
-                                                        echo 'Rp ' . number_format($pd->price, 0, ',', '.');
-                                                    @endphp
-                                                </td> --}}
-                                                </tr>
+                                                <td>
+                                                    {{ $pd->item->unit->name }}
+                                                </td>
+                                            </tr>
                                             @endif
                                         @endforeach
                                     </tbody>
@@ -136,9 +130,6 @@
         $('#purchase_order_date').datetimepicker({
             format: 'YYYY/MM/DD'
         });
-
-        // Set date to nowdate
-        document.getElementById('datePicker').valueAsDate = new Date();
 
         // count rows
         function checkAllCheckbox() {

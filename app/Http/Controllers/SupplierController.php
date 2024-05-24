@@ -24,7 +24,9 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return response()->json(array(
+            'view' => view('supplier.modal-create')->render()
+        ), 200);
     }
 
     /**

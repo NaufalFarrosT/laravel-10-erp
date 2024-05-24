@@ -43,8 +43,8 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-center">
-                                    <a href="" class="btn btn-sm btn-warning mr-2"><i
-                                            class="fas fa-edit"></i></a>
+                                    {{-- <a href="{{ route('item-receive.edit', $purchase_order->id) }}" class="btn btn-sm btn-warning mr-2"><i
+                                            class="fas fa-edit"></i></a> --}}
                                     <button class="btn btn-sm btn-danger"
                                         onclick="deleteConfirmationItemReceive({{ $ir->id }})"><i
                                             class="fas fa-trash-alt"></i></button>

@@ -28,6 +28,8 @@
                                     name="supplier_search" placeholder="Cari Pemasok">
                                 <input type="hidden" id="supplier_id" name="supplier_id">
                             </div>
+                            <button type="button" style="" class="btn btn-sm btn-success" onclick="createSupplier()">Tambah
+                                Pemasok</button>
                         </div>
 
                         <div class="form-group row">
@@ -111,6 +113,29 @@
 
         // Set date to nowdate
         document.getElementById('datePicker').valueAsDate = new Date();
+
+        // Trigger modal create supplier
+        function createSupplier() {
+            console.log(purchase_order_id)
+            $.ajax({
+                type: "GET",
+                url: "{{ route('supplier.create') }}",
+                success: function(response) {
+                    $("#modal-content").html(response.msg);
+                    $("#modal-default").modal('show');
+                },
+                error: function(xhr) {
+                    // Handle error response
+                    if (xhr.status == 404) {
+                        alert('Resource not found');
+                    } else if (xhr.status == 500) {
+                        alert('Internal Server Error');
+                    } else {
+                        alert('An error occurred: ' + xhr.statusText);
+                    }
+                }
+            });
+        }
 
         function countTotalItemPrice(tr) {
             // Price

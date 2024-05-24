@@ -133,6 +133,11 @@ Route::middleware('auth')->group(function () {
         });
 
     Route::resource('/transaction', TransactionController::class);
+    Route::prefix('transaction')->controller(TransactionController::class)
+    ->group(function () {
+        Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
+            ->name('transaction.deleteConfirmation');
+    });
 
     Route::resource('/unit', UnitController::class);
     Route::prefix('unit')->controller(UnitController::class)

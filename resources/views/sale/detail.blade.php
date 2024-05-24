@@ -174,7 +174,7 @@
             var sale_order_id = $('#sale_order_id').val();
 
             var payment_amount_integer_format = payment_amount.replace(/Rp\.|\./g, '').trim();
-            var numberOfRow = $("#sale-info tr").length - 0;
+            var numberOfRow = $("#payment-info tr").length - 0;
 
             $.ajax({
                 type: "POST",
@@ -198,8 +198,9 @@
                         "'>" + payment_date + "</td>" +
                         "<td>" + payment_amount + "</td>" +
                         "<td>" + sub_account_name + "</td>" +
-                        "<td><div class='d-flex justify-content-center'><button type='button' class='btn btn-sm btn-warning mr-2' onclick='editSalePayment(" +
-                        response.data.id + ")'><i class='fas fa-edit'></i></button>" +
+                        "<td><div class='d-flex justify-content-center'>" +
+                        // "<button type='button' class='btn btn-sm btn-warning mr-2' onclick='editSalePayment(" +
+                        // response.data.id + ")'><i class='fas fa-edit'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-danger' onclick='deleteConfirmationSalePayment(" +
                         response.data.id + ")'><i class='fas fa-trash-alt'></i></button></div>" +
                         "</td></tr>";
@@ -275,7 +276,7 @@
         }
         // End Payment
 
-        function formatRupiah(angka, prefix) {
+        function inputFormatRupiah(angka, prefix) {
             var number_string = angka.value.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,

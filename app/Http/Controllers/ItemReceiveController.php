@@ -156,9 +156,23 @@ class ItemReceiveController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ItemReceive $itemReceive)
+    public function edit($id)
     {
-        //
+        $item_receive = ItemReceive::find($id);
+        $purchase_order = PurchaseOrder::find($item_receive->purchase_order_id);
+        $warehouses = Warehouse::all();
+
+        $purchase_details = PurchaseDetail::all()->where('purchase_order_id', $purchase_order->id);
+
+        return view(
+            'purchase.item_receive.edit',
+            [
+                'item_receive' => $item_receive,
+                'purchase_order' => $purchase_order,
+                'purchase_details' => $purchase_details,
+                'warehouses' => $warehouses
+            ]
+        );
     }
 
     /**

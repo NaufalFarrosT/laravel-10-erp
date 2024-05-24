@@ -8,7 +8,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <a href="{{ Route('purchase.index')}}" class="btn btn-lg btn-default ml-2"> Kembali</a>
+            <a href="{{ Route('purchase.index') }}" class="btn btn-lg btn-default ml-2"> Kembali</a>
         </section>
 
         <!-- Main content -->
@@ -17,7 +17,6 @@
                 <div class="modal fade" id="modal-default">
                     <div class="modal-dialog">
                         <div class="modal-content" id="modal-content">
-
                         </div>
                     </div>
                 </div>
@@ -32,7 +31,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row mb-0">
-                            <label for="supplier" class="col-sm-1 col-form-label">Pemasok</label>
+                            <label for="supplier" class="col-12 col-lg-1 col-form-label">Pemasok</label>
                             <div class="col-sm-3">
                                 <label class='form-control' @readonly(true)>
                                     {{ $purchase_order->supplier->name }}
@@ -41,7 +40,7 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <label class="col-sm-1 col-form-label">Tanggal</label>
+                            <label class="col-12 col-lg-1 col-form-label">Tanggal</label>
                             <div class="col-sm-2">
                                 <input type='text' class='form-control'
                                     value='{{ \Carbon\Carbon::parse($purchase_order->date)->format('d-m-Y') }}' readonly>
@@ -61,8 +60,8 @@
                 </div>
 
                 <!-- Card Penerimaan Barang & Pembayaran -->
-                <div class="container-fluid m-0 w-100">
-                    <div class="row w-100">
+                <div class="container-fluid m-0 w-100 p-0">
+                    <div class="row">
                         <!-- Penerimaan Barang -->
                         <div class="col-sm-6">
                             @include('purchase.item_receive.table')
@@ -187,7 +186,7 @@
                             $("#purchase_payment_action").html("");
 
                             var purchase_payment_button_element =
-                                "<button type='button'style='width: fit-content;' class='btn btn-sm btn-success' onclick='createPayment({{ $purchase_order->id }})'>Tambah Pembayaran Barang</button>"
+                                "<button id='btn_add_purchase_payment' type='button'style='width: fit-content;' class='btn btn-sm btn-success' onclick='createPayment({{ $purchase_order->id }})'>Tambah Pembayaran Barang</button>"
 
                             $("#purchase_payment_action").append(purchase_payment_button_element);
                         }
@@ -267,12 +266,15 @@
 
                     var tr = "<tr id='tr_purchase_payment_" + response.data.id + "'>" +
                         "<td>" + numberOfRow + "</td>" +
-                        "<td id='td_name_" + response.data.id +
-                        "'>" + payment_date + "</td>" +
-                        "'<td>" + response.data.code + "</td>" +
-                        "<td>" + payment_amount + "</td>" +
-                        "<td>" + sub_account_name + "</td>" +
-                        "<td><div class='d-flex justify-content-center'><button type='button' class='btn btn-sm btn-warning mr-2' onclick='editPurchasePayment(" +
+                        "<td id='td_purchase_payment_date_" + response.data.id + "'>" +
+                        payment_date + "</td>" +
+                        "'<td id='td_purchase_payment_date_" + response.data.id + "'>" +
+                        response.data.code + "</td>" +
+                        "<td id='td_purchase_payment_amount_" + response.data.id + "'>" +
+                        payment_amount + "</td>" +
+                        "<td id='td_purchase_payment_sub_account_" + response.data.id + "'>" +
+                        sub_account_name + "</td>" +
+                        "<td><div class='d-flex justify-content-center'><button type='button' class='btn btn-sm btn-warning mr-2' onclick='editPaymentData(" +
                         response.data.id + ")'><i class='fas fa-edit'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-danger' onclick='deleteConfirmationPurchasePayment(" +
                         response.data.id + ")'><i class='fas fa-trash-alt'></i></button></div>" +
@@ -289,6 +291,57 @@
                         alert('An error occurred: ' + xhr.statusText);
                     }
                 }
+            });
+        }
+
+        function editPaymentData(id) {
+            $.ajax({
+                type: "GET",
+                url: `purchase-payment/${id}/edit`,
+                success: function(response) {
+                    $("#modal-content").html(response.data);
+                    $("#modal-default").modal('show');
+                },
+                error: function(err) {
+                    alert(err);
+                },
+            });
+        }
+
+        function updatePaymentData(id) {
+            var input_date = $("#eDatePicker").val();
+            var input_sub_account = $("#eAccount_id").val();
+            var sub_account_text = $("#eAccount_id option:selected").text();
+            var input_amount = $("#ePayment_amount").val();
+            var input_amount_integer_format = input_amount.replace(/Rp\.|\./g, '').trim();
+
+            $.ajax({
+                type: "PUT",
+                url: `purchase-payment/${id}`,
+                data: {
+                    _token: "<?php echo csrf_token(); ?>",
+                    date: input_date,
+                    amount: input_amount_integer_format,
+                    sub_account_id: input_sub_account,
+                },
+                success: function(response) {
+                    if (response.payment_status == "Lunas") {
+                        $("#purchase_payment_action").html("");
+                    } else if ($('#purchase_payment_action').find('#btn_add_purchase_payment').length == 0) {
+                        var purchase_payment_button_element =
+                            "<button id='btn_add_purchase_payment' type='button'style='width: fit-content;' class='btn btn-sm btn-success' onclick='createPayment({{ $purchase_order->id }})'>Tambah Pembayaran Barang</button>"
+
+                        $("#purchase_payment_action").append(purchase_payment_button_element);
+                    }
+
+                    $("#td_purchase_payment_date_" + id).html(input_date);
+                    $("#td_purchase_payment_amount_" + id).html(input_amount);
+                    $("#td_purchase_payment_sub_account_" + id).html(sub_account_text);
+                    toastr.success(response.msg);
+                },
+                error: function(err) {
+                    alert(err);
+                },
             });
         }
 
@@ -313,7 +366,7 @@
         }
         // End Payment
 
-        function formatRupiah(angka, prefix) {
+        function inputFormatRupiah(angka, prefix) {
             var number_string = angka.value.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,
