@@ -55,7 +55,7 @@ class SupplierController extends Controller
         //$items = $supplier->items;
 
         return response()->json(array(
-            'msg' => view('supplier.modal-show', compact('supplier'))->render()
+            'data' => view('supplier.modal-show', compact('supplier'))->render()
         ), 200);
     }
 

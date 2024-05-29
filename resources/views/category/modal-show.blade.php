@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title">Detail Jabatan {{ $role->name }}</h4>
+    <h4 class="modal-title">Detail Kategori {{ $category->name }}</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -9,22 +9,22 @@
         <thead>
             <tr>
                 <th style="width: 10px">#</th>
-                <th>Task</th>
-                <th>Email</th>
+                <th>Nama Item</th>
+                <th>Stok</th>
+                <th>Harga</th>
                 <th class="col-3"></th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $user)
+            @foreach ($items as $item)
                 <tr>
-                    <td>1.</td>
-                    <td>{{ $user->fullname }}</td>
-                    <td>{{ $user->email }}</td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->stock }}</td>
+                    <td>{{ $item->price }}</td>
                     <td>
-                        <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn btn-sm btn-warning"><i
+                        <a href="{{ route('item.edit', $item->id) }}" class="btn btn-sm btn-warning"><i
                                 class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-sm btn-primary" id="btnShow"
-                            onclick="showUser({{ $user->id }})"><i class="fas fa-eye"></i></button>
                     </td>
                 </tr>
             @endforeach

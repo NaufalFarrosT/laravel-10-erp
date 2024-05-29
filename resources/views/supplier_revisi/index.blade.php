@@ -10,6 +10,8 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+
+                <!-- Modal -->
                 <div class="modal fade" id="modal-default">
                     <div class="modal-dialog">
                         <div class="modal-content" id="modal-content">
@@ -17,17 +19,18 @@
                         </div>
                     </div>
                 </div>
+                <!-- Modal End -->
 
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex flex-wrap justify-content-between">
-                            <h3 class="mb-0">Data Kategori</h3>
+                            <h3 class="mb-0">Data Pemasok</h3>
 
                             <div class="d-flex flex-wrap justify-content-between">
 
                                 <div class="card-tools mr-2">
                                     <form id="filterForm" class="flex-fill" method="GET"
-                                        action="{{ route('category.index') }}">
+                                        action="{{ route('supplier.index') }}">
                                         <div class="input-group input-group-m" style="width: 300px;">
                                             <input type="text" name="table_search" class="form-control float-right"
                                                 placeholder="Search"
@@ -44,13 +47,13 @@
 
                                 <button type="button" style="" class="btn btn-sm btn-success" data-toggle="modal"
                                     data-target="#modal-create">Tambah
-                                    Kategori</button>
+                                    Pemasok</button>
                             </div>
                         </div>
                     </div>
 
                     <!-- Modal Start -->
-                    @include('category/modal-create')
+                    @include('supplier/modal-create')
                     <!-- Modal End -->
 
                     <!-- /.card-header -->
@@ -59,24 +62,28 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Nama Kategori</th>
-                                    <th style="width: 130px">Aksi</th>
+                                    <th>Nama Pemasok</th>
+                                    <th>Saldo</th>
+                                    <th Alamat="width: 130px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $category)
-                                    <tr id="tr_{{ $category->id }}">
+                                @foreach ($suppliers as $supplier)
+                                    <tr id="tr_{{ $supplier->id }}">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td id="td_name_{{ $category->id }}">{{ $category->name }}</td>
+                                        <td id="td_name_{{ $supplier->id }}">{{ $supplier->name }}</td>
+                                        <td id="td_address_{{ $supplier->id }}">
+                                            {{ $supplier->address }}
+                                        </td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-primary" id="btnShow"
-                                                onclick="showAllItemBasedOnCategory({{ $category->id }})"><i
+                                                onclick="showAllUserBasedOnSupplier({{ $supplier->id }})"><i
                                                     class="fas fa-eye"></i></button>
                                             <button type="button" class="btn btn-sm btn-warning"
-                                                onclick="editCategoryData({{ $category->id }})"><i
+                                                onclick="editSupplierData({{ $supplier->id }})"><i
                                                     class="fas fa-edit"></i></button>
                                             <button type="button" class="btn btn-sm btn-danger"
-                                                onclick="deleteConfirmation({{ $category->id }})"><i
+                                                onclick="deleteConfirmation({{ $supplier->id }})"><i
                                                     class="fas fa-trash-alt"></i></button>
                                         </td>
                                     </tr>
@@ -87,7 +94,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
-                            {{ $categories->links() }}
+                            {{ $suppliers->links() }}
                         </ul>
                     </div>
                 </div>
@@ -98,117 +105,42 @@
 
 @section('javascript-function')
     <script>
-        function storeCategoryData() {
-            var name = $("#inputName").val();
+        function storeSupplierData() {
+            var name = $("#name").val();
+            var address = $("#address").val();
             var numberOfRow = $(".table-bordered tr").length - 0;
 
             $.ajax({
                 type: "POST",
-                url: `category`,
+                url: `supplier`,
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
-                    name: name
+                    name: name,
+                    address: address
                 },
-                success: function(response) {
-                    toastr.success(response.msg);
-                    var tr = "<tr id='tr_" + response.category.id + "'>" +
+                success: function(data) {
+                    toastr.success(data.msg);
+                    var tr = "<tr id='tr_" + data.data.id + "'>" +
                         "<td>" + numberOfRow + "</td>" +
-                        "<td id='td_name_" + response.category.id +
+                        "<td id='td_name_" + data.data.id +
                         "'>" + name + "</td>" +
-                        "<td><button type='button' class='btn btn-sm btn-primary' id='btnShow' onclick='showAllItemBasedOnCategory(" +
-                        response.category.id + ")'><i class='fas fa-eye'></i></button>" +
-                        "<button type='button' class='btn btn-sm btn-warning' onclick='editCategoryData(" +
-                        response.category.id + ")'><i class='fas fa-edit'></i></button>" +
+                        "<td>" + address + "</td>" +
+                        "<td><button type='button' class='btn btn-sm btn-primary' id='btnShow' onclick='showAllUserBasedOnSupplier(" +
+                        data.data.id + ")'><i class="
+                    fas fa - eye "></i></button>" +
+                        "<button type='button' class='btn btn-sm btn-warning' onclick='editSupplierData(" +
+                        data.data.id + ")'><i class='fas fa-edit'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-danger' onclick='deleteConfirmation(" +
-                        response.category.id + ")'><i class='fas fa-trash-alt '></i></button>" +
+                        data.data.id + ")'><i class='fas fa-trash-alt '></i></button>" +
                         "</td></tr>";
 
                     $('.table-bordered tbody').append(tr);
-                    $('#inputName').val("");
+                    $('#name').val("");
+                    $('#address').val("");
                 },
                 error: function(xhr) {
                     console.log((xhr.responseJSON.errors));
                 }
-            });
-        }
-
-        function editCategoryData(id) {
-            $.ajax({
-                type: "GET",
-                url: `category/${id}/edit`,
-                success: function(data) {
-                    $("#modal-content").html(data.msg);
-                    $("#modal-default").modal('show');
-                },
-                error: function(err) {
-                    alert(err);
-                },
-            });
-        }
-
-        function saveCategoryDataUpdateTD(id) {
-            var eName = $("#eName").val();
-            $.ajax({
-                type: "PUT",
-                url: `category/${id}`,
-                data: {
-                    _token: "<?php echo csrf_token(); ?>",
-                    name: eName
-                },
-                success: function(data) {
-                    $("#td_name_" + id).html(eName);
-                    toastr.success(data.msg);
-                },
-                error: function(err) {
-                    alert(err);
-                },
-            });
-        }
-
-        function deleteConfirmation(id) {
-            $.ajax({
-                type: "GET",
-                url: `category/${id}/DeleteConfirmation`,
-                success: function(data) {
-                    $("#modal-content").html(data.msg);
-                    $("#modal-default").modal('show');
-                },
-                error: function(xhr) {
-                    console.log((xhr.responseJSON.errors));
-                    alert('Error');
-                }
-            });
-        }
-
-        function deleteCategoryDataRemoveTR(id) {
-            $.ajax({
-                type: "DELETE",
-                url: `category/${id}`,
-                data: {
-                    _token: "<?php echo csrf_token(); ?>",
-                },
-                success: function(data) {
-                    if (data.status == "Success") {
-                        $("#tr_" + id).remove();
-                        toastr.success(data.msg);
-                    } else {
-                        alert(data.msg);
-                    }
-                },
-            });
-        }
-
-        function showAllItemBasedOnCategory(id) {
-            $.ajax({
-                type: "GET",
-                url: `category/${id}`,
-                success: function(response) {
-                    $("#modal-content").html(response.data);
-                    $("#modal-default").modal('show');
-                },
-                error: function(err) {
-                    alert("Error");
-                },
             });
         }
     </script>

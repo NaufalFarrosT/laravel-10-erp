@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ERP KU</title>
+    <title>POS KU</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"

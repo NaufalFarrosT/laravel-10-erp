@@ -75,7 +75,7 @@
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-primary" id="btnShow"
-                                                onclick="showAllUserBasedOnSupplier({{ $supplier->id }})"><i
+                                                onclick="showAllPurchaseOrderBasedOnSupplier({{ $supplier->id }})"><i
                                                     class="fas fa-eye"></i></button>
                                             <button type="button" class="btn btn-sm btn-warning"
                                                 onclick="editSupplierData({{ $supplier->id }})"><i
@@ -104,8 +104,8 @@
 @section('javascript-function')
     <script>
         function storeSupplierData() {
-            var name = $("#name").val();
-            var address = $("#address").val();
+            var input_name = $("#name").val();
+            var input_address = $("#address").val();
             var numberOfRow = $(".table-bordered tr").length - 0;
 
             $.ajax({
@@ -113,23 +113,23 @@
                 url: `supplier`,
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
-                    name: name,
-                    address: address
+                    name: input_name,
+                    address: input_address
                 },
-                success: function(data) {
-                    toastr.success(data.msg);
-                    var tr = "<tr id='tr_" + data.data.id + "'>" +
+                success: function(response) {
+                    toastr.success(response.msg);
+                    var tr = "<tr id='tr_" + response.data.id + "'>" +
                         "<td>" + numberOfRow + "</td>" +
-                        "<td id='td_name_" + data.data.id +
-                        "'>" + name + "</td>" +
-                        "<td>" + address + "</td>" +
-                        "<td><button type='button' class='btn btn-sm btn-primary' id='btnShow' onclick='showAllUserBasedOnSupplier(" +
-                        data.data.id + ")'><i class="
-                    fas fa - eye "></i></button>" +
+                        "<td id='td_name_" + response.data.id +
+                        "'>" + input_name + "</td>" +
+                        "<td id='td_address_" + response.data.id +
+                        "'>" + input_address + "</td>" +
+                        "<td><button type='button' class='btn btn-sm btn-primary' id='btnShow' onclick='showAllPurchaseOrderBasedOnSupplier(" +
+                        response.data.id + ")'><i class='fas fa-eye'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-warning' onclick='editSupplierData(" +
-                        data.data.id + ")'><i class='fas fa-edit'></i></button>" +
+                        response.data.id + ")'><i class='fas fa-edit'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-danger' onclick='deleteConfirmation(" +
-                        data.data.id + ")'><i class='fas fa-trash-alt '></i></button>" +
+                        response.data.id + ")'><i class='fas fa-trash-alt '></i></button>" +
                         "</td></tr>";
 
                     $('.table-bordered tbody').append(tr);
@@ -168,7 +168,7 @@
                     name: eName,
                     address: eAddress
                 },
-                success: function(data) {
+                success: function(response) {
                     $("#td_name_" + id).html(eName);
                     $("#td_address_" + id).html(eAddress);
                     toastr.success(data.msg);
@@ -212,13 +212,13 @@
             });
         }
 
-        function showAllItemBasedOnSupplier(id) {
+        function showAllPurchaseOrderBasedOnSupplier(id) {
             $.ajax({
                 type: "GET",
                 url: `supplier/${id}`,
-                success: function(data) {
+                success: function(response) {
                     //console.log(data.users);
-                    $("#modal-content").html(data.msg);
+                    $("#modal-content").html(response.data);
                     $("#modal-default").modal('show');
                 },
                 error: function(err) {

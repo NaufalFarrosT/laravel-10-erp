@@ -52,7 +52,7 @@ class CategoryController extends Controller
         $items = $category->items;
 
         return response()->json(array(
-            'msg' => view('category.modal-show', compact('category','items'))->render()
+            'data' => view('category.modal-show', compact('category','items'))->render()
         ), 200);
     }
 

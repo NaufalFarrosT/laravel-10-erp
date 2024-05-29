@@ -9,7 +9,7 @@ class Supplier extends Model
 {
     use HasFactory;
 
-    public function purchasing_notes() {
-        return $this->hasMany(PurchasingNote::class);
+    public function purchase_orders() {
+        return $this->hasMany(PurchaseOrder::class);
     }
 }
