@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public function category()
     {
@@ -24,7 +25,7 @@ class Item extends Model
     }
 
     public function selling_details() {
-        return $this->belongsToMany(SalesOrder::class);
+        return $this->belongsToMany(SaleOrder::class);
     }
 
     public function warehouses(){

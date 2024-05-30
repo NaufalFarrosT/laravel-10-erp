@@ -23,7 +23,9 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex flex-wrap justify-content-between">
+                        <h3 class="mb-0">Data Akun</h3>
+
+                        {{-- <div class="d-flex flex-wrap justify-content-between">
                             <h3 class="mb-0">Data Akun</h3>
 
                             <div class="d-flex flex-wrap justify-content-between">
@@ -33,7 +35,8 @@
                                         action="{{ route('account.index') }}">
                                         <div class="input-group input-group-m" style="width: 300px;">
                                             <input type="text" name="table_search" class="form-control float-right"
-                                                placeholder="Search" value="{{ $table_search != null ? $table_search : '' }}">
+                                                placeholder="Search"
+                                                value="{{ $table_search != null ? $table_search : '' }}">
 
                                             <div class="input-group-append">
                                                 <button type="submit" class="btn btn-default">
@@ -48,7 +51,7 @@
                                     data-target="#modal-create">Tambah
                                     Akun</button>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <!-- Modal Start -->
@@ -57,7 +60,11 @@
 
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <div class="container ml-0 mb-2 pl-0">
+                            <button type="button" style="" class="btn btn-m btn-success" data-toggle="modal"
+                                data-target="#modal-create">Tambah Akun</button>
+                        </div>
+                        <table id="dataTable" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
@@ -94,11 +101,11 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer clearfix">
+                    {{-- <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
                             {{ $sub_accounts->links() }}
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>

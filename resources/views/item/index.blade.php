@@ -20,7 +20,9 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex flex-wrap justify-content-between">
+                        <h3 class="mb-0">Data Item</h3>
+
+                        {{-- <div class="d-flex flex-wrap justify-content-between">
                             <h3 class="mb-0">Data Item</h3>
 
                             <div class="d-flex flex-wrap justify-content-between">
@@ -30,7 +32,8 @@
                                         action="{{ route('item.index') }}">
                                         <div class="input-group input-group-m" style="width: 300px;">
                                             <input type="text" name="table_search" class="form-control float-right"
-                                                placeholder="Search" value="{{ $table_search != null ? $table_search : '' }}">
+                                                placeholder="Search"
+                                                value="{{ $table_search != null ? $table_search : '' }}">
 
                                             <div class="input-group-append">
                                                 <button type="submit" class="btn btn-default">
@@ -41,15 +44,20 @@
                                     </form>
                                 </div>
 
-                                <a href="{{route('item.create')}}" class="btn btn-sm btn-success">Tambah
+                                <a href="{{ route('item.create') }}" class="btn btn-sm btn-success">Tambah
                                     Item</a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- /.card-header -->
 
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <div class="container ml-0 mb-2 pl-0">
+                            <a href="{{ route('item.create') }}" class="btn btn-m btn-success">Tambah
+                                Item</a>
+                        </div>
+
+                        <table id="dataTable" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
@@ -90,12 +98,11 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer clearfix">
+                    {{-- <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
                             {{ $items->links() }}
-                            {{-- {{ $items->links() }} --}}
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
@@ -104,6 +111,11 @@
 
 @section('javascript-function')
     <script>
+        // $(function() {
+        //     $("#dataTable").DataTable();
+        // });
+        // $("#dataTable").DataTable();
+
         function show(id) {
             $.ajax({
                 type: "GET",
@@ -122,8 +134,8 @@
             $.ajax({
                 type: "GET",
                 url: `item/${id}/DeleteConfirmation`,
-                success: function(data) {
-                    $("#modal-content").html(data.msg);
+                success: function(response) {
+                    $("#modal-content").html(response.msg);
                     $("#modal-default").modal('show');
                 },
                 error: function(xhr) {
@@ -140,12 +152,12 @@
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
                 },
-                success: function(data) {
-                    if (data.status == "Success") {
+                success: function(response) {
+                    if (response.status == "Success") {
                         $("#tr_" + id).remove();
-                        toastr.success(data.msg);
+                        toastr.success(response.msg);
                     } else {
-                        alert(data.msg);
+                        alert(response.msg);
                     }
                 },
             });
@@ -155,9 +167,9 @@
             $.ajax({
                 type: "GET",
                 url: `item/${id}`,
-                success: function(data) {
+                success: function(response) {
                     //console.log(data.users);
-                    $("#modal-content").html(data.msg);
+                    $("#modal-content").html(response.msg);
                     $("#modal-default").modal('show');
                 },
                 error: function(err) {

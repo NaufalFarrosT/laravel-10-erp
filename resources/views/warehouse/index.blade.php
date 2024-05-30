@@ -27,7 +27,9 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex flex-wrap justify-content-between">
+                        <h3 class="mb-0">Data Gudang</h3>
+
+                        {{-- <div class="d-flex flex-wrap justify-content-between">
                             <h3 class="mb-0">Data Gudang</h3>
 
                             <div class="d-flex flex-wrap justify-content-between">
@@ -35,29 +37,34 @@
                                 <div class="card-tools mr-2">
                                     <form id="filterForm" class="flex-fill" method="GET"
                                         action="{{ route('warehouse.index') }}">
-                                    <div class="input-group input-group-m" style="width: 300px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search" value="{{ $table_search != null ? $table_search : '' }}">
+                                        <div class="input-group input-group-m" style="width: 300px;">
+                                            <input type="text" name="table_search" class="form-control float-right"
+                                                placeholder="Search"
+                                                value="{{ $table_search != null ? $table_search : '' }}">
 
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
                                     </form>
                                 </div>
 
-                                <button type="button" style=""
-                                    class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-create">Tambah
+                                <button type="button" style="" class="btn btn-sm btn-success" data-toggle="modal"
+                                    data-target="#modal-create">Tambah
                                     Gudang</button>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <div class="container ml-0 mb-2 pl-0">
+                            <button type="button" style="" class="btn btn-m btn-success" data-toggle="modal"
+                                data-target="#modal-create">Tambah Gudang</button>
+                        </div>
+                        <table id="dataTable" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
@@ -92,11 +99,11 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer clearfix">
+                    {{-- <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
                             {{ $warehouses->links() }}
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
@@ -106,8 +113,8 @@
 @section('javascript-function')
     <script>
         function storeWarehouseData() {
-            var warehouse_name = $("#warehouseName").val();
-            var warehouse_address = $("#warehouseAddress").val();
+            var input_warehouse_name = $("#warehouseName").val();
+            var input_warehouse_address = $("#warehouseAddress").val();
 
             var number_of_row = $(".table-bordered tr").length - 0;
 
@@ -116,24 +123,24 @@
                 url: `warehouse`,
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
-                    warehouse_name: warehouse_name,
-                    warehouse_address: warehouse_address,
+                    warehouse_name: input_warehouse_name,
+                    warehouse_address: input_warehouse_address,
                 },
-                success: function(data) {
-                    toastr.success(data.msg);
-                    var tr = "<tr id='tr_" + data.new_warehouse.id + "'>" +
+                success: function(response) {
+                    toastr.success(response.msg);
+                    var tr = "<tr id='tr_" + response.new_warehouse.id + "'>" +
                         "<td>" + number_of_row + "</td>" +
-                        "<td id='td_name_" + data.new_warehouse.id +
-                        "'>" + warehouse_name + "</td>" +
-                        "<td id='td_address_" + data.new_warehouse.id +
-                        "'>" + warehouse_address + "</td>" +
+                        "<td id='td_name_" + response.new_warehouse.id +
+                        "'>" + input_warehouse_name + "</td>" +
+                        "<td id='td_address_" + response.new_warehouse.id +
+                        "'>" + input_warehouse_address + "</td>" +
                         "<td><button type='button' class='btn btn-sm btn-primary' id='btnShow' onclick='show(" +
-                        data.new_warehouse.id +
+                            response.new_warehouse.id +
                         ")'><i class='fas fa-eye'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-warning' onclick='editWarehouseData(" +
-                        data.new_warehouse.id + ")'><i class='fas fa-edit'></i></button>" +
+                        response.new_warehouse.id + ")'><i class='fas fa-edit'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-danger' onclick='deleleConfirmationWarehouseData(" +
-                        data.new_warehouse.id + ")'><i class='fas fa-trash-alt'></i></button>" +
+                        response.new_warehouse.id + ")'><i class='fas fa-trash-alt'></i></button>" +
                         "</td></tr>";
 
                     $('.table-bordered tbody').append(tr);
@@ -149,8 +156,8 @@
             $.ajax({
                 type: "GET",
                 url: `warehouse/${id}/edit`,
-                success: function(data) {
-                    $("#modal-content").html(data.msg);
+                success: function(response) {
+                    $("#modal-content").html(response.modal);
                     $("#modal-default").modal('show');
                 },
                 error: function(err) {

@@ -20,7 +20,9 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex flex-wrap justify-content-between">
+                        <h3 class="mb-0">Data Pemasok</h3>
+
+                        {{-- <div class="d-flex flex-wrap justify-content-between">
                             <h3 class="mb-0">Data Pemasok</h3>
 
                             <div class="d-flex flex-wrap justify-content-between">
@@ -41,13 +43,11 @@
                                     </form>
                                 </div>
 
-                                {{-- <button type="button" style="" class="btn btn-sm btn-success"
-                                    onclick="createSupplier()">Tambah Pemasok</button> --}}
                                 <button type="button" style="" class="btn btn-sm btn-success" data-toggle="modal"
                                     data-target="#modal-create">Tambah
                                     Pemasok</button>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <!-- Modal Start -->
@@ -56,7 +56,11 @@
 
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <div class="container ml-0 mb-2 pl-0">
+                            <button type="button" class="btn btn-m btn-success" data-toggle="modal"
+                                data-target="#modal-create">Tambah Pemasok</button>
+                        </div>
+                        <table id="dataTable" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
@@ -90,11 +94,6 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer clearfix">
-                        <ul class="pagination pagination-sm m-0 float-right">
-                            {{ $suppliers->links() }}
-                        </ul>
-                    </div>
                 </div>
             </div>
         </section>

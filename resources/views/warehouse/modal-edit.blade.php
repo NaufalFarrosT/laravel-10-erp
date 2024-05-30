@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label for="">Alamat Gudang</label>
                 <input type="text" class="form-control" id="eWarehouseAddress" name="eWarehouseAddress"
-                    placeholder="Alamat Gudang">
+                    placeholder="Alamat Gudang" value="{{ $warehouse->address }}">
             </div>
         </div>
     </form>

@@ -27,7 +27,9 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex flex-wrap justify-content-between">
+                        <h3 class="mb-0">Data Jabatan</h3>
+
+                        {{-- <div class="d-flex flex-wrap justify-content-between">
                             <h3 class="mb-0">Data Jabatan</h3>
 
                             <div class="d-flex flex-wrap justify-content-between">
@@ -53,12 +55,16 @@
                                     data-target="#modal-create">Tambah
                                     Jabatan</button>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <div class="container ml-0 mb-2 pl-0">
+                            <button type="button" style="" class="btn btn-m btn-success" data-toggle="modal"
+                                data-target="#modal-create">Tambah Jabatan</button>
+                        </div>
+                        <table id="dataTable" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
@@ -91,11 +97,11 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer clearfix">
+                    {{-- <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
                             {{ $roles->links() }}
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>

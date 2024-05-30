@@ -4,17 +4,6 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Master User</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Master User</li>
-                        </ol>
-                    </div>
-                </div>
             </div><!-- /.container-fluid -->
         </section>
 
@@ -31,7 +20,9 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex flex-wrap justify-content-between">
+                        <h3 class="mb-0">Data User</h3>
+
+                        {{-- <div class="d-flex flex-wrap justify-content-between">
                             <h3 class="mb-0">Data User</h3>
 
                             <div class="d-flex flex-wrap justify-content-between">
@@ -51,7 +42,7 @@
                                 <a href="{{ route('user.create') }}" style="width: fit-content"
                                     class="btn btn-sm btn-success ml-3">Tambah Pengguna</a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <!-- Modal Start -->
@@ -60,7 +51,11 @@
 
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <div class="container ml-0 mb-2 pl-0">
+                            <a href="{{ route('user.create') }}" style="width: fit-content"
+                                class="btn btn-m btn-success">Tambah Pengguna</a>
+                        </div>
+                        <table id="dataTable" class="table table-bordered table-responsive">
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
@@ -95,12 +90,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
-
-                    <div class="card-footer clearfix">
-                        <ul class="pagination pagination-sm m-0 float-right">
-                            {{ $users->links() }}
-                        </ul>
                     </div>
                 </div>
             </div>

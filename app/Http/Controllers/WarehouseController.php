@@ -34,7 +34,7 @@ class WarehouseController extends Controller
     {
         $new_warehouse = new Warehouse();
         $new_warehouse->name = $request->get('warehouse_name');
-        $new_warehouse->address = $request->input('address', null);
+        $new_warehouse->address = $request->input('warehouse_address', null);
         $new_warehouse->save();
 
         return response()->json(array(
@@ -58,7 +58,7 @@ class WarehouseController extends Controller
         $warehouse = Warehouse::find($id);
 
         return response()->json(array(
-            'msg' => view('warehouse.modal-edit', compact('warehouse'))->render()
+            'modal' => view('warehouse.modal-edit', compact('warehouse'))->render()
         ), 200);
     }
 

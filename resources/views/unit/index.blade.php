@@ -20,7 +20,9 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex flex-wrap justify-content-between">
+                        <h3 class="mb-0">Data Satuan</h3>
+
+                        {{-- <div class="d-flex flex-wrap justify-content-between">
                             <h3 class="mb-0">Data Satuan</h3>
 
                             <div class="d-flex flex-wrap justify-content-between">
@@ -46,7 +48,7 @@
                                     data-target="#modal-create">Tambah
                                     Satuan</button>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <!-- Modal Start -->
@@ -55,7 +57,11 @@
 
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <div class="container ml-0 mb-2 pl-0">
+                            <button type="button" class="btn btn-m btn-success" data-toggle="modal"
+                                data-target="#modal-create">Tambah Satuan</button>
+                        </div>
+                        <table id="dataTable" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
@@ -69,9 +75,6 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td id="td_name_{{ $unit->id }}">{{ $unit->name }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-primary" id="btnShow"
-                                                onclick="showAllItemBasedOnItem({{ $unit->id }})"><i
-                                                    class="fas fa-eye"></i></button>
                                             <button type="button" class="btn btn-sm btn-warning"
                                                 onclick="editUnitData({{ $unit->id }})"><i
                                                     class="fas fa-edit"></i></button>
@@ -85,11 +88,6 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer clearfix">
-                        <ul class="pagination pagination-sm m-0 float-right">
-                            {{ $units->links() }}
-                        </ul>
-                    </div>
                 </div>
             </div>
         </section>
@@ -99,7 +97,7 @@
 @section('javascript-function')
     <script>
         function storeUnitData() {
-            var name = $("#inputName").val();
+            var input_name = $("#inputName").val();
             var numberOfRow = $(".table-bordered tr").length - 0;
 
             $.ajax({
@@ -107,22 +105,18 @@
                 url: `unit`,
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
-                    name: name
+                    name: input_name
                 },
-                success: function(data) {
-                    toastr.success(data.msg);
-                    var tr = "<tr id='tr_" + data.data.id + "'>" +
+                success: function(response) {
+                    toastr.success(response.msg);
+                    var tr = "<tr id='tr_" + response.data.id + "'>" +
                         "<td>" + numberOfRow + "</td>" +
-                        "<td id='td_name_" + data.data.id +
-                        "'>" + name + "</td>" +
-                        "<td>0</td>" +
-                        "<td><button type='button' class='btn btn-sm btn-primary' id='btnShow' onclick='showAllUserBasedOnRole(" +
-                        data.data.id + ")'><i class="
-                    fas fa - eye "></i></button>" +
-                        "<button type='button' class='btn btn-sm btn-warning' onclick='editRoleData(" +
-                        data.data.id + ")'><i class='fas fa-edit'></i></button>" +
+                        "<td id='td_name_" + response.data.id +
+                        "'>" + input_name + "</td>" +
+                        "<td><button type='button' class='btn btn-sm btn-warning' onclick='editUnitData(" +
+                        response.data.id + ")'><i class='fas fa-edit'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-danger' onclick='deleteConfirmation(" +
-                        data.data.id + ")'><i class='fas fa-trash-alt '></i></button>" +
+                        response.data.id + ")'><i class='fas fa-trash-alt '></i></button>" +
                         "</td></tr>";
 
                     $('.table-bordered tbody').append(tr);
@@ -196,21 +190,6 @@
                     } else {
                         alert(data.msg);
                     }
-                },
-            });
-        }
-
-        function showAllItemBasedOnItem(id) {
-            $.ajax({
-                type: "GET",
-                url: `unit/${id}`,
-                success: function(data) {
-                    //console.log(data.users);
-                    $("#modal-content").html(data.msg);
-                    $("#modal-default").modal('show');
-                },
-                error: function(err) {
-                    alert("Error");
                 },
             });
         }

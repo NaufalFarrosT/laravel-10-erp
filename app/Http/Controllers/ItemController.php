@@ -21,7 +21,8 @@ class ItemController extends Controller
     {
         $search =  ($request->get("table_search") == "" ? "" : $request->get("table_search"));
 
-        $items = Item::where('name', 'like', '%' . $search . '%')->paginate(10);
+        $items = Item::where('name', 'like', '%' . $search . '%')->get();
+        // $items = Item::where('name', 'like', '%' . $search . '%')->paginate(10);
 
         return view('item.index', ['items' => $items, 'table_search' => $search]);
     }
