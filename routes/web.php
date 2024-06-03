@@ -84,8 +84,8 @@ Route::middleware('auth')->group(function () {
                 ->name('purchase.detail.store');
             Route::get('/{id}/delete-confirmation',  'deleteConfirmation')
                 ->name('purchase.deleteConfirmation');
-            Route::get('/create/auto-complete-item', 'autoCompleteItem')->name('purchase.item.autoComplete');
             Route::get('/create/auto-complete-supplier', 'autoCompleteSupplier')->name('purchase.supplier.autoComplete');
+            Route::get('/create/auto-complete-item', 'autoCompleteItem')->name('purchase.item.autoComplete');
 
             // To create and store item receive for purchase
             Route::resource('/item-receive', ItemReceiveController::class);
@@ -116,6 +116,7 @@ Route::middleware('auth')->group(function () {
                 ->name('sale.detail.store');
             Route::get('/{id}/delete-confirmation',  'deleteConfirmation')
                 ->name('sale.deleteConfirmation');
+            Route::get('/create/auto-complete-customer', 'autoCompleteCustomer')->name('sale.customer.autoComplete');
             Route::get('/create/auto-complete-item', 'autoCompleteItem')->name('sale.item.autoComplete');
 
             // To create and store payment for purchase
@@ -134,10 +135,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/transaction', TransactionController::class);
     Route::prefix('transaction')->controller(TransactionController::class)
-    ->group(function () {
-        Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
-            ->name('transaction.deleteConfirmation');
-    });
+        ->group(function () {
+            Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
+                ->name('transaction.deleteConfirmation');
+        });
 
     Route::resource('/unit', UnitController::class);
     Route::prefix('unit')->controller(UnitController::class)

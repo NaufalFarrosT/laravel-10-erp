@@ -8,7 +8,17 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <a href="{{ Route('sale.index') }}" class="btn btn-lg btn-default ml-2"> Kembali</a>
+            <div class="row align-items-center justify-content-between">
+                <div class="col-sm-2">
+                    <a href="{{ Route('sale.index') }}" class="btn btn-m btn-default ml-2"> Kembali</a>
+                </div>
+                <div class="col-sm-2 text-right">
+                    <a href="{{ route('purchase.create') }}" class="btn btn-m btn-primary">
+                        <i class="fas fa-print"></i>
+                        Cetak Nota
+                    </a>
+                </div>
+            </div>
         </section>
 
         <!-- Main content -->
@@ -35,7 +45,7 @@
                             <label for="supplier" class="col-sm-1 col-form-label">Pelanggan</label>
                             <div class="col-sm-3">
                                 <label class='form-control' @readonly(true)>
-                                    {{-- {{ $sale_order->supplier->name }} --}}
+                                    {{ $sale_order->customer->name }}
                                 </label>
                             </div>
                         </div>

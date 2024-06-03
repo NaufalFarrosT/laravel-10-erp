@@ -4,17 +4,6 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Tambah Data Penjualan</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item">Penjualan</li>
-                        </ol>
-                    </div>
-                </div>
             </div><!-- /.container-fluid -->
         </section>
 
@@ -25,53 +14,60 @@
                 <form class="form-horizontal" id="sale_detail" name="sale_detail" method="POST"
                     action="{{ route('sale.store') }}">
                     @csrf
-                    <div class="p-1">
-                        <div class="form-group row">
-                            <label for="customer" class="col-sm-1 col-form-label">Pelanggan</label>
-                            <div class="col-sm-3">
-                                <input type="search" class="typeahead form-control input-medium" id="customer_search"
-                                    name="customer_search" placeholder="Cari Pelanggan">
-                                <input type="hidden" id="customer_id" name="customer_id">
-                            </div>
+
+                    <div class="card card-light">
+                        <div class="card-header">
+                            <h3 class="card-title">Informasi Penjualan</h3>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-sm-1 col-form-label">Tanggal</label>
-                            <div class="col-sm-2">
-                                <input class="form-control form-control-inline input-medium date-picker" size="16"
-                                    type="date" value="" id="datePicker" name="datePicker" />
+                        <div class="card-body">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-sm-4">
+                                    <div class="form-group col-sm-8 p-0">
+                                        <label class="col-form-label">Pelanggan</label>
+                                        <input id="customer_search" type="text" class="form-control" value="guest"
+                                            name="customer_name">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group col-sm-6 p-0">
+                                        <label class="col-form-label">Tanggal</label>
+                                        <input class="form-control form-control-inline input-medium date-picker"
+                                            size="16" type="date" value="" id="datePicker"
+                                            name="datePicker" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="col col-form-label">TOTAL</label>
+                                        <label id="displayTotal" name="displayTotal" class="bold"
+                                            style="margin-left: 10px;font-size: large;">RP 0</label>
+                                        <input type="hidden" id="total" name="total">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-1 col-form-label">Total </label>
-                            <label id="displayTotal" name="displayTotal" class="bold col-sm-3"
-                                style="margin-left: 10px;font-size: large;">RP 0</label>
-                            <input type="hidden" id="total" name="total">
                         </div>
                     </div>
 
-
-
-                    <div class="card card-info">
+                    <div class="card card-light">
                         <div class="card-header">
-                            <h3 class="card-title">Buat Data Penjualan</h3>
+                            <h3 class="card-title">Data Barang</h3>
                         </div>
-                        <!-- /.card-header -->
+
                         <div class="card-body">
-                            <div class="col-md-6 mb-2 p-0">
+                            <div class="col-sm-4 mb-2 p-0">
                                 <div class="input-group">
-                                    <input type="search" class="typeahead form-control form-control-lg" id="item_search"
+                                    <input type="search" class="typeahead form-control form-control-m" id="item_search"
                                         placeholder="Cari Barang">
                                     <div class="input-group-append">
-                                        <button type="submit" class="btn btn-lg btn-default">
+                                        <button type="submit" class="btn btn-m btn-default">
                                             <i class="fa fa-search"></i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row table-responsive">
 
+                            <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -90,17 +86,13 @@
                                 </table>
                             </div>
                         </div>
-                        <!-- /.card-body -->
+
                         <div class="card-footer clearfix">
-                            <button type="submit" class="btn btn-info">Simpan</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                             <a href="{{ url()->previous() }}" class="btn btn-default float-right"> Batal</a>
                         </div>
-                        <!-- /.card-footer -->
-
                     </div>
-                    <!-- /.card -->
                 </form>
-                <!-- form end -->
             </div>
         </section>
     </div>
@@ -199,6 +191,30 @@
             countGrandTotal();
         });
 
+        let autoCompleteCustomerPath = "{{ route('sale.customer.autoComplete') }}";
+        $("#customer_search").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: autoCompleteCustomerPath,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        search: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            select: function(event, ui) {
+                $('#customer_search').val(ui.item.value);
+                $('#customer_id').val(ui.item.id);
+                console.log(ui.item);
+
+                return false;
+            }
+        });
+
         let autoCompleteItemPath = "{{ route('sale.item.autoComplete') }}";
         let numberOfRow = $(".table-bordered tr").length - 0;
         $("#item_search").autocomplete({
@@ -249,7 +265,7 @@
                         "' class='form-control quantity' value='1' required/><span>Stok: " + ui.item.stock +
                         "</span>" + "</td>" +
 
-                        "<td><input type='number' name='discount[]' id='discount'" +
+                        "<td><input type='text' name='discount[]' id='discount'" +
                         "min='0' class='form-control discount' value='0' required/></td>" +
 
                         "<td><label id='display_total_price_per_item' name='display_total_price_per_item[]' class='form-control display_total_price_per_item'>" +

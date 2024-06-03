@@ -8,7 +8,6 @@
                     <div class="col-sm-6">
                         <h1>Tambah Data Pembelian</h1>
                     </div>
-
                 </div>
             </div><!-- /.container-fluid -->
         </section>
@@ -65,7 +64,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row table-responsive">
+                            <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>

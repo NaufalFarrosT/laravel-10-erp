@@ -15,10 +15,6 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="d-flex flex-wrap justify-content-between mb-2">
-                            <div>
-                                <a href="{{ route('purchase.create') }}" class="btn btn-m btn-success">Tambah
-                                    Pembelian</a>
-                            </div>
                             <form id="filterForm" method="GET" action="{{ route('purchase.index') }}">
                                 <div class="d-flex flex-wrap">
                                     <div class="form-group d-flex align-items-center mr-3 m-0 p-0">
@@ -46,6 +42,11 @@
                                     </div>
                                 </div>
                             </form>
+
+                            <div>
+                                <a href="{{ route('purchase.create') }}" class="btn btn-m btn-success">Tambah
+                                    Pembelian</a>
+                            </div>
                         </div>
                         <table id="dataTable" class="table table-bordered table-responsive-xl">
                             <thead>

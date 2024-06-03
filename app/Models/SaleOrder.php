@@ -10,11 +10,15 @@ class SaleOrder extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function sale_details() {
-        return $this->hasMany(SaleDetail::class);
+    public function customer() {
+        return $this->belongsTo(Customer::class);
     }
 
     public function payments(){
         return $this->hasMany(SalePayment::class);
+    }
+
+    public function sale_details() {
+        return $this->hasMany(SaleDetail::class);
     }
 }

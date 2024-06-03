@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Item;
 use App\Models\SaleDetail;
 use App\Models\SaleOrder;
@@ -72,6 +73,9 @@ class SaleController extends Controller
 
         $so_code = sprintf('%s%s-%03d', $prefix, $date, $totalOrdersToday);
 
+        if (strtoupper($request->customer_name) == "GUEST" || "") {
+        }
+
         // Store Sale Order
         $sale_order = new SaleOrder();
         $sale_order->code = $so_code;
@@ -79,7 +83,9 @@ class SaleController extends Controller
         $sale_order->total_price = $request->get('total');
         $sale_order->status = "PROSES";
         $sale_order->payment_status = "Belum Bayar";
-        $sale_order->customer_id = 1;
+        $sale_order->customer_id = (strtoupper($request->customer_name) == "GUEST" || "")
+            ? 1
+            : Customer::create(['name' => $request->customer_name])->id;
         $sale_order->user_id = Auth::id();
         $sale_order->save();
 
@@ -145,6 +151,15 @@ class SaleController extends Controller
     public function destroy(SaleOrder $salesOrder)
     {
         //
+    }
+
+    public function autoCompleteCustomer(Request $request)
+    {
+        $data = Customer::select("id", "name as value")
+            ->where('name', 'LIKE', '%' . $request->get('search') . '%')
+            ->get();
+
+        return response()->json($data);
     }
 
     public function autoCompleteItem(Request $request)
