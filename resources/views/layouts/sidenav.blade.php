@@ -84,6 +84,7 @@
                         </li>
                     </ul>
                 </li>
+
                 <li class="nav-item" style="border-bottom: 1px solid #4f5962">
                     <a href="#" class="nav-link">
                         <i class="fas fa-folder nav-icon"></i>
@@ -119,6 +120,8 @@
                         </li>
                     </ul>
                 </li>
+
+                <!-- Start Transaction -->
                 <li class="nav-header">Transaksi</li>
                 <li class="nav-item">
                     <a href="{{ route('sale.create') }}" class="nav-link">
@@ -133,11 +136,14 @@
                     </a>
                 </li>
                 <li class="nav-item" style="border-bottom: 1px solid #4f5962">
-                    <a href="{{route('transaction.index')}}" class="nav-link">
+                    <a href="{{ route('transaction.index') }}" class="nav-link">
                         <i class="fas fa-clipboard nav-icon"></i>
                         <p>Pendapatan/Pengeluaran</p>
                     </a>
                 </li>
+                <!-- End Transaction -->
+                
+                <!-- Start Logout-->
                 <li class="nav-item mt-2">
                     <form id="logout" action="{{ route('logout') }}" method="POST" class="nav-link">
                         @csrf
@@ -149,7 +155,7 @@
                         </a>
                     </form>
                 </li>
-
+                <!-- End Logout-->
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

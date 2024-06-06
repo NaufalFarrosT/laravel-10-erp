@@ -80,7 +80,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/purchase', PurchaseController::class);
     Route::prefix('purchase')->controller(PurchaseController::class)
         ->group(function () {
-            Route::get('/{id}/print-pdf', 'print_pdf')->name('purchase.invoice');
+            Route::get('/{id}/print-pdf', 'print_invoice')->name('purchase.invoice');
             Route::post('/detail', 'storePurchaseDetail')
                 ->name('purchase.detail.store');
             Route::get('/{id}/delete-confirmation',  'deleteConfirmation')
@@ -113,7 +113,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/sale', SaleController::class);
     Route::prefix('sale')->controller(SaleController::class)
         ->group(function () {
-            Route::get('/{id}/print-pdf', 'print_pdf')->name('sale.invoice');
+            Route::get('/{id}/print-pdf', 'print_invoice')->name('sale.invoice');
             Route::post('/detail', 'storePurchaseDetail')
                 ->name('sale.detail.store');
             Route::get('/{id}/delete-confirmation',  'deleteConfirmation')

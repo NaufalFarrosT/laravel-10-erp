@@ -174,7 +174,7 @@ class PurchaseController extends Controller
         return response()->json($data);
     }
 
-    public function print_pdf($purchase_id)
+    public function print_invoice($purchase_id)
     {
         $purchase_order = PurchaseOrder::find($purchase_id);
         $purchase_order->date = Carbon::parse($purchase_order->date)->format('d-m-Y');

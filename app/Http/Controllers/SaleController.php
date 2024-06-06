@@ -178,7 +178,7 @@ class SaleController extends Controller
         return response()->json($data);
     }
 
-    public function print_pdf($sale_id)
+    public function print_invoice($sale_id)
     {
         $sale_order = SaleOrder::find($sale_id);
         $sale_order->date = Carbon::parse($sale_order->date)->format('d-m-Y');
