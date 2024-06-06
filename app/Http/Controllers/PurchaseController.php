@@ -8,9 +8,11 @@ use App\Models\ItemReceiveDetail;
 use App\Models\ItemWarehouse;
 use App\Models\PurchaseDetail;
 use App\Models\PurchaseOrder;
+use App\Models\PurchasePayment;
 use App\Models\Supplier;
 use App\Models\Warehouse;
 use App\Models\WarehouseItem;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,12 +77,16 @@ class PurchaseController extends Controller
 
         $po_code = sprintf('%s%s-%03d', $prefix, $date, $totalOrdersToday);
 
+        $get_supplier = Supplier::where('name', $request->get('supplier_search'))->get(); // Get data supplier if exist
+
         // Store Purchase Order
         $purchase_order = new PurchaseOrder();
         $purchase_order->code = $po_code;
         $purchase_order->date = $request->get('datePicker');
         $purchase_order->total_price = $request->get('total');
-        $purchase_order->supplier_id = $request->get('supplier_id');
+        $purchase_order->supplier_id = ($get_supplier->count() == 0)
+            ? Supplier::create(['name' => $request->supplier_search])->id
+            : $get_supplier[0]->id;
         $purchase_order->status = "PROSES";
         $purchase_order->item_receive_status = "Belum Diterima";
         $purchase_order->payment_status = "Belum Bayar";
@@ -143,20 +149,50 @@ class PurchaseController extends Controller
 
     public function autoCompleteItem(Request $request)
     {
-        $data = Item::select("items.id", DB::raw("CONCAT(items.name, ' - ', units.name) as value"), "items.price", "items.stock")
+        $data = Item::select("items.id", DB::raw("CONCAT( items.name, ' - ', units.name) as value"), "items.price", "items.stock")
             ->join('units', 'items.unit_id', '=', 'units.id')
             ->where('items.name', 'LIKE', '%' . $request->get('search') . '%')
             ->get();
+        // $data = Item::select("items.id", DB::raw("CONCAT(items.code, ' - ', items.name, ' (', units.name, ')') as value"), "items.price", "items.stock")
+        //     ->join('units', 'items.unit_id', '=', 'units.id')
+        //     ->where('items.name', 'LIKE', '%' . $request->get('search') . '%')
+        //     ->get();
 
         return response()->json($data);
     }
 
     public function autoCompleteSupplier(Request $request)
     {
-        $data = Supplier::select("id", "name as value")
-            ->where('name', 'LIKE', '%' . $request->get('search') . '%')
+        $data = Supplier::select("suppliers.id", "suppliers.name", DB::raw("CONCAT(suppliers.id, ' - ', suppliers.name) as value"))
+            ->where('suppliers.name', 'LIKE', '%' . $request->get('search') . '%')
             ->get();
 
+        // $data = Supplier::select("id", "name as value")
+        //     ->where('name', 'LIKE', '%' . $request->get('search') . '%')
+        //     ->get();
+
         return response()->json($data);
+    }
+
+    public function print_pdf($purchase_id)
+    {
+        $purchase_order = PurchaseOrder::find($purchase_id);
+        $purchase_order->date = Carbon::parse($purchase_order->date)->format('d-m-Y');
+
+        $purchase_payment = PurchasePayment::where('purchase_order_id', $purchase_id)->get();
+        $total_purchase_payment = 0;
+
+        foreach ($purchase_payment as $sp) {
+            $total_purchase_payment += $sp->amount;
+        }
+
+        $data = [
+            'purchase_order' => $purchase_order,
+            'total_purchase_payment' => $total_purchase_payment,
+        ];
+
+        $pdf = Pdf::loadview('purchase.invoice-pdf', $data);
+        return $pdf->stream('invoice.pdf'); // Code to stream pdf file
+        // return $pdf->download('invoice.pdf'); // Code to download pdf file
     }
 }

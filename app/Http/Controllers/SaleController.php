@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Item;
 use App\Models\SaleDetail;
 use App\Models\SaleOrder;
+use App\Models\SalePayment;
 use App\Models\SalesOrder;
 use App\Models\Warehouse;
 use App\Models\WarehouseItem;
@@ -13,6 +14,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SaleController extends Controller
 {
@@ -93,7 +96,7 @@ class SaleController extends Controller
         for ($i = 0; $i < count($request->get('itemId')); $i++) {
             $sale_detail = new SaleDetail();
             $sale_detail->qty = $request->get('quantity')[$i];
-            $sale_detail->price = intval(str_replace('.', '', $request->get('price')[$i]));
+            $sale_detail->price = intval(str_replace(',', '', $request->get('price')[$i]));
             $sale_detail->discount = intval(str_replace('.', '', $request->get('discount')[$i]));
             $sale_detail->total_price = $request->get('total_price_per_item')[$i];
             $sale_detail->item_id = $request->get('itemId')[$i];
@@ -173,5 +176,27 @@ class SaleController extends Controller
             ->get();
 
         return response()->json($data);
+    }
+
+    public function print_pdf($sale_id)
+    {
+        $sale_order = SaleOrder::find($sale_id);
+        $sale_order->date = Carbon::parse($sale_order->date)->format('d-m-Y');
+
+        $sale_payment = SalePayment::where('sale_order_id', $sale_id)->get();
+        $total_sale_payment = 0;
+
+        foreach($sale_payment as $sp){
+            $total_sale_payment += $sp->amount;
+        }
+
+        $data = [
+            'sale_order' => $sale_order,
+            'total_sale_payment' => $total_sale_payment,
+        ];
+
+        $pdf = Pdf::loadview('sale.invoice-pdf', $data);
+        return $pdf->stream('invoice.pdf'); // Code to stream pdf file
+        // return $pdf->download('invoice.pdf'); // Code to download pdf file
     }
 }

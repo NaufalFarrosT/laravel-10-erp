@@ -13,7 +13,7 @@
                     <a href="{{ Route('purchase.index') }}" class="btn btn-m btn-default ml-2"> Kembali</a>
                 </div>
                 <div class="col-sm-2 text-center">
-                    <a href="{{ route('purchase.create') }}" class="btn btn-m btn-primary">
+                    <a target="_blank" href="{{ route('purchase.invoice', $purchase_order->id) }}" class="btn btn-m btn-primary">
                         <i class="fas fa-print"></i>
                         Cetak Nota
                     </a>
@@ -33,9 +33,44 @@
 
                 <input type="hidden" id="purchase_order_id" value={{ $purchase_order->id ?? 0 }}>
 
-                <!-- form start -->
+                <div class="card card-light">
+                    <div class="card-header">
+                        <h3 class="card-title">Informasi Pembelian</h3>
+                    </div>
 
-                <div class="card">
+                    <div class="card-body pt-0 pb-0">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-sm-4">
+                                <div class="form-group col-sm-8 p-0">
+                                    <label class="col-form-label">Pemasok</label>
+                                    <input id="customer_search" type="text" class="form-control"
+                                        value="{{ $purchase_order->supplier->name }}" name="customer_name" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group col-sm-6 p-0">
+                                    <label class="col-form-label">Tanggal</label>
+                                    <input class="form-control form-control-inline input-medium date-picker" size="16"
+                                        type="text"
+                                        value="{{ \Carbon\Carbon::parse($purchase_order->date)->format('d-m-Y') }}"
+                                        id="datePicker" name="datePicker" readonly />
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="col col-form-label">TOTAL</label>
+                                    <label id="displayTotal" name="displayTotal" class="bold"
+                                        style="margin-left: 10px;font-size: large;">
+                                        {{ 'Rp ' . number_format($purchase_order->total_price, 0, ',', '.') }}
+                                    </label>
+                                    <input type="hidden" id="total" name="total">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- <div class="card">
                     <div class="card-header">
                         <h3 class="card-title" style="font-size: 24px;">Detail Pembelian</h3>
                     </div>
@@ -67,7 +102,7 @@
                             </label>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Card Penerimaan Barang & Pembayaran -->
                 <div class="container-fluid m-0 w-100 p-0">

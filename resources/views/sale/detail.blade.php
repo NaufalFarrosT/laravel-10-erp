@@ -13,7 +13,7 @@
                     <a href="{{ Route('sale.index') }}" class="btn btn-m btn-default ml-2"> Kembali</a>
                 </div>
                 <div class="col-sm-2 text-right">
-                    <a href="{{ route('purchase.create') }}" class="btn btn-m btn-primary">
+                    <a target="_blank" href="{{ route('sale.invoice', $sale_order->id) }}" class="btn btn-m btn-primary">
                         <i class="fas fa-print"></i>
                         Cetak Nota
                     </a>
@@ -33,8 +33,6 @@
                 </div>
 
                 <input type="hidden" id="sale_order_id" value={{ $sale_order->id ?? 0 }}>
-
-                <!-- form start -->
 
                 <div class="card card-light">
                     <div class="card-header">
@@ -56,7 +54,7 @@
                                     <input class="form-control form-control-inline input-medium date-picker" size="16"
                                         type="text"
                                         value="{{ \Carbon\Carbon::parse($sale_order->date)->format('d-m-Y') }}"
-                                        id="datePicker" name="datePicker" readonly/>
+                                        id="datePicker" name="datePicker" readonly />
                                 </div>
                             </div>
                             <div class="col-sm-2">
@@ -241,10 +239,10 @@
                     }
                     var tr = "<tr id='tr_sale_payment_" + response.data.id + "'>" +
                         "<td>" + numberOfRow + "</td>" +
-                        "<td id='td_name_" + response.data.id +
-                        "'>" + payment_date + "</td>" +
-                        "<td>" + payment_amount + "</td>" +
-                        "<td>" + sub_account_name + "</td>" +
+                        "<td id='td_sale_payment_date_" + response.data.id + "'>" + payment_date + "</td>" +
+                        "<td id='td_sale_payment_amount_" + response.data.id + "'>" + payment_amount + "</td>" +
+                        "<td id='td_sale_payment_sub_account_" + response.data.id + "'>" + sub_account_name +
+                        "</td>" +
                         "<td><div class='d-flex justify-content-center'>" +
                         // "<button type='button' class='btn btn-sm btn-warning mr-2' onclick='editSalePayment(" +
                         // response.data.id + ")'><i class='fas fa-edit'></i></button>" +
@@ -263,6 +261,57 @@
                         alert('An error occurred: ' + xhr.statusText);
                     }
                 }
+            });
+        }
+
+        function editPaymentData(id) {
+            $.ajax({
+                type: "GET",
+                url: `sale-payment/${id}/edit`,
+                success: function(response) {
+                    $("#modal-content").html(response.data);
+                    $("#modal-default").modal('show');
+                },
+                error: function(err) {
+                    alert(err);
+                },
+            });
+        }
+
+        function updatePaymentData(id) {
+            var input_date = $("#eDatePicker").val();
+            var input_sub_account = $("#eAccount_id").val();
+            var sub_account_text = $("#eAccount_id option:selected").text();
+            var input_amount = $("#ePayment_amount").val();
+            var input_amount_integer_format = input_amount.replace(/Rp\.|\./g, '').trim();
+
+            $.ajax({
+                type: "PUT",
+                url: `sale-payment/${id}`,
+                data: {
+                    _token: "<?php echo csrf_token(); ?>",
+                    date: input_date,
+                    amount: input_amount_integer_format,
+                    sub_account_id: input_sub_account,
+                },
+                success: function(response) {
+                    if (response.payment_status == "Lunas") {
+                        $("#sale_payment_action").html("");
+                    } else if ($('#sale_payment_action').find('#btn_add_sale_payment').length == 0) {
+                        var sale_payment_button_element =
+                            "<button id='btn_add_sale_payment' type='button'style='width: fit-content;' class='btn btn-sm btn-success' onclick='createPayment({{ $sale_order->id }})'>Tambah Pembayaran Barang</button>"
+
+                        $("#sale_payment_action").append(sale_payment_button_element);
+                    }
+
+                    $("#td_sale_payment_date_" + id).html(input_date);
+                    $("#td_sale_payment_amount_" + id).html(input_amount);
+                    $("#td_sale_payment_sub_account_" + id).html(sub_account_text);
+                    toastr.success(response.msg);
+                },
+                error: function(err) {
+                    alert(err);
+                },
             });
         }
 

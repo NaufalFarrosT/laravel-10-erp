@@ -29,7 +29,7 @@ class SalePaymentController extends Controller
 
         $sale_payment = SalePayment::where('sale_order_id', $sale_order->id)->get();
 
-        foreach($sale_payment as $sp){
+        foreach ($sale_payment as $sp) {
             $sale_order->total_price -= $sp->amount;
         }
 
@@ -91,17 +91,43 @@ class SalePaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SalePayment $salePayment)
+    public function edit($id)
     {
-        //
+        $sale_payment = SalePayment::find($id);
+        $sub_accounts = SubAccount::all();
+
+        return response()->json(array(
+            'data' => view('sale.payment.modal-edit', compact('sale_payment', 'sub_accounts'))->render()
+        ), 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SalePayment $salePayment)
+    public function update(Request $request, $id)
     {
-        //
+        // retrieve balance, then substract it with updated payment amount
+        $sale_payment = SalePayment::find($id);
+        $sub_account = SubAccount::find($sale_payment->sub_account_id);
+        $sub_account->balance = $sub_account->balance - $sale_payment->amount;
+        $sub_account->save();
+
+        $sale_payment->date = $request->get('date');
+        $sale_payment->amount = $request->get('amount');
+        $sale_payment->sub_account_id = $request->get('sub_account_id');
+        $sale_payment->save();
+
+        $sub_account = SubAccount::find($sale_payment->sub_account_id);
+        $sub_account->balance = $sub_account->balance + $sale_payment->amount;
+        $sub_account->save();
+
+        $sale_order = SaleOrder::find($sale_payment->sale_order_id);
+        $sale_order_after_check = $this->checkPaymentStatus($sale_order);
+
+        return response()->json(array(
+            'msg' => 'BERHASIL MEMPERBARUI DATA PEMBAYARAN PENJUALAN ITEM',
+            'payment_status' => $sale_order_after_check->payment_status
+        ), 200);
     }
 
     /**
@@ -133,6 +159,31 @@ class SalePaymentController extends Controller
                 'msg' => 'kesalahan dalam menghapus data'
             ), 200);
         }
+    }
+
+    public function checkPaymentStatus($sale_order)
+    {
+        $total_payment = 0;
+        foreach ($sale_order->payments as $payment) {
+            $total_payment += $payment->amount;
+        }
+
+        if ($total_payment == $sale_order->total_price) {
+            $sale_order->payment_status = "Lunas";
+            $sale_order->status = "Selesai";
+        } else {
+            $sale_order->status = "Proses";
+
+            if ($total_payment > 0) {
+                $sale_order->payment_status = "Sebagian";
+            } else {
+                $sale_order->payment_status = "Belum Bayar";
+            }
+        }
+
+        $sale_order->save();
+
+        return $sale_order;
     }
 
     public function deleteConfirmation($id)

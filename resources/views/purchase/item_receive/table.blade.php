@@ -20,7 +20,7 @@
                     <tr>
                         <th style="width: 10px">#</th>
                         <th>Tanggal</th>
-                        <th>Kode</th>
+                        <th>Kode pengiriman barang</th>
                         <th>Detail Item</th>
                         <th>Gudang</th>
                         <th></th>

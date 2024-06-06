@@ -1,0 +1,15 @@
+{
+    "source sans pro": {
+        "italic": "D:\\Project\\Project-Laravel\\Laravel 10\\laravel-10-erp\\storage\\fonts\/source_sans_pro_italic_af17c8440088929b38c5cfe930d7915d",
+        "300": "D:\\Project\\Project-Laravel\\Laravel 10\\laravel-10-erp\\storage\\fonts\/source_sans_pro_300_c6077ec99d149827fee17e2ea27788e4",
+        "normal": "D:\\Project\\Project-Laravel\\Laravel 10\\laravel-10-erp\\storage\\fonts\/source_sans_pro_normal_a331146e176a0c94e64a58f063c4f2b5",
+        "bold": "source_sans_pro_bold_cfebb083c1921633494989255bc500d0"
+    },
+    "font awesome 5 brands": {
+        "normal": "font_awesome_5_brands_normal_120bd4adaf40cad33c8df9be45381bf7"
+    },
+    "font awesome 5 free": {
+        "normal": "D:\\Project\\Project-Laravel\\Laravel 10\\laravel-10-erp\\storage\\fonts\/font_awesome_5_free_normal_c5ad390249695daf288a8af112b9235e",
+        "900": "font_awesome_5_free_900_bb13f00c99f4166e4c7eae856a73c77d"
+    }
+}

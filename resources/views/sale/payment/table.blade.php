@@ -4,7 +4,7 @@
             <h3 class="card-title">Data Pembayaran</h3>
             <div id="sale_payment_action" class="p-0 m-0">
                 @if ($sale_order->payment_status != 'Lunas')
-                    <button type="button" style="width: fit-content;" class="btn btn-sm btn-success"
+                    <button type="button" id="btn_add_sale_payment" style="width: fit-content;" class="btn btn-sm btn-success"
                         onclick="createPayment({{ $sale_order->id }})">Tambah
                         Pembayaran Barang</button>
                 @endif
@@ -28,19 +28,19 @@
                     @foreach ($sale_order->payments as $payment)
                         <tr id="tr_sale_payment_{{ $payment->id }}">
                             <td>{{ $loop->iteration }}</td>
-                            <td id="td_name_{{ $payment->id }}">{{ $payment->date }}</td>
-                            <td>
+                            <td id="td_sale_payment_date_{{ $payment->id }}">{{ $payment->date }}</td>
+                            <td id="td_sale_payment_amount_{{ $payment->id }}">
                                 @php
                                     echo 'Rp ' . number_format($payment->amount, 0, ',', '.');
                                 @endphp
                             </td>
-                            <td>
+                            <td id="td_sale_payment_sub_account_{{ $payment->id }}">
                                 {{ $payment->sub_account->name }}
                             </td>
                             <td>
                                 <div class="d-flex justify-content-center">
-                                    {{-- <a href="" class="btn btn-sm btn-warning mr-2"><i
-                                            class="fas fa-edit"></i></a> --}}
+                                    <button onclick="editPaymentData({{ $payment->id }})" class="btn btn-sm btn-warning mr-2"><i
+                                        class="fas fa-edit"></i></a>
                                     <button class="btn btn-sm btn-danger"
                                         onclick="deleteConfirmationSalePayment({{ $payment->id }})">
                                         <i class="fas fa-trash-alt"></i>

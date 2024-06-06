@@ -24,11 +24,9 @@
                             <label for="supplier" class="col-sm-1 col-form-label">Pemasok</label>
                             <div class="col-sm-3">
                                 <input type="search" class="typeahead form-control input-medium" id="supplier_search"
-                                    name="supplier_search" placeholder="Cari Pemasok">
+                                    name="supplier_search" placeholder="Cari Pemasok" required>
                                 <input type="hidden" id="supplier_id" name="supplier_id">
                             </div>
-                            <button type="button" style="" class="btn btn-sm btn-success" onclick="createSupplier()">Tambah
-                                Pemasok</button>
                         </div>
 
                         <div class="form-group row">
@@ -231,7 +229,7 @@
                 });
             },
             select: function(event, ui) {
-                $('#supplier_search').val(ui.item.value);
+                $('#supplier_search').val(ui.item.name);
                 $('#supplier_id').val(ui.item.id);
                 console.log(ui.item);
 
