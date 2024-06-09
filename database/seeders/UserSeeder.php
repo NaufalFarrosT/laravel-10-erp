@@ -64,12 +64,12 @@ class UserSeeder extends Seeder
                 'warehouse_id' => 3
             ],
             [
-                'fullname' => "Staff 1",
-                'name' => "Staff1",
+                'fullname' => "Kasir 1",
+                'name' => "Kasir1",
                 'dob'=> '1999-12-20',
                 'address' => "Jalan Kertajaya",
                 'gender' => "Perempuan",
-                'email' => "staff1@gmail.com",
+                'email' => "kasir1@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
                 'role_id' => 3,

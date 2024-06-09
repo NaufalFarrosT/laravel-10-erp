@@ -21,7 +21,7 @@ class RoleSeeder extends Seeder
                 'name' => "Admin",
             ],
             [
-                'name' => "Staff",
+                'name' => "Kasir",
             ],
         ];
 

@@ -76,8 +76,7 @@ class SaleController extends Controller
 
         $so_code = sprintf('%s%s-%03d', $prefix, $date, $totalOrdersToday);
 
-        if (strtoupper($request->customer_name) == "GUEST" || "") {
-        }
+        $get_customer = Customer::where('name', $request->customer_name)->get(); // Get data custoemr if exist
 
         // Store Sale Order
         $sale_order = new SaleOrder();
@@ -86,7 +85,7 @@ class SaleController extends Controller
         $sale_order->total_price = $request->get('total');
         $sale_order->status = "PROSES";
         $sale_order->payment_status = "Belum Bayar";
-        $sale_order->customer_id = (strtoupper($request->customer_name) == "GUEST" || "")
+        $sale_order->customer_id = ($get_customer->count() == 0)
             ? 1
             : Customer::create(['name' => $request->customer_name])->id;
         $sale_order->user_id = Auth::id();
@@ -94,9 +93,12 @@ class SaleController extends Controller
 
         // Store Sale Detail
         for ($i = 0; $i < count($request->get('itemId')); $i++) {
+            $item = Item::find($request->get('itemId'))[$i];
+
             $sale_detail = new SaleDetail();
             $sale_detail->qty = $request->get('quantity')[$i];
-            $sale_detail->price = intval(str_replace(',', '', $request->get('price')[$i]));
+            $sale_detail->selling_price = intval(str_replace(',', '', $request->get('price')[$i]));
+            $sale_detail->buying_price = $item->buying_price;
             $sale_detail->discount = intval(str_replace('.', '', $request->get('discount')[$i]));
             $sale_detail->total_price = $request->get('total_price_per_item')[$i];
             $sale_detail->item_id = $request->get('itemId')[$i];
@@ -167,7 +169,7 @@ class SaleController extends Controller
 
     public function autoCompleteItem(Request $request)
     {
-        $data = Item::select("warehouse_items.id as warehouse_item_id", "warehouses.name", "items.id", DB::raw("CONCAT(warehouses.name,' - ',items.name, ' - ', warehouse_items.stock,' ' , units.name) as value"), "items.price", "warehouse_items.stock")
+        $data = Item::select("warehouse_items.id as warehouse_item_id", "warehouses.name", "items.id", DB::raw("CONCAT(warehouses.name,' - ',items.name, ' - ', warehouse_items.stock,' ' , units.name) as value"), "items.selling_price", "warehouse_items.stock")
             ->join('units', 'items.unit_id', '=', 'units.id')
             ->join('warehouse_items', 'warehouse_items.item_id', '=', 'items.id')
             ->join('warehouses', 'warehouses.id', '=', 'warehouse_items.warehouse_id')
@@ -186,7 +188,7 @@ class SaleController extends Controller
         $sale_payment = SalePayment::where('sale_order_id', $sale_id)->get();
         $total_sale_payment = 0;
 
-        foreach($sale_payment as $sp){
+        foreach ($sale_payment as $sp) {
             $total_sale_payment += $sp->amount;
         }
 

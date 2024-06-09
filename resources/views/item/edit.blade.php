@@ -23,58 +23,68 @@
                             @method('PUT')
                             @csrf
                             <div class="card-body">
-                                <div class="form-group row">
-                                    <label for="fullname" class="col-sm-2 col-form-label">Nama Item</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control col-sm-6" id="name" name="name"
-                                            placeholder="Nama Item" value="{{ $item->name }}" required>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="fullname" class="col-sm-2 col-form-label">Stok</label>
-                                    <div class="col-sm-10">
-                                        <input type="number" class="form-control col-sm-2" id="stock" name="stock"
-                                            placeholder="Jumlah Stok" min="0" value="{{ $item->stock }}" required>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="fullname" class="col-form-label">Nama Item</label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                placeholder="Nama Item" value="{{ $item->name }}" required>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label for="fullname" class="col-sm-2 col-form-label">Harga</label>
-                                    <div class="col-sm-10">
-                                        <input type="number" class="form-control col-sm-2" id="price" name="price"
-                                            placeholder="Harga" min="0" value="{{ $item->price }}" required>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="fullname" class="col-form-label">Harga Beli</label>
+                                            <input type="number" class="form-control" id="buying_price" name="buying_price"
+                                                placeholder="Harga" min="0" value="{{ $item->buying_price }}"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="fullname" class="col-form-label">Harga Jual</label>
+                                            <input type="number" class="form-control" id="selling_price"
+                                                name="selling_price" placeholder="Harga" min="0"
+                                                value="{{ $item->selling_price }}" required>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-2 col-form-label">Satuan</label>
-                                    <div class="col-sm-2">
-                                        <select class="custom-select" id="unit_id" name="unit_id">
-                                            @foreach ($units as $unit)
-                                                @if ($item->unit_id == $unit->id)
-                                                    <option value="{{ $unit->id }}" selected>{{ $unit->name }}
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Satuan</label>
+                                            <select class="custom-select" id="unit_id" name="unit_id">
+                                                @foreach ($units as $unit)
+                                                    @if ($item->unit_id == $unit->id)
+                                                        <option value="{{ $unit->id }}" selected>{{ $unit->name }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-2 col-form-label">Kategori Item</label>
-                                    <div class="col-sm-3">
-                                        <select class="custom-select" id="category_id" name="category_id">
-                                            @foreach ($categories as $category)
-                                                @if ($item->category_id == $category->id)
-                                                    <option value="{{ $category->id }}" selected>{{ $category->name }}
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="" class="col-form-label">Kategori Item</label>
+                                            <select class="custom-select" id="category_id" name="category_id">
+                                                @foreach ($categories as $category)
+                                                    @if ($item->category_id == $category->id)
+                                                        <option value="{{ $category->id }}" selected>{{ $category->name }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

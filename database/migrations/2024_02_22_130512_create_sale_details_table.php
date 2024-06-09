@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('sale_details', function (Blueprint $table) {
             $table->id();
             $table->integer('qty');
-            $table->integer('price');
+            $table->integer('selling_price');
+            $table->integer('buying_price');
+            $table->integer('profit');
             $table->integer('discount');
             $table->integer('total_price');
 

@@ -259,7 +259,7 @@
                         ui.item.value + "</td>" +
                         "<td>" +
                         "<input type='text' class='form-control price' id='price' name='price[]' value=" + ui
-                        .item.price.toLocaleString() + "></td>" +
+                        .item.selling_price.toLocaleString() + "></td>" +
                         "<td><input type='number' name='quantity[]' id='quantity'" +
                         "min='1' max='" + ui.item.stock +
                         "' class='form-control quantity' value='1' required/><span>Stok: " + ui.item.stock +
@@ -269,10 +269,9 @@
                         "min='0' class='form-control discount' value='0' required/></td>" +
 
                         "<td><label id='display_total_price_per_item' name='display_total_price_per_item[]' class='form-control display_total_price_per_item'>" +
-                        ui.item.price.toLocaleString() + "</label>" +
+                        ui.item.selling_price.toLocaleString() + "</label>" +
                         "<input type='hidden' id='total_price_per_item' name='total_price_per_item[]' value=" +
-                        ui
-                        .item.price + "></td>" +
+                        ui.item.selling_price + "></td>" +
                         "<td><button type='button' style='' class='btn btn-danger btn-sm delete' onclick='deleteConfirmation(" +
                         ui.item.id + ")'><i class='fas fa-trash-alt'></i></button>" +
                         "</td></tr>";

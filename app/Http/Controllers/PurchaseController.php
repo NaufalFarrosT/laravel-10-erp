@@ -149,7 +149,7 @@ class PurchaseController extends Controller
 
     public function autoCompleteItem(Request $request)
     {
-        $data = Item::select("items.id", DB::raw("CONCAT( items.name, ' - ', units.name) as value"), "items.price", "items.stock")
+        $data = Item::select("items.id", DB::raw("CONCAT( items.name, ' - ', units.name) as value"), "items.selling_price", "items.stock")
             ->join('units', 'items.unit_id', '=', 'units.id')
             ->where('items.name', 'LIKE', '%' . $request->get('search') . '%')
             ->get();
@@ -172,6 +172,18 @@ class PurchaseController extends Controller
         //     ->get();
 
         return response()->json($data);
+    }
+
+    public function print_table()
+    {
+        $purchase_orders = PurchaseOrder::all();
+
+        $data = [
+            'purchase_orders' => $purchase_orders,
+        ];
+
+        $pdf = PDF::loadview('pegawai_pdf', ['purchase_orders' => $purchase_orders]);
+        return $pdf->stream();
     }
 
     public function print_invoice($purchase_id)

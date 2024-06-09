@@ -21,40 +21,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="mb-0">Data Item</h3>
-
-                        {{-- <div class="d-flex flex-wrap justify-content-between">
-                            <h3 class="mb-0">Data Item</h3>
-
-                            <div class="d-flex flex-wrap justify-content-between">
-
-                                <div class="card-tools mr-2">
-                                    <form id="filterForm" class="flex-fill" method="GET"
-                                        action="{{ route('item.index') }}">
-                                        <div class="input-group input-group-m" style="width: 300px;">
-                                            <input type="text" name="table_search" class="form-control float-right"
-                                                placeholder="Search"
-                                                value="{{ $table_search != null ? $table_search : '' }}">
-
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-default">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <a href="{{ route('item.create') }}" class="btn btn-sm btn-success">Tambah
-                                    Item</a>
-                            </div>
-                        </div> --}}
                     </div>
-                    <!-- /.card-header -->
 
                     <div class="card-body">
                         <div class="container ml-0 mb-2 pl-0">
-                            <a href="{{ route('item.create') }}" class="btn btn-m btn-success">Tambah
-                                Item</a>
+                            <a href="{{ route('item.create') }}" class="btn btn-m btn-success">Tambah Item</a>
                         </div>
 
                         <table id="dataTable" class="table table-bordered">
@@ -63,7 +34,10 @@
                                     <th style="width: 10px">#</th>
                                     <th>Nama Item</th>
                                     <th>Stok</th>
-                                    <th style="">Satuan</th>
+                                    <th>Satuan</th>
+                                    <th>Harga Jual</th>
+                                    <th>Harga Beli</th>
+                                    <th>Profit</th>
                                     <th style="width: 130px">Aksi</th>
                                 </tr>
                             </thead>
@@ -77,6 +51,15 @@
                                         </td>
                                         <td>
                                             {{ $item->unit->name }}
+                                        </td>
+                                        <td>
+                                            {{ 'Rp ' . number_format($item->selling_price, 0, ',', '.') }}
+                                        </td>
+                                        <td>
+                                            {{ 'Rp ' . number_format($item->buying_price, 0, ',', '.') }}
+                                        </td>
+                                        <td>
+                                            {{ 'Rp ' . number_format($item->profit, 0, ',', '.') }}
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-primary" id="btnShow"

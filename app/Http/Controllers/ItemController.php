@@ -45,16 +45,18 @@ class ItemController extends Controller
     {
         $item = new Item();
         $item->name = $request->get('name');
-        $item->price = $request->get('price');
+        $item->selling_price = $request->get('selling_price');
+        $item->buying_price = $request->get('buying_price');
+        $item->profit = $item->selling_price - $item->buying_price;
         $item->stock = 0;
-        // $item->stock = $request->get('stock');
+        $item->item_capital = 0;
         $item->unit_id = $request->get('unit_id');
         $item->category_id = $request->get('category_id');
         $item->save();
 
         // Create Item Data on each Warehouse
         $warehouses = Warehouse::all();
-        foreach($warehouses as $warehouse){
+        foreach ($warehouses as $warehouse) {
             $warehouse_item = new WarehouseItem();
             $warehouse_item->item_id = $item->id;
             $warehouse_item->warehouse_id = $warehouse->id;
@@ -88,7 +90,6 @@ class ItemController extends Controller
         $units = Unit::all();
         $categories = Category::all();
 
-
         return view('item.edit', ['item' => $item, 'units' => $units, 'categories' => $categories]);
     }
 
@@ -99,7 +100,9 @@ class ItemController extends Controller
     {
         $item = Item::find($id);
         $item->name = $request->get('name');
-        $item->price = $request->get('price');
+        $item->selling_price = $request->get('selling_price');
+        $item->buying_price = $request->get('buying_price');
+        $item->profit = $item->selling_price - $item->buying_price;
         $item->stock = $request->get('stock');
         $item->unit_id = $request->get('unit_id');
         $item->category_id = $request->get('category_id');

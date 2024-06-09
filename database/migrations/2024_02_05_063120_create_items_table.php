@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('price');
+            $table->integer('selling_price');
+            $table->integer('buying_price');
+            $table->integer('item_capital')->nullable();
+            $table->integer('profit')->nullable();
             $table->integer('stock');
 
             $table->foreignId('category_id')->constrained();
