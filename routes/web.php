@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
             Route::get('/{id}/DeleteConfirmation', 'deleteConfirmation')
                 ->name('item.deleteConfirmation');
+            Route::post('/import', 'import')->name('items.import');
         });
 
     Route::resource('/purchase', PurchaseController::class);

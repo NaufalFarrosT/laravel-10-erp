@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ItemImport;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\ItemWarehouse;
@@ -11,6 +12,7 @@ use App\Models\Warehouse;
 use App\Models\WarehouseItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ItemController extends Controller
 {
@@ -139,5 +141,15 @@ class ItemController extends Controller
         return response()->json(array(
             'msg' => view('item.modal-deleteConfirmation', compact('item'))->render()
         ), 200);
+    }
+
+    public function import(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        Excel::import(new ItemImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Item imported successfully.');
     }
 }
