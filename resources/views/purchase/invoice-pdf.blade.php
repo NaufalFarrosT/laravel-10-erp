@@ -111,6 +111,12 @@
                             {{ 'Rp ' . number_format($purchase_order->total_price, 0, ',', '.') }}
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="5" class="text-right"><strong>Terbayar:</strong></td>
+                        <td class="text-right">
+                            {{ 'Rp ' . number_format($total_purchase_payment, 0, ',', '.') }}
+                        </td>
+                    </tr>
                 @else
                     <tr>
                         <td colspan="5" class="text-right"><strong>Total:</strong></td>
