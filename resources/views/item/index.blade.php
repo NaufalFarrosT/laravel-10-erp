@@ -10,6 +10,9 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+                <!-- Modal Start -->
+                @include('item/modal-importExcel')
+
                 <div class="modal fade" id="modal-default">
                     <div class="modal-dialog">
                         <div class="modal-content" id="modal-content">
@@ -17,6 +20,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Modal End -->
 
                 <div class="card">
                     <div class="card-header">
@@ -24,9 +28,13 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="container ml-0 mb-2 pl-0">
+                        <div class="d-flex flex-wrap justify-content-between mb-2">
                             <a href="{{ route('item.create') }}" class="btn btn-m btn-success">Tambah Item</a>
+
+                            <button type="button" style="" class="btn btn-m btn-primary" data-toggle="modal"
+                                data-target="#modal-importExcel">Import Excel</button>
                         </div>
+
 
                         <table id="dataTable" class="table table-bordered">
                             <thead>
