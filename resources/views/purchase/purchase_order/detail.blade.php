@@ -13,7 +13,8 @@
                     <a href="{{ Route('purchase.index') }}" class="btn btn-m btn-default ml-2"> Kembali</a>
                 </div>
                 <div class="col-sm-2 text-center">
-                    <a target="_blank" href="{{ route('purchase.invoice', $purchase_order->id) }}" class="btn btn-m btn-primary">
+                    <a target="_blank" href="{{ route('purchase.invoice', $purchase_order->id) }}"
+                        class="btn btn-m btn-primary">
                         <i class="fas fa-print"></i>
                         Cetak Nota
                     </a>
@@ -39,16 +40,17 @@
                     </div>
 
                     <div class="card-body pt-0 pb-0">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-6">
                                 <div class="form-group col-sm-8 p-0">
                                     <label class="col-form-label">Pemasok</label>
-                                    <input id="customer_search" type="text" class="form-control"
-                                        value="{{ $purchase_order->supplier->name }}" name="customer_name" readonly>
+                                    <input id="supplier_search" type="text" class="form-control"
+                                        placeholder="Cari Pemasok" name="supplier_search"
+                                        value="{{ $purchase_order->supplier->name }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="form-group col-sm-6 p-0">
+                            <div class="col-sm-6">
+                                <div class="form-group p-0">
                                     <label class="col-form-label">Tanggal</label>
                                     <input class="form-control form-control-inline input-medium date-picker" size="16"
                                         type="text"
@@ -56,53 +58,9 @@
                                         id="datePicker" name="datePicker" readonly />
                                 </div>
                             </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label class="col col-form-label">TOTAL</label>
-                                    <label id="displayTotal" name="displayTotal" class="bold"
-                                        style="margin-left: 10px;font-size: large;">
-                                        {{ 'Rp ' . number_format($purchase_order->total_price, 0, ',', '.') }}
-                                    </label>
-                                    <input type="hidden" id="total" name="total">
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title" style="font-size: 24px;">Detail Pembelian</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group row mb-0">
-                            <label for="supplier" class="col-12 col-lg-1 col-form-label">Pemasok</label>
-                            <div class="col-sm-3">
-                                <label class='form-control' @readonly(true)>
-                                    {{ $purchase_order->supplier->name }}
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <label class="col-12 col-lg-1 col-form-label">Tanggal</label>
-                            <div class="col-sm-2">
-                                <input type='text' class='form-control'
-                                    value='{{ \Carbon\Carbon::parse($purchase_order->date)->format('d-m-Y') }}' readonly>
-                            </div>
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="col-sm-1 col-form-label p-0">Total </label>
-                            <label id="displayTotal" name="displayTotal" class="bold col-sm-3 m-0 p-0"
-                                style="margin-left: 10px;font-size: large;">
-                                @php
-                                    echo 'Rp ' . number_format($purchase_order->total_price, 0, ',', '.');
-                                @endphp
-                            </label>
-                        </div>
-                    </div>
-                </div> --}}
 
                 <!-- Card Penerimaan Barang & Pembayaran -->
                 <div class="container-fluid m-0 w-100 p-0">
@@ -145,20 +103,20 @@
                                         <tr id="tr_{{ $pd->id }}">
                                             <td>{{ $loop->iteration }}</td>
                                             <td id="td_name_{{ $pd->id }}">{{ $pd->item->name }}</td>
-                                            <td>
+                                            <td class="text-right">
                                                 @php
                                                     echo 'Rp ' . number_format($pd->price, 0, ',', '.');
                                                 @endphp
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 {{ $pd->qty }} {{ $pd->item->unit->name }}
                                             </td>
-                                            <td>
+                                            <td  class="text-right">
                                                 @php
                                                     echo 'Rp ' . number_format($pd->discount, 0, ',', '.');
                                                 @endphp
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 @php
                                                     echo 'Rp ' . number_format($pd->total_price, 0, ',', '.');
                                                 @endphp
@@ -166,6 +124,18 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td class="text-right" colspan="5">
+                                            <h3>Total</h3>
+                                        </td>
+                                        <td class="text-right" colspan="2"> <label id="displayTotal" name="displayTotal"
+                                                class="bold"
+                                                style="margin-left: 10px;font-size: large;">{{ 'Rp ' . number_format($purchase_order->total_price, 0, ',', '.') }}</label>
+                                            <input type="hidden" id="total" name="total">
+                                        </td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

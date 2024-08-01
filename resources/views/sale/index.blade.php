@@ -43,8 +43,9 @@
                                 </div>
                             </form>
                             <div>
-                                <a href="{{ route('sale.create') }}" class="btn btn-m btn-success">Tambah
-                                    Penjualan</a>
+                                <a href="{{ route('sale.create') }}" class="btn btn-m btn-success">
+                                    Tambah Penjualan
+                                </a>
                             </div>
                         </div>
                         <table id="dataTable" class="table table-bordered table-responsive-lg">

@@ -19,33 +19,34 @@
                 <form class="form-horizontal" id="purchase_detail" name="purchase_detail" method="POST"
                     action="{{ route('purchase.store') }}">
                     @csrf
-                    <div class="p-1">
-                        <div class="form-group row">
-                            <label for="supplier" class="col-sm-1 col-form-label">Pemasok</label>
-                            <div class="col-sm-3">
-                                <input type="search" class="typeahead form-control input-medium" id="supplier_search"
-                                    name="supplier_search" placeholder="Cari Pemasok" required>
-                                <input type="hidden" id="supplier_id" name="supplier_id">
-                            </div>
+
+                    <div class="card card-light">
+                        <div class="card-header">
+                            <h3 class="card-title">Informasi Pembelian</h3>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-sm-1 col-form-label">Tanggal</label>
-                            <div class="col-sm-2">
-                                <input class="form-control form-control-inline input-medium date-picker" size="16"
-                                    type="date" value="" id="datePicker" name="datePicker" />
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group col-sm-8 p-0">
+                                        <label class="col-form-label">Pemasok</label>
+                                        <input id="supplier_search" type="text" class="form-control"
+                                            placeholder="Cari Pemasok" name="supplier_search">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group p-0">
+                                        <label class="col-form-label">Tanggal</label>
+                                        <input class="form-control form-control-inline input-medium date-picker"
+                                            size="16" type="date" value="" id="datePicker"
+                                            name="datePicker" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div>
-                        <label class="col-sm-1 col-form-label">Total </label>
-                        <label id="displayTotal" name="displayTotal" class="bold col-sm-3"
-                            style="margin-left: 10px;font-size: large;">RP 0</label>
-                        <input type="hidden" id="total" name="total">
-                    </div>
-
-                    <div class="card card-info">
+                    <div class="card card-light">
                         <div class="card-header">
                             <h3 class="card-title">Data Pembelian</h3>
                         </div>
@@ -75,9 +76,18 @@
                                             <th style="width: 15px"></th>
                                         </tr>
                                     </thead>
-                                    <tbody class="addMoreItem">
-
+                                    <tbody id="itemList" class="addMoreItem">
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="text-right" colspan="5"><h3>Total</h3></td>
+                                            <td class="text-right" colspan="2"> <label id="displayTotal"
+                                                    name="displayTotal" class="bold"
+                                                    style="margin-left: 10px;font-size: large;">RP 0</label>
+                                                <input type="hidden" id="total" name="total">
+                                            </td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -161,12 +171,12 @@
             let formattedDiscount = changeNumberWithThousandSeparator(discountValue)
             discount.val(function() {
                 return (discountValue === 0) ?
-                    "0" :
+                    0 :
                     formattedDiscount;
             })
 
             // Total Price per Item
-            let totalPriceValue = (qtyValue * priceValue) - discountValue;
+            let totalPriceValue = (qtyValue.replace(/\D/g, '') * priceValue.replace(/\D/g, '')) - discountValue.replace(/\D/g, '');
             let displayTotalPrice = tr.find('.display_total_price_per_item');
             tr.find('#total_price_per_item').val(totalPriceValue);
 
@@ -231,14 +241,14 @@
             select: function(event, ui) {
                 $('#supplier_search').val(ui.item.name);
                 $('#supplier_id').val(ui.item.id);
-                console.log(ui.item);
 
                 return false;
             }
         });
 
         let autoCompleteItemPath = "{{ route('purchase.item.autoComplete') }}";
-        let numberOfRow = $(".table-bordered tr").length - 0;
+        let numberOfRow = $("#itemList tr").length - 0;
+        //let numberOfRow = $(".table-bordered tbody tr").length - 0;
         $("#item_search").autocomplete({
             source: function(request, response) {
                 $.ajax({
@@ -249,14 +259,15 @@
                         search: request.term
                     },
                     success: function(data) {
-                        console.log(data)
                         response(data);
                     }
                 });
             },
             select: function(event, ui) {
                 $('#item_search').val("");
-                // console.log(ui.item);
+
+                numberOfRow += 1;
+                console.log(numberOfRow);
 
                 if ($('#tr_' + ui.item.id).length) {
                     tr_item = $('#tr_' + ui.item.id)
@@ -273,17 +284,17 @@
                         "<td id='td_name_" + ui.item.id + "'>" +
                         ui.item.value + "</td>" +
                         "<td>" +
-                        "<input type='text' class='form-control price' id='price' name='price[]' value=" + ui
+                        "<input type='text' class='form-control text-right price' id='price' name='price[]' value=" + ui
                         .item.selling_price.toLocaleString() + "></td>" +
                         "<td>" +
-                        "<input type='number' name='quantity[]' id='quantity'" +
-                        "min='1' class='form-control quantity' value='1' required/>" +
+                        "<input type='text' name='quantity[]' id='quantity'" +
+                        "min='1' class='form-control text-right quantity' value='1' required/>" +
                         "</td>" +
 
                         "<td><input type='text' name='discount[]' id='discount'" +
-                        "min='0' class='form-control discount' value='0' required/></td>" +
+                        "min='0' class='form-control text-right discount' value='0' required/></td>" +
 
-                        "<td><label id='display_total_price_per_item' name='display_total_price_per_item[]' class='form-control display_total_price_per_item'>" +
+                        "<td><label id='display_total_price_per_item' name='display_total_price_per_item[]' class='form-control text-right display_total_price_per_item'>" +
                         ui.item.selling_price.toLocaleString() + "</label>" +
                         "<input type='hidden' id='total_price_per_item' name='total_price_per_item[]' value=" +
                         ui

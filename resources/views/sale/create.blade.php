@@ -80,8 +80,7 @@
                                             <th style="width: 15px"></th>
                                         </tr>
                                     </thead>
-                                    <tbody class="addMoreItem">
-
+                                    <tbody id="itemList" class="addMoreItem">
                                     </tbody>
                                 </table>
                             </div>
@@ -235,6 +234,8 @@
             select: function(event, ui) {
                 $('#item_search').val("");
 
+                numberOfRow+=1;
+
                 if ($('#tr_' + ui.item.id).length) {
                     $tr_item = $('#tr_' + ui.item.id);
 
@@ -260,7 +261,7 @@
                         "<td>" +
                         "<input type='text' class='form-control price' id='price' name='price[]' value=" + ui
                         .item.selling_price.toLocaleString() + "></td>" +
-                        "<td><input type='number' name='quantity[]' id='quantity'" +
+                        "<td><input type='text' name='quantity[]' id='quantity'" +
                         "min='1' max='" + ui.item.stock +
                         "' class='form-control quantity' value='1' required/><span>Stok: " + ui.item.stock +
                         "</span>" + "</td>" +

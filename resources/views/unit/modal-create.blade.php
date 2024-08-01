@@ -13,15 +13,16 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nama Unit</label>
-                            <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Nama Jabatan" required>
-                          </div>
+                            <input type="text" class="form-control" id="inputName" name="inputName"
+                                placeholder="Nama Jabatan" required>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                onclick="storeUnitData()">Simpan</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" >Tutup</button>
+                    onclick="storeUnitData()">Simpan</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>

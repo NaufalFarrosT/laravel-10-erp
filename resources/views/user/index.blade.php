@@ -55,7 +55,7 @@
                             <a href="{{ route('user.create') }}" style="width: fit-content"
                                 class="btn btn-m btn-success">Tambah Pengguna</a>
                         </div>
-                        <table id="dataTable" class="table table-bordered table-responsive">
+                        <table id="dataTable" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
