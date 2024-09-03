@@ -148,9 +148,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td id="td_name_{{ $sd->id }}">{{ $sd->item->name }}</td>
                                             <td>
-                                                @php
-                                                    echo 'Rp ' . number_format($sd->price, 0, ',', '.');
-                                                @endphp
+                                                Rp. {{ number_format($sd->selling_price, 0, ',', '.') }}
                                             </td>
                                             <td>
                                                 {{ $sd->qty }} {{ $sd->item->unit->name }}

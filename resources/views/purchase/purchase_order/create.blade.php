@@ -80,10 +80,14 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td class="text-right" colspan="5"><h3>Total</h3></td>
-                                            <td class="text-right" colspan="2"> <label id="displayTotal"
-                                                    name="displayTotal" class="bold"
-                                                    style="margin-left: 10px;font-size: large;">RP 0</label>
+                                            <td class="text-right" colspan="5">
+                                                <h3>Total</h3>
+                                            </td>
+                                            <td class="text-right" colspan="2">
+                                                <label id="displayTotal" name="displayTotal" class="bold"
+                                                    style="margin-left: 10px;font-size: large;">
+                                                    RP 0
+                                                </label>
                                                 <input type="hidden" id="total" name="total">
                                             </td>
                                         </tr>
@@ -176,7 +180,8 @@
             })
 
             // Total Price per Item
-            let totalPriceValue = (qtyValue.replace(/\D/g, '') * priceValue.replace(/\D/g, '')) - discountValue.replace(/\D/g, '');
+            let totalPriceValue = (qtyValue.replace(/\D/g, '') * priceValue.replace(/\D/g, '')) - discountValue.replace(
+                /\D/g, '');
             let displayTotalPrice = tr.find('.display_total_price_per_item');
             tr.find('#total_price_per_item').val(totalPriceValue);
 
@@ -191,7 +196,7 @@
         function countGrandTotal() {
             let total = 0;
             $(".display_total_price_per_item").each(function(i, e) {
-                let amount = $(this).text().replaceAll(",", "");
+                let amount = $(this).text().replaceAll(".", "");
                 amount = parseInt(amount);
 
                 //let amount = $(this).val() - 0;
@@ -284,10 +289,11 @@
                         "<td id='td_name_" + ui.item.id + "'>" +
                         ui.item.value + "</td>" +
                         "<td>" +
-                        "<input type='text' class='form-control text-right price' id='price' name='price[]' value=" + ui
+                        "<input type='text' class='form-control text-right price' id='price' name='price[]' value=" +
+                        ui
                         .item.selling_price.toLocaleString() + "></td>" +
                         "<td>" +
-                        "<input type='text' name='quantity[]' id='quantity'" +
+                        "<input type='number' name='quantity[]' id='quantity'" +
                         "min='1' class='form-control text-right quantity' value='1' required/>" +
                         "</td>" +
 

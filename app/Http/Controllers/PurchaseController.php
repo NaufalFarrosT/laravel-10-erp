@@ -68,7 +68,7 @@ class PurchaseController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {   
         $prefix = 'PO';
         $date = Carbon::now()->format('Ymd');
 

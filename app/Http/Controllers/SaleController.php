@@ -94,11 +94,13 @@ class SaleController extends Controller
         // Store Sale Detail
         for ($i = 0; $i < count($request->get('itemId')); $i++) {
             $item = Item::find($request->get('itemId'))[$i];
+            $quantity = $request->get('quantity')[$i];
 
             $sale_detail = new SaleDetail();
-            $sale_detail->qty = $request->get('quantity')[$i];
-            $sale_detail->selling_price = intval(str_replace(',', '', $request->get('price')[$i]));
+            $sale_detail->qty = $quantity;
+            $sale_detail->selling_price = intval(str_replace('.', '', $request->get('price')[$i]));
             $sale_detail->buying_price = $item->buying_price;
+            $sale_detail->profit = $item->profit * $quantity;
             $sale_detail->discount = intval(str_replace('.', '', $request->get('discount')[$i]));
             $sale_detail->total_price = $request->get('total_price_per_item')[$i];
             $sale_detail->item_id = $request->get('itemId')[$i];

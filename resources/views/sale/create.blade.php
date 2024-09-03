@@ -143,7 +143,7 @@
             })
 
             // Total Price per Item
-            let totalPriceValue = (qtyValue * priceValue) - discountValue;
+            let totalPriceValue = (qtyValue.replace(/\D/g, '') * priceValue.replace(/\D/g, '')) - discountValue.replace(/\D/g, '');
             let displayTotalPrice = tr.find('.display_total_price_per_item');
             tr.find('#total_price_per_item').val(totalPriceValue);
 
@@ -158,7 +158,7 @@
         function countGrandTotal() {
             let total = 0;
             $(".display_total_price_per_item").each(function(i, e) {
-                let amount = $(this).text().replaceAll(",", "");
+                let amount = $(this).text().replaceAll(".", "");
                 amount = parseInt(amount);
 
                 //let amount = $(this).val() - 0;
@@ -261,7 +261,7 @@
                         "<td>" +
                         "<input type='text' class='form-control price' id='price' name='price[]' value=" + ui
                         .item.selling_price.toLocaleString() + "></td>" +
-                        "<td><input type='text' name='quantity[]' id='quantity'" +
+                        "<td><input type='number' name='quantity[]' id='quantity'" +
                         "min='1' max='" + ui.item.stock +
                         "' class='form-control quantity' value='1' required/><span>Stok: " + ui.item.stock +
                         "</span>" + "</td>" +
