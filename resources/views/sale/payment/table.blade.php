@@ -8,6 +8,9 @@
                         onclick="createPayment({{ $sale_order->id }})">Tambah
                         Pembayaran Barang</button>
                 @endif
+                <button class="btn btn-sm btn-primary" id="pay-button" name="pay-button">
+                    Bayar Midtrans
+                </button>
             </div>
         </div>
     </div>
