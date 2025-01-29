@@ -97,7 +97,7 @@ class PurchaseController extends Controller
         for ($i = 0; $i < count($request->get('itemId')); $i++) {
             $purchase_detail = new PurchaseDetail();
             $purchase_detail->qty = $request->get('quantity')[$i];
-            $purchase_detail->price = intval(str_replace(',', '', $request->get('price')[$i]));
+            $purchase_detail->price = intval(str_replace('.', '', $request->get('price')[$i]));
             $purchase_detail->discount = intval(str_replace('.', '', $request->get('discount')[$i]));
             $purchase_detail->total_price = $request->get('total_price_per_item')[$i];
             $purchase_detail->item_id = $request->get('itemId')[$i];

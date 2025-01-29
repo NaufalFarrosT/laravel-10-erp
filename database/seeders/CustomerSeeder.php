@@ -15,8 +15,8 @@ class CustomerSeeder extends Seeder
     {
         $customers = [
             [
-                'Code'=>"Guest",
-                'name' => "Guest",
+                'code'=>"Guest",
+                'name' => "Non-Member",
                 'address' => "-"
             ],
         ];
