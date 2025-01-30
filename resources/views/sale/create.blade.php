@@ -24,8 +24,8 @@
                             <div class="row align-items-center justify-content-between">
                                 <div class="col-sm-4">
                                     <div class="form-group col-sm-8 p-0">
-                                        <label class="col-form-label">Pelanggan</label>
-                                        <input id="customer_search" type="text" class="form-control" value="guest"
+                                        <label class="col-form-label">Member</label>
+                                        <input id="customer_search" type="text" class="form-control" value="Non-Member"
                                             name="customer_name">
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table id="itemTable" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
@@ -215,8 +215,17 @@
             }
         });
 
+        function decreaseTableNumberAfterDelete() {
+            let table = document.getElementById("itemTable");
+            let rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].getElementsByTagName("td")[0].innerText = i + 1;
+            }
+        }
+
+        // Auto Complete Item
         let autoCompleteItemPath = "{{ route('sale.item.autoComplete') }}";
-        let numberOfRow = $(".table-bordered tr").length - 0;
         $("#item_search").autocomplete({
             source: function(request, response) {
                 $.ajax({
@@ -233,6 +242,8 @@
                 });
             },
             select: function(event, ui) {
+                let numberOfRow = $("#itemList tr").length - 0;
+
                 $('#item_search').val("");
 
                 if ($('#tr_' + ui.item.id).length) {
@@ -288,6 +299,7 @@
         $(".addMoreItem").delegate(".delete", "click", function() {
             $(this).parent().parent().remove();
             countGrandTotal();
+            decreaseTableNumberAfterDelete();
         });
     </script>
 @endsection

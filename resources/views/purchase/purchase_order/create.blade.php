@@ -64,7 +64,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table id="itemTable" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
@@ -251,9 +251,17 @@
             }
         });
 
+        function decreaseTableNumberAfterDelete() {
+            let table = document.getElementById("itemTable");
+            let rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].getElementsByTagName("td")[0].innerText = i + 1;
+            }
+        }
+
+        // Auto Complete Supplier
         let autoCompleteItemPath = "{{ route('purchase.item.autoComplete') }}";
-        let numberOfRow = $("#itemList tr").length - 0;
-        //let numberOfRow = $(".table-bordered tbody tr").length - 0;
         $("#item_search").autocomplete({
             source: function(request, response) {
                 $.ajax({
@@ -269,6 +277,8 @@
                 });
             },
             select: function(event, ui) {
+                let numberOfRow = $("#itemList tr").length - 0;
+
                 $('#item_search').val("");
 
                 numberOfRow += 1;
@@ -320,6 +330,7 @@
         $(".addMoreItem").delegate(".delete", "click", function() {
             $(this).parent().parent().remove();
             countGrandTotal();
+            decreaseTableNumberAfterDelete();
         });
     </script>
 @endsection
