@@ -89,7 +89,7 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('sale.show', $so->id) }}"
-                                                class="btn btn-sm btn-info ml-0 mr-0" id="btnShow" onclick=""><i
+                                                class="btn btn-sm btn-primary ml-0 mr-0" id="btnShow" onclick=""><i
                                                     class="fas fa-eye"></i></button>
                                         </td>
                                     </tr>

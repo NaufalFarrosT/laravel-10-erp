@@ -10,7 +10,7 @@
         <section class="content-header">
             <div class="row align-items-center justify-content-between">
                 <div class="col-sm-2">
-                    <a href="{{ Route('sale.index') }}" class="btn btn-m btn-default ml-2"> Kembali</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-m btn-default ml-2"> Kembali</a>
                 </div>
                 <div class="col-sm-2 text-right">
                     <a target="_blank" href="{{ route('sale.invoice', $sale_order->id) }}" class="btn btn-m btn-primary">
@@ -70,40 +70,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title" style="font-size: 24px;">Detil Penjualan</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group row mb-0">
-                            <label for="supplier" class="col-sm-1 col-form-label">Pelanggan</label>
-                            <div class="col-sm-3">
-                                <label class='form-control' @readonly(true)>
-                                    {{ $sale_order->customer->name }}
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <label class="col-sm-1 col-form-label">Tanggal</label>
-                            <div class="col-sm-2">
-                                <input type='text' class='form-control'
-                                    value='{{ \Carbon\Carbon::parse($sale_order->date)->format('d-m-Y') }}' readonly>
-                            </div>
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="col-sm-1 col-form-label p-0">Total </label>
-                            <label id="displayTotal" name="displayTotal" class="bold col-sm-3 m-0 p-0"
-                                style="margin-left: 10px;font-size: large;">
-                                @php
-                                    echo 'Rp ' . number_format($sale_order->total_price, 0, ',', '.');
-                                @endphp
-                            </label>
-                        </div>
-                    </div>
-                </div> --}}
 
                 <!-- Card Penerimaan Barang & Pembayaran -->
                 <div class="container-fluid m-0 w-100">
@@ -297,7 +263,7 @@
                         $("#sale_payment_action").html("");
                     } else if ($('#sale_payment_action').find('#btn_add_sale_payment').length == 0) {
                         var sale_payment_button_element =
-                            "<button id='btn_add_sale_payment' type='button'style='width: fit-content;' class='btn btn-sm btn-success' onclick='createPayment({{ $sale_order->id }})'>Tambah Pembayaran Barang</button>"
+                            "<button id='btn_add_sale_payment' type='button'style='width: fit-content;' class='btn btn-sm btn-success' onclick='createPayment({{ $sale_order->id }})'>Pembayaran Tunai</button>"
 
                         $("#sale_payment_action").append(sale_payment_button_element);
                     }
@@ -391,22 +357,15 @@
     </script>
     <script type="text/javascript">
         document.getElementById('pay-button').onclick = function() {
-            // SnapToken acquired from previous step
             snap.pay('{{ $snap_token }}', {
-                // Optional
                 onSuccess: function(result) {
-                    /* You may add your own js here, this is just example */
                     console.log(result)
                     document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                 },
-                // Optional
                 onPending: function(result) {
-                    /* You may add your own js here, this is just example */
                     document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                 },
-                // Optional
                 onError: function(result) {
-                    /* You may add your own js here, this is just example */
                     document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                 }
             });

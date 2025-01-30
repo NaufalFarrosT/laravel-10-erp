@@ -7,8 +7,8 @@ use App\Models\ItemReceive;
 use App\Models\ItemReceiveDetail;
 use App\Models\PurchaseDetail;
 use App\Models\PurchaseOrder;
-use App\Models\Warehouse;
-use App\Models\WarehouseItem;
+use App\Models\Store;
+use App\Models\StoreItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +29,7 @@ class ItemReceiveController extends Controller
     public function create($purchase_order_id)
     {
         $purchase_order = PurchaseOrder::find($purchase_order_id);
-        $warehouses = Warehouse::all();
+        $stores = Store::all();
 
         $purchase_details = PurchaseDetail::all()->where('purchase_order_id', $purchase_order_id);
         $item_receive = ItemReceive::all()->where('purchase_order_id', $purchase_order_id);
@@ -52,7 +52,7 @@ class ItemReceiveController extends Controller
             [
                 'purchase_order' => $purchase_order,
                 'purchase_details' => $purchase_details,
-                'warehouses' => $warehouses
+                'stores' => $stores
             ]
         );
     }
@@ -66,7 +66,7 @@ class ItemReceiveController extends Controller
         $status_datas = $request->selectedData;
         $qty_datas = $request->qty;
         $purchase_detail_id_datas = $request->purchase_detail_id;
-        $warehouse_id = $request->warehouse_id;
+        $store_id = $request->store_id;
         $purchase_order = PurchaseOrder::find($request->purchase_order_id);
 
         // Store Item Receive Data
@@ -78,7 +78,7 @@ class ItemReceiveController extends Controller
         $item_receive_data = new ItemReceive();
         $item_receive_data->code = $ir_code;
         $item_receive_data->date = $request->datePicker;
-        $item_receive_data->warehouse_id = $warehouse_id;
+        $item_receive_data->store_id = $store_id;
         $item_receive_data->purchase_order_id = $purchase_order->id;
         $item_receive_data->save();
 
@@ -100,21 +100,21 @@ class ItemReceiveController extends Controller
                 $item->stock = $item->stock + $qty_datas[$idx];
                 $item->save();
 
-                // Start Update and Increase Item Stock in Warehouse
-                $warehouse_item = WarehouseItem::where('item_id', $pd->item_id)->where('warehouse_id', $warehouse_id)->first();
+                // Start Update and Increase Item Stock in Store
+                $store_item = StoreItem::where('item_id', $pd->item_id)->where('store_id', $store_id)->first();
 
-                // Check if warehouse item already exist or not
-                // If not exist, create new warehouse item
-                if ($warehouse_item == null) {
-                    $warehouse_item = new WarehouseItem();
-                    $warehouse_item->stock = $qty_datas[$idx];
-                    $warehouse_item->item_id = $pd->item_id;
-                    $warehouse_item->warehouse_id = $warehouse_id;
+                // Check if store item already exist or not
+                // If not exist, create new store item
+                if ($store_item == null) {
+                    $store_item = new StoreItem();
+                    $store_item->stock = $qty_datas[$idx];
+                    $store_item->item_id = $pd->item_id;
+                    $store_item->store_id = $store_id;
                 } else {
-                    $warehouse_item->stock = $warehouse_item->stock + $qty_datas[$idx];
+                    $store_item->stock = $store_item->stock + $qty_datas[$idx];
                 }
-                $warehouse_item->save();
-                // END Update and Increase Item Stock in Warehouse
+                $store_item->save();
+                // END Update and Increase Item Stock in Store
             }
         }
 
@@ -160,7 +160,7 @@ class ItemReceiveController extends Controller
     {
         $item_receive = ItemReceive::find($id);
         $purchase_order = PurchaseOrder::find($item_receive->purchase_order_id);
-        $warehouses = Warehouse::all();
+        $stores = Store::all();
 
         $purchase_details = PurchaseDetail::all()->where('purchase_order_id', $purchase_order->id);
 
@@ -170,7 +170,7 @@ class ItemReceiveController extends Controller
                 'item_receive' => $item_receive,
                 'purchase_order' => $purchase_order,
                 'purchase_details' => $purchase_details,
-                'warehouses' => $warehouses
+                'stores' => $stores
             ]
         );
     }
@@ -193,16 +193,16 @@ class ItemReceiveController extends Controller
 
         try {
             foreach ($item_receive->itemReceiveDetails as $ird) {
-                $warehouse = Warehouse::find($item_receive->warehouse_id);
+                $store = Store::find($item_receive->store_id);
                 $item = $ird->purchaseDetail->item;
                 $item->stock = $item->stock - $ird->qty;
                 $item->save();
 
-                $warehouse_item = WarehouseItem::where('item_id', $item->id)
-                    ->where('warehouse_id', $warehouse->id)->decrement('stock', $ird->qty);
+                $store_item = StoreItem::where('item_id', $item->id)
+                    ->where('store_id', $store->id)->decrement('stock', $ird->qty);
 
-                // $warehouse_item->stock = $warehouse_item->stock - $ird->qty;
-                // $warehouse_item->save();
+                // $store_item->stock = $store_item->stock - $ird->qty;
+                // $store_item->save();
 
                 $ird->delete();
             }

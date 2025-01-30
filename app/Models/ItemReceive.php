@@ -10,9 +10,9 @@ class ItemReceive extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function warehouse()
+    public function store()
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->belongsTo(Store::class);
     }
 
     public function itemReceiveDetails() {

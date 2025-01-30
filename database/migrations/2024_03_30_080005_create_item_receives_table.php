@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->date('date');
 
-            $table->foreignId('warehouse_id')->constrained();
+            $table->foreignId('store_id')->constrained();
             $table->foreignId('purchase_order_id')->constrained();
 
             $table->timestamp('created_at')->useCurrent();

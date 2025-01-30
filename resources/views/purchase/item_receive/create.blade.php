@@ -42,11 +42,11 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="email" class="col-sm-1 col-form-label">Gudang</label>
+                        <label for="email" class="col-sm-1 col-form-label">Toko</label>
                         <div class="col-sm-3">
-                            <select class="custom-select" id="warehouse_id" name="warehouse_id">
-                                @foreach ($warehouses as $warehouse)
-                                    <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
+                            <select class="custom-select" id="store_id" name="store_id">
+                                @foreach ($stores as $store)
+                                    <option value="{{ $store->id }}">{{ $store->name }}</option>
                                 @endforeach
                             </select>
                         </div>

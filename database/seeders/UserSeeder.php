@@ -18,62 +18,62 @@ class UserSeeder extends Seeder
             [
                 'fullname' => "Super Admin 1",
                 'name' => "SuperAdmin1",
-                'dob'=> '1999-12-20',
+                'dob' => '1999-12-20',
                 'address' => "Jalan Kuningan",
                 'gender' => "Laki-Laki",
                 'email' => "superadmin@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
                 'role_id' => 1,
-                'warehouse_id' => 1
+                'store_id' => 1
             ],
             [
                 'fullname' => "ADMIN 1",
                 'name' => "Admin1",
-                'dob'=> '1999-12-20',
+                'dob' => '1999-12-20',
                 'address' => "Jalan Kembar",
                 'gender' => "Laki-Laki",
                 'email' => "admin1@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
                 'role_id' => 2,
-                'warehouse_id' => 1
+                'store_id' => 1
             ],
             [
                 'fullname' => "ADMIN 2",
                 'name' => "Admin2",
-                'dob'=> '1999-12-20',
+                'dob' => '1999-12-20',
                 'address' => "Jalan Kembar",
                 'gender' => "Laki-Laki",
                 'email' => "admin2@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
                 'role_id' => 2,
-                'warehouse_id' => 2
+                'store_id' => 2
             ],
             [
                 'fullname' => "ADMIN 3",
                 'name' => "Admin3",
-                'dob'=> '1999-12-20',
+                'dob' => '1999-12-20',
                 'address' => "Jalan Kembar",
                 'gender' => "Laki-Laki",
                 'email' => "admin3@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
                 'role_id' => 2,
-                'warehouse_id' => 3
+                'store_id' => 3
             ],
             [
                 'fullname' => "Kasir 1",
                 'name' => "Kasir1",
-                'dob'=> '1999-12-20',
+                'dob' => '1999-12-20',
                 'address' => "Jalan Kertajaya",
                 'gender' => "Perempuan",
                 'email' => "kasir1@gmail.com",
                 'password' => Hash::make('123'),
                 'join_date' => '1999-12-20',
                 'role_id' => 3,
-                'warehouse_id' => 1
+                'store_id' => 1
             ],
         ];
 

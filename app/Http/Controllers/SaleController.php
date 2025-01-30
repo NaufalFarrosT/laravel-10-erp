@@ -7,9 +7,7 @@ use App\Models\Item;
 use App\Models\SaleDetail;
 use App\Models\SaleOrder;
 use App\Models\SalePayment;
-use App\Models\SalesOrder;
-use App\Models\Warehouse;
-use App\Models\WarehouseItem;
+use App\Models\StoreItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +17,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class SaleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $date_range = $request->input('dateRange');
@@ -55,17 +50,11 @@ class SaleController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('sale.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $prefix = 'SO';
@@ -107,10 +96,10 @@ class SaleController extends Controller
             $sale_detail->sale_order_id = $sale_order->id;
             $sale_detail->save();
 
-            // Update Stock on Warehouse
-            $warehouse_item = WarehouseItem::find($request->get('warehouseItemId')[$i]);
-            $warehouse_item->stock = $warehouse_item->stock - $sale_detail->qty;
-            $warehouse_item->save();
+            // Update Stock on Store
+            $store_item = StoreItem::find($request->get('storeItemId')[$i]);
+            $store_item->stock = $store_item->stock - $sale_detail->qty;
+            $store_item->save();
 
             // Update master item stock
             $item = Item::find($sale_detail->item_id);
@@ -121,9 +110,6 @@ class SaleController extends Controller
         return redirect()->route('sale.show', $sale_order->id);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($sale_id)
     {
         $sale_order = SaleOrder::find($sale_id);
@@ -141,7 +127,7 @@ class SaleController extends Controller
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
-                'gross_amount' => 10000,
+                'gross_amount' => 15000,
             )
         );
 
@@ -156,25 +142,16 @@ class SaleController extends Controller
         );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(SaleOrder $salesOrder)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, SaleOrder $salesOrder)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(SaleOrder $salesOrder)
     {
         //
@@ -191,10 +168,10 @@ class SaleController extends Controller
 
     public function autoCompleteItem(Request $request)
     {
-        $data = Item::select("warehouse_items.id as warehouse_item_id", "warehouses.name", "items.id", DB::raw("CONCAT(warehouses.name,' - ',items.name, ' - ', warehouse_items.stock,' ' , units.name) as value"), "items.selling_price", "warehouse_items.stock")
+        $data = Item::select("store_items.id as store_item_id", "stores.name", "items.id", DB::raw("CONCAT(stores.name,' - ',items.name, ' - ', store_items.stock,' ' , units.name) as value"), "items.selling_price", "store_items.stock")
             ->join('units', 'items.unit_id', '=', 'units.id')
-            ->join('warehouse_items', 'warehouse_items.item_id', '=', 'items.id')
-            ->join('warehouses', 'warehouses.id', '=', 'warehouse_items.warehouse_id')
+            ->join('store_items', 'store_items.item_id', '=', 'items.id')
+            ->join('stores', 'stores.id', '=', 'store_items.store_id')
             ->where('items.stock', '>', 0)
             ->where('items.name', 'LIKE', '%' . $request->get('search') . '%')
             ->get();

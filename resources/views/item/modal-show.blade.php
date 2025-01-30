@@ -9,17 +9,17 @@
         <thead>
             <tr>
                 <th style="width: 10px">#</th>
-                <th>Gudang</th>
+                <th>Toko</th>
                 <th>Stok</th>
                 <th class="col-3"></th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($item->warehouses as $item_warehouse)
+            @foreach ($item->stores as $item_store)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item_warehouse->warehouse->name }}</td>
-                    <td>{{ $item_warehouse->stock }}</td>
+                    <td>{{ $item_store->store->name }}</td>
+                    <td>{{ $item_store->stock }}</td>
                     <td>
 
                     </td>

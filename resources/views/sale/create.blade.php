@@ -15,7 +15,7 @@
                     action="{{ route('sale.store') }}">
                     @csrf
 
-                    <div class="card card-light">
+                    <div class="card card-gray">
                         <div class="card-header">
                             <h3 class="card-title">Informasi Penjualan</h3>
                         </div>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
 
-                    <div class="card card-light">
+                    <div class="card card-gray">
                         <div class="card-header">
                             <h3 class="card-title">Data Barang</h3>
                         </div>
@@ -143,7 +143,8 @@
             })
 
             // Total Price per Item
-            let totalPriceValue = (qtyValue.replace(/\D/g, '') * priceValue.replace(/\D/g, '')) - discountValue.replace(/\D/g, '');
+            let totalPriceValue = (qtyValue.replace(/\D/g, '') * priceValue.replace(/\D/g, '')) - discountValue.replace(
+                /\D/g, '');
             let displayTotalPrice = tr.find('.display_total_price_per_item');
             tr.find('#total_price_per_item').val(totalPriceValue);
 
@@ -234,8 +235,6 @@
             select: function(event, ui) {
                 $('#item_search').val("");
 
-                numberOfRow+=1;
-
                 if ($('#tr_' + ui.item.id).length) {
                     $tr_item = $('#tr_' + ui.item.id);
 
@@ -253,8 +252,8 @@
                 } else {
                     let tr = "<tr id='tr_" + ui.item.id + "'>" +
                         "<input type='hidden' id='itemId' name='itemId[]' value=" + ui.item.id + ">" +
-                        "<input type='hidden' id='warehouseItemId' name='warehouseItemId[]' value=" + ui.item
-                        .warehouse_item_id + ">" +
+                        "<input type='hidden' id='storeItemId' name='storeItemId[]' value=" + ui.item
+                        .store_item_id + ">" +
                         "<td>" + numberOfRow + "</td>" +
                         "<td id='td_name_" + ui.item.id + "'>" +
                         ui.item.value + "</td>" +
@@ -278,6 +277,7 @@
                         "</td></tr>";
 
                     $('.table-bordered tbody').append(tr);
+                    numberOfRow += 1;
                 }
 
                 countGrandTotal();

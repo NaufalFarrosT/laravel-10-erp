@@ -5,11 +5,10 @@
             <div id="sale_payment_action" class="p-0 m-0">
                 @if ($sale_order->payment_status != 'Lunas')
                     <button type="button" id="btn_add_sale_payment" style="width: fit-content;" class="btn btn-sm btn-success"
-                        onclick="createPayment({{ $sale_order->id }})">Tambah
-                        Pembayaran Barang</button>
+                        onclick="createPayment({{ $sale_order->id }})">Pembayaran Tunai</button>
                 @endif
                 <button class="btn btn-sm btn-primary" id="pay-button" name="pay-button">
-                    Bayar Midtrans
+                    Pembayaran QRIS
                 </button>
             </div>
         </div>

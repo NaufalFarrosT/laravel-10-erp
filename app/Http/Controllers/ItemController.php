@@ -5,33 +5,26 @@ namespace App\Http\Controllers;
 use App\Imports\ItemImport;
 use App\Models\Category;
 use App\Models\Item;
-use App\Models\ItemWarehouse;
+use App\Models\ItemStore;
 use App\Models\Supplier;
 use App\Models\Unit;
-use App\Models\Warehouse;
-use App\Models\WarehouseItem;
+use App\Models\Store;
+use App\Models\StoreItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $search =  ($request->get("table_search") == "" ? "" : $request->get("table_search"));
 
-        $items = Item::where('name', 'like', '%' . $search . '%')->get();
-        // $items = Item::where('name', 'like', '%' . $search . '%')->paginate(10);
+        $items = Item::where('name', 'like', '%' . $search . '%')->get()->sortBy('name');
 
         return view('item.index', ['items' => $items, 'table_search' => $search]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $units = Unit::all();
@@ -40,9 +33,6 @@ class ItemController extends Controller
         return view('item.create', ['units' => $units, 'categories' => $categories]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $item = new Item();
@@ -56,15 +46,15 @@ class ItemController extends Controller
         $item->category_id = $request->get('category_id');
         $item->save();
 
-        // Create Item Data on each Warehouse
-        $warehouses = Warehouse::all();
-        foreach ($warehouses as $warehouse) {
-            $warehouse_item = new WarehouseItem();
-            $warehouse_item->item_id = $item->id;
-            $warehouse_item->warehouse_id = $warehouse->id;
-            $warehouse_item->stock = 0;
+        // Create Item Data on each Store
+        $stores = Store::all();
+        foreach ($stores as $store) {
+            $store_item = new StoreItem();
+            $store_item->item_id = $item->id;
+            $store_item->store_id = $store->id;
+            $store_item->stock = 0;
 
-            $warehouse_item->save();
+            $store_item->save();
         }
 
         return redirect()->route('item.index')->with('Success', 'BERHASIL MENAMBAHKAN DATA ITEM');

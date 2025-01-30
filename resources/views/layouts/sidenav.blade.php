@@ -41,9 +41,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/warehouse" class="nav-link">
+                            <a href="/store" class="nav-link">
                                 <i class="far fa fa-database nav-icon"></i>
-                                <p>Gudang</p>
+                                <p>Toko</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -77,6 +77,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('sale.index') }}" class="nav-link">
+                                <i class="far fa fa-database nav-icon"></i>
+                                <p>Penjualan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('purchase.index') }}" class="nav-link">
+                                <i class="far fa fa-database nav-icon"></i>
+                                <p>Pembelian</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="/unit" class="nav-link">
                                 <i class="far fa fa-database nav-icon"></i>
                                 <p>Satuan</p>
@@ -95,15 +107,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('sale.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Penjualan</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{ route('purchase.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pembelian</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('sale.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Penjualan</p>
                             </a>
                         </li>
                     </ul>
@@ -130,7 +142,7 @@
                     </a>
                 </li>
                 <!-- End Transaction -->
-                
+
                 <!-- Start Logout-->
                 <li class="nav-item mt-2">
                     <form id="logout" action="{{ route('logout') }}" method="POST" class="nav-link">

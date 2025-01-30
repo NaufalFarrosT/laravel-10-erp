@@ -6,30 +6,30 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class WarehouseSeeder extends Seeder
+class StoreSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $warehouses = [
+        $stores = [
             [
-                'name' => "Gudang Utama",
+                'name' => "Toko Utama",
                 'address' => "Jalan Ahmad Yani"
             ],
             [
-                'name' => "Gudang 01",
+                'name' => "Toko 01",
                 'address' => "Jalan Benowo"
             ],
             [
-                'name' => "Gudang 02",
+                'name' => "Toko 02",
                 'address' => "Jalan Katedral"
             ],
         ];
 
-        DB::table('warehouses')->insert(
-            $warehouses
+        DB::table('stores')->insert(
+            $stores
         );
     }
 }

@@ -20,7 +20,7 @@
                     action="{{ route('purchase.store') }}">
                     @csrf
 
-                    <div class="card card-light">
+                    <div class="card card-gray">
                         <div class="card-header">
                             <h3 class="card-title">Informasi Pembelian</h3>
                         </div>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
 
-                    <div class="card card-light">
+                    <div class="card card-gray">
                         <div class="card-header">
                             <h3 class="card-title">Data Pembelian</h3>
                         </div>
@@ -97,7 +97,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
-                            <button type="submit" class="btn btn-info">Simpan</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                             <a href="{{ url()->previous() }}" class="btn btn-default float-right"> Batal</a>
                         </div>
                         <!-- /.card-footer -->

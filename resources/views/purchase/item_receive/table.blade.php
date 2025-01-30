@@ -22,7 +22,7 @@
                         <th>Tanggal</th>
                         <th>Kode pengiriman barang</th>
                         <th>Detail Item</th>
-                        <th>Gudang</th>
+                        <th>Toko</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -39,7 +39,7 @@
                                 @endforeach
                             </td>
                             <td>
-                                {{ $ir->warehouse->name }}
+                                {{ $ir->store->name }}
                             </td>
                             <td>
                                 <div class="d-flex justify-content-center">

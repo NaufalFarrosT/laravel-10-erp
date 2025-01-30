@@ -12,7 +12,7 @@
             <div class="container-fluid">
 
                 <!-- Modal Start -->
-                @include('warehouse/modal-create')
+                @include('store/modal-create')
                 <!-- Modal End -->
 
                 <!-- Modal -->
@@ -27,16 +27,16 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="mb-0">Data Gudang</h3>
+                        <h3 class="mb-0">Data Toko</h3>
 
                         {{-- <div class="d-flex flex-wrap justify-content-between">
-                            <h3 class="mb-0">Data Gudang</h3>
+                            <h3 class="mb-0">Data Toko</h3>
 
                             <div class="d-flex flex-wrap justify-content-between">
 
                                 <div class="card-tools mr-2">
                                     <form id="filterForm" class="flex-fill" method="GET"
-                                        action="{{ route('warehouse.index') }}">
+                                        action="{{ route('store.index') }}">
                                         <div class="input-group input-group-m" style="width: 300px;">
                                             <input type="text" name="table_search" class="form-control float-right"
                                                 placeholder="Search"
@@ -53,7 +53,7 @@
 
                                 <button type="button" style="" class="btn btn-sm btn-success" data-toggle="modal"
                                     data-target="#modal-create">Tambah
-                                    Gudang</button>
+                                    Toko</button>
                             </div>
                         </div> --}}
                     </div>
@@ -62,34 +62,34 @@
                     <div class="card-body">
                         <div class="container ml-0 mb-2 pl-0">
                             <button type="button" style="" class="btn btn-m btn-success" data-toggle="modal"
-                                data-target="#modal-create">Tambah Gudang</button>
+                                data-target="#modal-create">Tambah Toko</button>
                         </div>
                         <table id="dataTable" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Nama Gudang</th>
+                                    <th>Nama Toko</th>
                                     <th>Alamat</th>
                                     <th style="width: 130px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($warehouses as $warehouse)
-                                    <tr id="tr_{{ $warehouse->id }}">
+                                @foreach ($stores as $store)
+                                    <tr id="tr_{{ $store->id }}">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td id="td_name_{{ $warehouse->id }}">{{ $warehouse->name }}</td>
-                                        <td id="td_address_{{ $warehouse->id }}">{{ $warehouse->address }}</td>
+                                        <td id="td_name_{{ $store->id }}">{{ $store->name }}</td>
+                                        <td id="td_address_{{ $store->id }}">{{ $store->address }}</td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-primary" id="btnShow"
-                                                onclick="show({{ $warehouse->id }})">
+                                                onclick="show({{ $store->id }})">
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                             <button type="button" class="btn btn-sm btn-warning"
-                                                onclick="editWarehouseData({{ $warehouse->id }})">
+                                                onclick="editWarehouseData({{ $store->id }})">
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-sm btn-danger"
-                                                onclick="deleleConfirmationWarehouseData({{ $warehouse->id }})">
+                                                onclick="deleleConfirmationWarehouseData({{ $store->id }})">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
@@ -101,7 +101,7 @@
                     <!-- /.card-body -->
                     {{-- <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
-                            {{ $warehouses->links() }}
+                            {{ $stores->links() }}
                         </ul>
                     </div> --}}
                 </div>
@@ -113,34 +113,34 @@
 @section('javascript-function')
     <script>
         function storeWarehouseData() {
-            var input_warehouse_name = $("#warehouseName").val();
-            var input_warehouse_address = $("#warehouseAddress").val();
+            var input_store_name = $("#storeName").val();
+            var input_store_address = $("#storeAddress").val();
 
             var number_of_row = $(".table-bordered tr").length - 0;
 
             $.ajax({
                 type: "POST",
-                url: `warehouse`,
+                url: `store`,
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
-                    warehouse_name: input_warehouse_name,
-                    warehouse_address: input_warehouse_address,
+                    store_name: input_store_name,
+                    store_address: input_store_address,
                 },
                 success: function(response) {
                     toastr.success(response.msg);
-                    var tr = "<tr id='tr_" + response.new_warehouse.id + "'>" +
+                    var tr = "<tr id='tr_" + response.new_store.id + "'>" +
                         "<td>" + number_of_row + "</td>" +
-                        "<td id='td_name_" + response.new_warehouse.id +
-                        "'>" + input_warehouse_name + "</td>" +
-                        "<td id='td_address_" + response.new_warehouse.id +
-                        "'>" + input_warehouse_address + "</td>" +
+                        "<td id='td_name_" + response.new_store.id +
+                        "'>" + input_store_name + "</td>" +
+                        "<td id='td_address_" + response.new_store.id +
+                        "'>" + input_store_address + "</td>" +
                         "<td><button type='button' class='btn btn-sm btn-primary' id='btnShow' onclick='show(" +
-                            response.new_warehouse.id +
+                        response.new_store.id +
                         ")'><i class='fas fa-eye'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-warning' onclick='editWarehouseData(" +
-                        response.new_warehouse.id + ")'><i class='fas fa-edit'></i></button>" +
+                        response.new_store.id + ")'><i class='fas fa-edit'></i></button>" +
                         "<button type='button' class='btn btn-sm btn-danger' onclick='deleleConfirmationWarehouseData(" +
-                        response.new_warehouse.id + ")'><i class='fas fa-trash-alt'></i></button>" +
+                        response.new_store.id + ")'><i class='fas fa-trash-alt'></i></button>" +
                         "</td></tr>";
 
                     $('.table-bordered tbody').append(tr);
@@ -155,7 +155,7 @@
         function editWarehouseData(id) {
             $.ajax({
                 type: "GET",
-                url: `warehouse/${id}/edit`,
+                url: `store/${id}/edit`,
                 success: function(response) {
                     $("#modal-content").html(response.modal);
                     $("#modal-default").modal('show');
@@ -172,11 +172,11 @@
 
             $.ajax({
                 type: "PUT",
-                url: `warehouse/${id}`,
+                url: `store/${id}`,
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
-                    warehouse_name: eWarehouseName,
-                    warehouse_address: eWarehouseAddress,
+                    store_name: eWarehouseName,
+                    store_address: eWarehouseAddress,
                 },
                 success: function(data) {
                     $("#td_name_" + id).html(eWarehouseName);
@@ -192,7 +192,7 @@
         function deleleConfirmationWarehouseData(id) {
             $.ajax({
                 type: "GET",
-                url: `warehouse/${id}/DeleteConfirmation`,
+                url: `store/${id}/DeleteConfirmation`,
                 success: function(data) {
                     $("#modal-content").html(data.msg);
                     $("#modal-default").modal('show');
@@ -207,7 +207,7 @@
         function deleteWarehouseDataRemoveTR(id) {
             $.ajax({
                 type: "DELETE",
-                url: `warehouse/${id}`,
+                url: `store/${id}`,
                 data: {
                     _token: "<?php echo csrf_token(); ?>",
                 },

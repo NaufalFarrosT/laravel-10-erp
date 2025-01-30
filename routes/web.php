@@ -14,6 +14,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SalePaymentController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UnitController;
@@ -157,11 +158,11 @@ Route::middleware('auth')->group(function () {
                 ->name('user.deleteConfirmation');
         });
 
-    Route::resource('/warehouse', WarehouseController::class);
-    Route::prefix('warehouse')->controller(WarehouseController::class)
+    Route::resource('/store', StoreController::class);
+    Route::prefix('store')->controller(StoreController::class)
         ->group(function () {
             Route::get('/{id}/DeleteConfirmation',  'deleteConfirmation')
-                ->name('warehouse.deleteConfirmation');
+                ->name('store.deleteConfirmation');
         });
 });
 
